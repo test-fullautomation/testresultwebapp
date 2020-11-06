@@ -1,0 +1,84 @@
+.ctxmenu{
+   float: right;
+   position: relative;
+}
+
+.more-btn,
+.more-menu-btn {
+   background: none;
+   border: 0 none;
+   line-height: normal;
+   overflow: visible;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   width: 100%;
+   text-align: left;
+   outline: none;
+   cursor: pointer;
+}
+
+.more-dot {
+   background-color: #8f959a;
+   display: inline-block;
+   width: 5px;
+   height: 5px;
+   margin-right: 3px;
+   border-radius: 50%
+}
+
+.more-menu {
+   position: absolute;
+   top: 100%;
+   z-index: 900;
+   right: -2px;
+   padding: 5px 0;
+   margin-top: 2px;
+   background-color: #fff;
+   border: 1px solid #ccd8e0;
+   border-radius: 4px;
+   box-shadow: 1px 1px 3px rgba(0,0,0,0.25);
+   opacity: 0;
+   pointer-events: none;
+}
+
+.more-menu-items {
+   margin: 0;
+   list-style: none;
+   padding: 0;
+}
+
+.more-menu-item {
+   display: block;
+}
+
+.more-menu-btn {
+   min-width: 100%;
+   cursor: pointer;
+   display: block;
+   font-size: 13px;
+   line-height: 16px;
+   padding: 4px 10px;
+   position: relative;
+   white-space: nowrap;
+}
+
+.more-menu-item:hover, .more-menu-items .selected {
+   background-color: #489fe5;
+}
+
+.more-menu-item:hover .more-menu-btn, .more-menu-items .selected {
+   color: #fff;
+}
+
+.more-btn:hover .more-dot,
+.show-more-menu .more-dot {
+   background-color: #516471;
+}
+
+.show-more-menu .more-menu {
+   opacity: 1;
+   -webkit-transform: translate(0, 0) scale(1);
+   transform: translate(0, 0) scale(1);
+   pointer-events: auto;
+}

@@ -1,0 +1,449 @@
+<!--
+#  Copyright 2010-2020 Robert Bosch Car Multimedia GmbH
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   
+   <title>CMD BVT Dashboard</title>
+   
+   <!-- bootstrap core css -->
+   <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+   
+   <!-- metis menu css -->
+   <link href="./bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+   
+   <!-- custom css -->
+   <link href="./dist/css/cmd_bvt_dashboard.css" rel="stylesheet">
+   
+   <!-- morris charts css -->
+   <link href="./bower_components/morrisjs/morris.css" rel="stylesheet">
+   
+   <!-- custom fonts -->
+   <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+   
+   <style>
+
+
+
+.arc text {
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+
+
+</style>
+
+
+</head>
+
+<body>
+
+   <div id="wrapper">
+       <!-- Navigation -->
+       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0px;" >
+	
+		  
+          <!--  div class="navbar-header" >
+             <img class="navbar-brand" src="./img/20150908_CMD_Logo_solid_M.png" alt="CM/PJ-CMD" style="width:80px;height:80px;padding:10px;">
+			 <a class="navbar-brand" href="index.html" style="margin-top: 15px">CMD BVT Test Results</a>		 
+          </div-->
+          <!-- /.navbar-header -->
+          
+          <div>
+             <!-- Project,Variant,Version selector- -->					
+             <div class="row">
+                <div class="col-xs-3">
+ 	               <img class="navbar-brand" src="./img/20150908_CMD_Logo_solid_M.png" alt="CM/PJ-CMD" style="width:80px;height:80px;padding:10px;">
+			 <a class="navbar-brand" href="index.html" style="margin-top: 15px">CMD BVT Test Results</a>		
+ 	         	  		
+                </div>
+             
+                <div class="col-xs-2" style="margin-top:8px;font-size:12px;">
+ 	               <div class="form-group">
+ 	         	     <label for="sel1">Project/Variant:</label>
+                       <select class="form-control" id="sel1">
+ 	         			<option value="psarcc">psarcc/psarcc</option>
+                          <option value="suzsln">suzsln/suzsln</option>
+                          <option value="rnaivi">rnaivi/rnaivi</option>
+                       </select>
+ 	         	  </div>		
+                </div>
+           
+ 	           <!-- /.col-xs-2 -->
+                <div class="col-xs-4" style="margin-top:8px;font-size:12px;">
+ 	               <div class="form-group">
+ 	         	     <label for="sel2">Version:</label>
+ 	         		    <select class="form-control">
+                             <option value="psarcc">6251_160624_AI_PRJ_CMD_LINUX_16.0F25</option>
+                             <option value="suzsln">6271_160708_AI_PRJ_CMD_LINUX_16.0F27</option>
+                             <option value="rnaivi">6281_160714_AI_PRJ_CMD_LINUX_16.0F28</option>
+                          </select>
+ 	         	  </div>			
+ 	           </div>
+ 	           <div class="col-xs-3" style="margin-top:25px;">
+ 	                  <ul class="nav navbar-right" style="margin-right:-5px">
+             <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                   <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                </a>     
+             </li>
+             <!-- /.dropdown -->    
+          </ul>
+ 	           </div>
+ 	           <!-- /.col-xs-8 -->
+             </div>
+             <!-- /.Project,Variant,Version selector- -->	
+          </div>
+				
+  
+
+          <div class="navbar-default sidebar" role="navigation" >
+             <div class="sidebar-nav navbar-collapse" style="margin-top: 0px">
+                <ul class="nav" id="side-menu">
+                   <li>
+                      <a href="index.html"><i class="fa fa-dashboard fa-fw"></i>Dashboard</a>
+                   </li>
+                        
+                </ul>
+             </div>
+             <!-- /.sidebar-collapse -->
+          </div>
+          <!-- /.navbar-static-side -->
+          
+           
+       </nav>
+       <!-- /.Navigation- -->	 
+   </div>
+   <!-- wrapper -->
+   
+   
+   
+  
+   
+
+   <div id="page-wrapper">
+      <div class="row">
+         <div class="col-lg-12">
+             <h1 class="page-header" style="font-size: x-large;">Dashboard</h1>
+         </div>
+         <!-- /.col-lg-12 -->
+      </div>
+      
+    
+       
+      <!-- /.row -->
+      <div class="row">
+         
+
+         <div class="col-xs-8">
+             <div class="panel panel-default">
+                <div class="panel-heading">BVT Test Results</div>
+                <div class="panel-body">
+                   <canvas id="chartAllResultsBars" " height="200"/>
+                </div>
+                
+                
+                
+                
+                <div id="myDivPlotly"></div>
+                
+                            
+        
+                
+                
+                
+                
+                
+             </div>      
+             
+             
+     
+               
+          </div>
+          <!-- /.col-xs-8 -->
+         <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Result detail 16.0F30_1</div>
+                <div class="panel-body">
+                   <canvas id="chartSingleResultDonut" " height="200"/>
+                </div>
+                 
+             
+            
+               
+                <div class="panel-body">
+                   <canvas id="chartFailPerComponentSpider" " height="200"/>
+                </div>
+                
+                
+
+
+                
+             </div>              
+         </div>
+          <!-- /.col-xs-4 -->          
+      
+      </div>    
+      <!-- /.row -->
+   </div>
+   <!-- /#page-wrapper -->
+
+
+    <!-- load jQuery -->
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- load bootstrap core js -->
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- load metis menu plugin js -->
+    <script src="./bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- load morris charts js -->
+    <script src="./bower_components/raphael/raphael-min.js"></script>
+    <script src="./bower_components/morrisjs/morris.min.js"></script>
+    
+     <!-- load chartjs -->
+    <script src="./bower_components/chartjs/chart.min.js"></script>
+    
+    <!-- load ds -->
+    <script src="./bower_components/d3/d3.min.js"></script>
+    
+    <script src="./bower_components/plotly/plotly-latest.min.js"></script>
+    
+
+    <!-- load custom js -->
+    <script src="./dist/js/cmd_bvt_dashboard.js"></script>
+    
+    <script>
+var glresponse;
+
+var data1 = {
+	    labels: [
+	        "Passed",
+	        "Failed",
+	        "Unknwon",
+	        "Aborted"
+	    ],
+	    datasets: [
+	        {
+	            data: [300, 50, 10,2],
+	            backgroundColor: [
+	                "#00FF00",
+	                "#FF0000",
+	                "#0000FF",
+	                "#C8C8C8"
+	            ],
+	            hoverBackgroundColor: [
+	                "#00FF00",
+	                "#FF0000",
+	                "#0000FF",
+	                "#C8C8C8"
+	            ]
+	        }]
+	};
+	
+datar = {
+	    labels: ["Tuner", "LCM", "MPLAY", "Audio","unknown"],
+	    datasets: [
+	        {
+	            label: "Failed Tests",
+	            backgroundColor: "rgba(255,0,0,0.2)",
+	            borderColor: "rgba(255,0,0,0.8)",
+	            pointBackgroundColor: "rgba(255,0,0,1)",
+	            pointBorderColor: "#FF0000",
+	            pointHoverBackgroundColor: "#ff0000",
+	            pointHoverBorderColor: "rgba(255,0,0,1)",
+	            data: [10, 15, 0, 110, 20]
+	        }
+	    ]
+	};	
+
+var ctx = document.getElementById("chartSingleResultDonut").getContext("2d");
+var myDoughnutChart = new Chart.Doughnut(ctx, {
+    data: data1,
+    response: true,
+    onAnimationComplete: addText,
+    options:{
+    animation: {animateRotate: true},
+    }
+});
+
+var ctx = document.getElementById("chartFailPerComponentSpider");
+var myRadartChart = new Chart(ctx, {
+    type: 'radar',
+    data: datar,
+    
+});
+
+ $.ajax({
+        type: 'GET',
+        url: 'http://www-app.hi.de.bosch.com:3000/',
+        crossDomain: true,
+        data: "",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        {
+            console.log(responseData);
+            
+				
+				
+				
+				
+				
+				var ctx = document.getElementById("chartAllResultsBars");
+var myChart = new Chart(ctx, {
+	xLableAngle:0,
+    type: 'bar',
+    data: {
+        labels: responseData["text"],
+        datasets: [{
+            label: 'passed test cases',
+            data: responseData["data"],
+            backgroundColor: 'rgba(0, 255, 0, 0.8)',
+            borderColor: 'rgba(0, 255, 0, 0.8)',
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true
+    }
+}); 
+
+            
+   
+
+				
+				
+				
+				
+				
+				
+				
+				
+		  },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });
+ 
+ function addText() {
+	 
+
+      var canvas=document.getElementById("chartSingleResultDonut")
+	  var ctx = document.getElementById("chartSingleResultDonut").getContext("2d");
+
+	  var cx = canvas.width / 2;
+	  var cy = canvas.height / 2;
+
+
+	  ctx.textAlign = 'center';
+	  ctx.textBaseline = 'middle';
+	  ctx.font = '14px';
+	  ctx.fillStyle = 'black';
+	  ctx.fillText("Text Here", cx, cy);
+
+	}
+ 
+ 
+ window.onresize = function() {
+
+
+     var update = {
+              width: $("#myDivPlotly").width(),  // or any new width
+              height: $("#myDivPlotly").height() // " "
+            };
+	
+	
+	    Plotly.relayout('myDivPlotly',update);
+	    
+	};
+
+
+ 
+ 
+ 
+ 
+
+ var trace1 = {
+		  x: [1, 2, 3, 4],
+		  y: [1, 4, 9, 16],
+		  name: 'Trace1',
+		  type: 'bar'
+		};
+		var trace2 = {
+		  x: [1, 2, 3, 4],
+		  y: [6, -8, -4.5, 8],
+		  name: 'Trace2',
+		  type: 'bar'
+		};
+		var trace3 = {
+		  x: [1, 2, 3, 4],
+		  y: [-15, -3, 4.5, -8],
+		  name: 'Trace3',
+		  type: 'bar'
+		 }
+		 
+		 var trace4 = {
+		  x: [1, 2, 3, 4],
+		  y: [-1, 3, -3, -4],
+		  name: 'Trace4',
+		  type: 'bar'
+		 }
+		 
+		var data = [trace1, trace2, trace3, trace4];
+		var layout = {
+		  xaxis: {title: 'X axis'},
+		  yaxis: {title: 'Y axis'},
+		  barmode: 'relative',
+		  title: 'Relative Barmode',
+		  margin : { t: 30},
+		  showlegend: true
+		};
+
+ Plotly.newPlot('myDivPlotly', data , layout,{displaylogo: false});
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+
+</html>

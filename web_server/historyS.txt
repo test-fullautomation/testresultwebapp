@@ -1,0 +1,4 @@
+19.12.2016 Pollerspöck
+- bugfix
+  deactivated caching of JSON messages to browser.
+  IE showed old data.

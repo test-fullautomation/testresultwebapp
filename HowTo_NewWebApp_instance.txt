@@ -1,0 +1,57 @@
+Web_Client
+1. clone WebApp to server
+   git clone ssh://pol2hi@sourcecode.socialcoding.bosch.com:7999/tml/webapp.git
+2. Symlink BIOS web_client to wherever required. E.g.
+   c:\BIOS\webapp\tools\Junction\junction64.exe TML_SelfTest c:\BIOS_TML_SELFTEST\webapp\web_client\dashboad
+3. Adapt 
+   webapp\web_client\dashboard\dist\js\common\global.js (domain name)
+   webapp\web_client\dashboard\dist\js\common\communication.js  (port for node application)
+   accoding to your needs.
+4. Make sure that WebServer delivers pages. E.g.
+   http://www-app.hi.de.bosch.com/TML_SelfTest/
+   This will show initial static content, but fail with an unexpected error because
+   the node application (web_server) is not yet up.   
+
+mysql:
+10. create user, pwd and schema as per
+    webapp\web_server\lib\global.js 
+11. Apply with MySQL workbench tables and stored procedures.
+    a) replace all occurences of `pjcmd_bvt` with your schema name
+	   e.g. search and replace with notepad++ over
+	   C:\BIOS_TML_SELFTEST\webapp\mysql_server\TMLdb_sproc\
+	b) load now sql scripts and execute to apply to schema
+	c) load model from webapp\mysql_server\datamodel
+	   EER Diagram > Database > Forward Engineer... > your schema
+	   - copy generated createn code to ClipBoard
+	   - store in file and replase agin all `pjcmd_bvt` with your schema name
+	   - apply sql to your schema
+12. now tables as well as stored procedures should be avaialble for your   
+    schema
+13. set tbl_config paramname Debug:Mode  paramvalue:ON
+14. provide with TMLLog2DB initial Data to the database.
+	   
+
+Web_Server
+20. adapt 
+    webapp\web_server\lib\global.js
+	webapp\web_server\testdb.js (port for node application)
+	according to your needs
+21. open firewall at desired port for node application
+22. start node application  
+    in webapp\web_server do
+	node testdb.js
+	response: testdb_app successfully listening on port 3005!
+
+Web_Server make Windows service:
+# C:\BIOS_TML_SELFTEST\webapp\web_server\node_modules\qckwinsvc\bin>node qckwinsvc.js
+# prompt: Service name:  TML-WebApp--TMLSelfTest
+# prompt: Service description:  TML-WebApp--TMLSelfTest
+# prompt: Node script path:  C:\BIOS_TML_SELFTEST\webapp\web_server\testdb.js
+# prompt: Should the service get started immediately? (y/n):  y
+# Service installed.
+# Service started.
+
+#C:\BIOS_TML_SELFTEST\webapp\web_server\node_modules\qckwinsvc\bin>
+Creates deamon directory:
+C:\BIOS_TML_SELFTEST\webapp\web_server\daemon
+... and runsg generated windows service tmlwebapptmlselftest.exe from there.

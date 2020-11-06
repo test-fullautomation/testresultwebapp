@@ -1,0 +1,33 @@
+// Mixins
+@import "variables.less";
+
+.modal-radius(){
+   	-webkit-border-radius: @modal-radius @modal-radius 0 0 !important;
+    -moz-border-radius: @modal-radius @modal-radius 0 0 !important;
+    border-radius: @modal-radius @modal-radius 0 0 !important; 
+}
+
+.modal-font(){
+   	font-size        : 105%;
+   	font-weight      : bold;
+}
+
+.panel-functions-base(){
+    border-radius: 4px; 
+	display: inline-block;
+	margin-top:-10px; 
+	margin-right:-4px;
+}
+
+.qualityIndicator-base(){
+	
+	height: 24px; 
+    border-left: 3px solid white; 
+    border-right: 3px solid white; 
+    display: inline-block; 
+    vertical-align: middle; 
+    border-radius: 5px; 
+    margin-right: 9px; 
+    width: 4px; 
+    margin-left: -9px;
+}

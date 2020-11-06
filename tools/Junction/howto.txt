@@ -1,0 +1,15 @@
+Verwendung
+
+Verwendung: junction [-s] <Verzeichnis- oder Dateiname>
+
+-s
+
+Rekursion in Unterverzeichnissen.
+
+
+
+Wenn Sie eine Verbindung erstellen oder löschen möchten, verwenden Sie Junction folgendermaßen:
+
+Verwendung: junction [-d] <Verbindungsverzeichnis> [<Verbindungsziel>]
+
+Um eine Verbindung zu löschen, geben Sie den -d-Schalter und den Namen der Verbindung an.

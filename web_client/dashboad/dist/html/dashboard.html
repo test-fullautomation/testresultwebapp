@@ -1,0 +1,454 @@
+<!--
+#  Copyright 2010-2020 Robert Bosch Car Multimedia GmbH
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+        
+<html lang="en">
+   <div class="row row-dashboard">
+      <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.0em;"> CMD BVT - Dashboard
+               <span id="header-component"></span>
+               <div class="dropdown pull-right">
+               <button class="btn btn-default btn-xs dropdown-toggle" type="button"  data-toggle="dropdown" style="border: 0px; font-size: 1.2em; margin-top: -5px; color: #808080;">
+                  <i class="fa fa-bars"></i>
+               </button>
+               <ul class="dropdown-menu">
+                  <li class="dropdown-header" style="background-color: #F7F7F7; margin-top: -4px;">test suite menu</li>
+                  <li class="hidden"><a href="index.html" onClick="updateSelectPageContent(event,'dashboard')"><i class="fa fa-dashboard fa-fw" style="margin-left: -4px;"></i> show dashboard</a></li>
+                  <li><a href="index.html?view=datatbl" onClick="updateSelectPageContent(event,'datatbl')"><i class="fa fa-table fa-fw" style="margin-left: -4px;"></i> show data table</a></li>
+                  <li><a href="index.html?view=runtime" onClick="updateSelectPageContent(event,'runtime')"><i class="fa fa-clock-o fa-fw" style="margin-left: -4px;"></i> show run-time view</a></li>
+                  <li class="hidden"><a href="index.html?view=ccr" onClick="updateSelectPageContent(event,'ccr')"><i class="fa fa-dashboard fa-fw"></i> CCR</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#" onClick="showHistory($('#selectVersion').find('option:selected').val(),enHistorySource.test_suite)"><i class="fa fa-history" style="margin-right: 2px;"></i> history</a></li>
+               </ul>
+               </div>
+            </h1>
+      </div>
+      <div class="col-lg-12" style="margin-top: -30px; height:2px;">
+         <div class="progress"  id="pbTestResult" style="height: 2px;">
+            <div id="pbTestResultPassed" title="loading..." class="progress-bar test-result-passed pbTooltip" style="width: 0%;"></div>
+            <div id="pbTestResultFailed" title="loading..." class="progress-bar test-result-failed pbTooltip" style="width: 0%;"></div>
+            <div id="pbTestResultUnknown" title="loading..." class="progress-bar test-result-unknown pbTooltip" style="width: 0%;"></div>
+            <div id="pbTestResultAborted" title="loading..." class="progress-bar test-result-aborted pbTooltip" style="width: 0%;"></div>
+         </div>
+      </div>
+      
+      <!-- /.col-lg-12 -->
+   </div>
+   <!-- /.row -->
+   
+   <div id="rowQGateIndicator" class="row row-dashboard hidden">
+
+         <div class="col-lg-12 ZeroHeightAndTopDistance" style="margin-top: -10px;">
+            <div id="pbTestResultWorstComponentTextPosition" class="ZeroHeightAndTopDistance" style="width: 80%;  text-align: right; margin-top: -20px;">
+               <span id="pbTestResultWorstComponent" style="font-size: 0.75em; color: gray;  margin-right: 10px;">(QG 80%. Loading...)</span>
+            </div>
+         </div>
+         <div class="col-lg-12 ZeroHeightAndTopDistance" style="padding: 0px;">
+            <div id="pbTestResultWorstComponentMarkerPosition" class="ZeroHeightAndTopDistance" style="margin-left:80%;  margin-top:-30px; ">
+               <i class="fa fa-caret-up" style="color: gray; margin-left: -10px; font-size: 1.5em; " title="" data-toggle="tooltip" data-original-title="Quality gate"></i>
+            </div>
+         </div>
+         <!--/.col-lg-12-->
+   
+   </div>
+   <!-- /.row status progress -->
+   
+   <div id="rowStatus" class="row row-dashboard">
+         <div class="col-xs-1">
+            <!-- abort reason panel -->
+            <div id="panAbort" class="panel panel-warning panel-slim-box hidden">
+               <div class="panel-heading" style="color: red">
+                  <div class="row">
+                     <div class="col-xs-2">
+                           <i style="font-size: 1.8em" class="fa fa-exclamation-triangle"></i>
+                     </div>
+                     <div class="text-right" style="margin-right: 15px">
+                           <div id="panAbortText" class="huge">Aborted</div>  
+                     </div>
+                  </div>  
+                  <div  class="row" id="panAbortMsg" style="margin-left:-5px;margin-right:-5px;"></div>
+               </div>
+                     
+               <div class="panel-footer">
+                  <span id="panAbortReason" class="pull-left" style="text-align: left"></span>
+                  <div class="clearfix"></div>
+               </div>
+            </div>
+
+            <!-- panel PassedRate  --> 
+            <div id="panQGate" class="panel panel-success panel-slim-box hidden">
+               <div class="panel-heading" >
+                  <div class="row">
+                        <div class="col-xs-2">
+                           <!-- i class="glyphicon glyphicon-ok-circle fa-3x"></i -->
+                           <i id="panQGateIcon" style="font-size: 1.8em" class="fa fa-thumbs-o-up"></i>
+                        </div>
+                        <div class="text-right" style="margin-right: 15px;">
+                           <div id="panQGateText" class="huge">passed</div>  
+                        </div>
+                        
+                        
+                  </div>
+                  <div id="panQGateFailedComponents" class="hidden">
+                     <div  class="row " style="margin-left:-5px;margin-right:-5px;">
+                        <div class="col-xs-12"  style="background-color: #f2cfcf">
+                           <span style="font-size: 0.8em; margin-left: -10px;">failed components</span>
+                           </div>
+                     </div>
+                     <div  class="row " >
+                        <div class="col-xs-12">
+                           <div id="panQGateFailedComponentsList">
+                              <!-- span id="panQGateLoading" style="font-size: 0.8em">loading...</span -->
+                           </div>
+                        </div>
+                     </div>
+                  </div>   
+               </div>          
+               <div class="panel-footer">
+                  <span class="pull-left">quality gate</span>
+                        
+                  <div class="clearfix"></div>
+               </div>
+            </div>
+            <!-- /. panel quality Gate  --> 
+            
+                        
+            <div id="panNoQGate" class="panel panel-info panel-slim-box">
+               <div class="panel-heading" >
+                  <div class="row">
+                        <div class="col-xs-2">
+                           <!-- i class="glyphicon glyphicon-ok-circle fa-3x"></i -->
+                           <i  style="font-size: 1.8em" class="fa fa-exclamation"></i>
+                        </div>
+                        <div class="text-right" style="margin-right: 15px;">
+                           <div id="panQGateText" class="huge">not defined</div>  
+                        </div>
+                        
+                        
+                  </div>  
+               </div>          
+               <div class="panel-footer">
+                  <span class="pull-left">quality gate</span>
+                  <div class="clearfix"></div>
+               </div>
+            </div>
+            <!-- /. panel no quality Gate  -->
+      
+      </div>
+
+      <!-- // Added column reanimation -->
+      <div id="reanimation-col" class="col-xs-1 hidden">
+            
+         <!-- panel Reanimation  --> 
+         <div id="reanimation" class="panel panel-info panel-slim-box panel-danger">
+            <div class="panel-heading" >
+               <div class="row" style="margin-left:-5px;margin-right:-5px;">
+                     <div class="col-xs-2">
+                        <!-- i class="glyphicon glyphicon-ok-circle fa-3x"></i -->
+                        <i style="font-size: 1.5em" class="glyphicon glyphicon-refresh fa-2x"></i>
+                     </div>
+                     <div class="text-right" style="margin-right: 15px;">
+                        <div id="reanimationText" class="huge">-- %</div>  
+                     </div>
+               </div>
+            </div>          
+            <div class="panel-footer">
+               <span class="pull-left">&#x2300; reanimation</span>
+                     
+               <div class="clearfix"></div>
+            </div>
+         </div>
+         <!-- /. panel Reanimation  --> 
+      </div>
+   
+      <div class="col-xs-1">
+            
+            <!-- panel PassedRate  --> 
+            <div id="panPassedRate" class="panel panel-info panel-slim-box">
+               <div class="panel-heading" >
+                  <div class="row">
+                        <div class="col-xs-2">
+                           <!-- i class="glyphicon glyphicon-ok-circle fa-3x"></i -->
+                           <i style="font-size: 1.5em" class="glyphicon glyphicon-cog fa-2x"></i>
+                        </div>
+                        <div class="text-right" style="margin-right: 15px;">
+                           <div id="panPassedRateText" class="huge">-- %</div>  
+                        </div>
+                  </div>
+               </div>          
+               <div class="panel-footer">
+                  <span class="pull-left">&#x2300; passed rate</span>
+                        
+                  <div class="clearfix"></div>
+               </div>
+            </div>
+            <!-- /. panel PassedRate  --> 
+      
+      </div>
+
+      <div class="col-xs-1">                
+            <!-- panel panTestsExecuted  -->                                                    
+            <div class="panel panel-info  panel-slim-box">
+               <div class="panel-heading">
+                  <div class="row">
+                        <div class="col-xs-2">
+                           <!-- i class="glyphicon glyphicon-ok-circle fa-3x"></i -->
+                           <i style="font-size: 1.5em" class="glyphicon glyphicon-list fa-2x"></i>
+                        </div>
+                        <div class="text-right" style="margin-right: 15px;">
+                           <div id="panTestsExecutedText" class="huge">--</div>
+                        </div>
+                  </div>
+               </div>
+               <div class="panel-footer">
+                  <span class="pull-left">tests</span>
+                        
+                  <div class="clearfix"></div>
+               </div>
+
+            </div>
+            <!-- /. panel panTestsExecuted  -->    
+      </div>
+      <div class="col-xs-1">    
+            <!-- panel execution duration  -->    
+            <div id="panExeuctionTime" class="panel panel-info panel-slim-box">
+               <div class="panel-heading">
+                  <div class="row">
+                        <div class="col-xs-2" >
+                           <!-- i class="glyphicon glyphicon-ok-circle fa-3x"></i -->
+                           <i style="font-size: 1.5em" class="glyphicon glyphicon-time fa-2x"></i>
+                        </div>
+                        <div class="text-right" style="margin-right: 15px;">
+                           <div id="panExeuctionTimeHoursText" class="huge">-- h</div>
+                           <div id="panExeuctionTimeMinutesText" class="huge">-- min</div>
+                        </div>
+                  </div>
+               </div>
+               <div class="panel-footer">
+                  <span class="pull-left">duration</span>    
+                  <div class="clearfix"></div>
+               </div>
+            
+            </div>
+            <!-- /. panel execution time  -->    
+               
+      </div>
+      <!--  /. col-xs-2 -->
+      <div id="space-col" class="col-xs-5"> 
+      </div>
+      
+      <div class="col-xs-3">    
+            <!-- panel meta data  -->    
+            <div id="panMetaData" class="panel panel-warning panel-slim-box">
+               <div class="panel-heading">
+                  <div class="row">
+                        <div class="col-xs-2" >
+                           <div id="panMetaDataJenkins" class="hidden">
+                              <a id="panMetaDataJenkinsUrl" href="" target="_blank"><img src="./img/jenkins.png"  alt="executed by Jenkins" style="width:30px;height:30px;" data-toggle="tooltip" data-placement="bottom" title="executed by Jenkins"></a>
+                           </div>
+                           <div id="panMetaDataUser">
+                              <i style="font-size: 1.5em" class="fa fa-user fa-2x"></i>
+                           </div>
+                        </div>
+                        <div class="text-right" style="margin-right: 15px;">
+                           <div id="panMetaDataExecutedAt" class="huge"><b>--</b></div>
+                           <div id="panMetaDataExecutedBy" class="huge">-- @ --</div>
+                        </div>
+                  </div>
+               </div>
+               <div class="panel-footer">
+                  <span class="pull-left">execution meta data</span>    
+                  <div class="clearfix"></div>
+               </div>
+            
+            </div>
+            <!-- /. panel execution time  -->    
+               
+      </div>
+   
+   </div>
+   
+   <div id="rowTags" class="row row-dashboard" style="padding-top: -10px;">
+      <div id="colTags" class="col-lg-12" >
+
+            <div style="margin-left: 5px;">
+               <input id="tagsInput" placeholder="Type here..." class="hidden">
+            </div>
+         
+         </div>
+   </div>
+   
+   <div id="rowFailDots" class="row row-dashboard">
+      <div id="colDots" class="col-lg-12" style="padding-left: 0px;">
+
+            <div id="chartFailDots" style="height: 15px; margin-top: -10px;"></div>
+         
+         </div>
+   </div>
+   
+   <div id="rowMain" class="row">
+   
+      <div id="colCharts" class="col-lg-8">
+      
+         <div id="rowFirstCharts" class="row row-dashboard">
+            
+            
+            <div class="col-xs-4">
+               <!--  panel Test result -->
+               <div class="panel panel-default">
+                  <div class="panel-heading panel-slim-head"><i class="fa fa-pie-chart"></i> Average test result</div>
+                  <div class="panel-body">
+                     <canvas id="chartSingleResultDonut" height="250px"></canvas>
+                  </div>
+                  <!-- /. chartSingleResultDonut --> 
+               </div>  
+               <!-- /. panel Test result -->
+            </div>
+            <!--  /. col-xs-5 -->
+      
+            <div class="col-xs-4">
+               <!-- /. panel: Fail per component -->
+               <div class="panel panel-default">
+                  <div class="panel-heading panel-slim-head"><i class="fa fa-bar-chart"></i> Test result per component <span class="text-muted">(%)</span></div>
+                  <div class="panel-body">
+                        <canvas id="chartFailPerComponentSpider" height="250px"></canvas>
+                     </div>
+                     <!-- /. chartFailPerComponentSpider -->        
+                  </div>  
+                  <!-- /. panel: Fail per component -->
+            </div>
+            <!--  /. col-xs-5 -->
+            
+            <div class="col-xs-4">
+               
+               <!-- /. panel: Fail per component -->
+               <div class="panel panel-default">
+                  <div class="panel-heading panel-slim-head"><i class="fa fa-bar-chart"></i> Not analyzed issues</div>
+                  <div class="panel-body">
+                        <canvas id="chartNotAnalyzedIssues" height="250px"></canvas>
+                     </div>
+                     <!-- /. chartFailPerComponentSpider --> 
+                              
+                  </div>  
+                  <!-- /. panel: Fail per component -->
+            </div>
+            <!--  /. col-xs-5 -->
+      
+         </div>
+         
+         <div id="rowSecondCharts" class="row row-dashboard">
+            
+            <div class="col-xs-6">
+            
+                  <!--  panel Test result flow --> 
+                  <div id="panTestResultFlow" class="panel panel-default">
+                     <div class="panel-heading panel-slim-head"><i class="fa fa-bar-chart"></i> Test result flow <span class="text-muted">(%)</span>
+                        <!-- div id="dpTRFReportRange" class="btn-group pull-right" >
+                           <i class="glyphicon glyphicon-calendar"></i> <span></span> <b class="caret"></b>
+                     </div -->
+                     </div>
+                     <div class="panel-body">
+                        <canvas id="chartAllResultsBars" height="195px"></canvas>
+                     </div> 
+                     <!-- /. chartAllResultsBars --> 
+                  </div>    
+                  <!-- /. panel Test result flow -->    
+            
+            </div>
+            <!-- /.col-xs- -->
+            
+            <div class="col-xs-6">
+            
+                  <!--  panel Test result flow --> 
+                  <div id="panTestsPerComponentFlow" class="panel panel-default">
+                     <div class="panel-heading panel-slim-head">
+                        <i class="fa fa-bar-chart"></i> Tests per component flow <span class="text-muted">(absolute number)</span>
+                     </div>
+                     <div class="panel-body">
+                        <canvas id="chartTestsPerComponentFlow" height="195px"></canvas>
+                     </div> 
+                     <!-- /. chartAllResultsBars --> 
+                  </div>    
+                  <!-- /. panel Test result flow -->    
+            
+            </div>
+            <!-- /.col-xs- -->
+            
+         </div>
+         
+         <div id="rowThirdCharts" class="row row-dashboard">
+               
+               <div class="col-xs-12">
+            
+                  <!--  panel Test result flow --> 
+                  <div id="panTestResultFlow" class="panel panel-default">
+                     <div class="panel-heading panel-slim-head"><i class="fa fa-bar-chart"></i> Resets vs. component
+                        <!-- div id="dpTRFReportRange" class="btn-group pull-right" >
+                           <i class="glyphicon glyphicon-calendar"></i> <span></span> <b class="caret"></b>
+                     </div -->
+                     </div>
+                     <div class="panel-body" style="height: 200px;">
+                        <canvas id="chartResetVsComponentLine"></canvas>
+                     </div> 
+                     <!-- /. chartAllResultsBars --> 
+                  </div>    
+                  <!-- /. panel Test result flow -->    
+            
+            </div>
+               
+         </div>
+      
+      </div>
+   
+   
+      
+      <div  class="col-md-8 col-lg-4" style="padding-right: 5px;">
+         
+      <!-- panel testsuite relationship -->
+         <div id="testsuiteRelation" class="panel panel-default" style="margin-top: 5px; margin-left: -10px;">
+            <div class="panel-heading panel-slim-head">
+               <i class="fa fa-info-circle"></i> 
+               <span>Testsuite relationship</span>
+               <div id="ctxmenuTestsuiteRelationship"></div>
+            </div>
+            <div id="testsuiteRelationship"></div>
+         </div>
+      
+         <!-- panel interpretation -->  
+         <div id="colInterpretation" class="panel panel-default" style="margin-top: 15px; margin-left: -10px; ">
+            <div class="panel-heading panel-slim-head">
+               <div class="row">
+                  <div class="col-xs-8">
+                     <i class="fa fa-info-circle"></i> Result interpretation
+                  </div>
+                  <div class="col-xs-4">
+                     <div id="btnEditResultInterpretation" class="panel-default-functions pull-right hide" style="margin-right: -2px;">
+                        <button id="btnEditResultInterpretationSave" class="btn btn-default btn-sm pull-right hide" onclick="editResultInterpretation_save()" type="button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+                        <button id="btnEditResultInterpretationEdit" class="btn btn-default btn-sm pull-right hide" onclick="editResultInterpretation_edit()" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div id="editResultInterpretation" class="panel-body" style="padding:5px;"></div> 
+         </div>   
+         <!-- /. panel interpretation -->
+            
+      </div>
+         
+               
+   </div>
+   <!-- /.row -->
+</html>      

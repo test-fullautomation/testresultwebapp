@@ -1,0 +1,171 @@
+<!--
+#  Copyright 2010-2020 Robert Bosch Car Multimedia GmbH
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+        
+<html lang="en">
+   <div class="row row-dashboard">
+      <div class="col-lg-12">
+            <!--  h1 class="page-header" style="font-size: 1.0em;">CM/PJ-CMD BVT - Dashboard<div class="btn btn-default btn-xs pull-right" style="border: 0px; font-size: 1.2em; margin-top: -5px; color: #808080;"><i class="fa fa-bars"></i></div></h1 -->
+            <h1 class="page-header" style="font-size: 1.0em;">CM/PJ-CMD BVT - Dashboard
+               <div class="dropdown pull-right">
+               <button class="btn btn-default btn-xs dropdown-toggle" type="button"  data-toggle="dropdown" style="border: 0px; font-size: 1.2em; margin-top: -5px; color: #808080;">
+                  <i class="fa fa-bars"></i>
+               </button>
+               <ul class="dropdown-menu">
+                  <li class="dropdown-header" style="background-color: #F7F7F7; margin-top: -4px;">test suite menu</li>
+                  <li><a href="index.html" onClick="updateSelectPageContent(event,'dashboard')"><i class="fa fa-dashboard fa-fw" style="margin-left: -4px;"></i> show dashboard</a></li>
+                  <li><a href="index.html?view=datatbl" onClick="updateSelectPageContent(event,'datatbl')"><i class="fa fa-table fa-fw" style="margin-left: -4px;"></i> show data table</a></li>
+                  <li><a href="index.html?view=runtime" onClick="updateSelectPageContent(event,'runtime')"><i class="fa fa-clock-o fa-fw" style="margin-left: -4px;"></i> show run-time view</a></li>
+                  <li class="hidden"><a href="index.html?view=ccr" onClick="updateSelectPageContent(event,'ccr')"><i class="fa fa-dashboard fa-fw"></i> CCR</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#" onClick="showHistory($('#selectVersion').find('option:selected').val(),enHistorySource.test_suite)"><i class="fa fa-history" style="margin-right: 2px;"></i> history</a></li>
+               </ul>
+               </div>
+            </h1>
+      </div>
+      <div class="col-lg-12" style="margin-top: -30px; height:2px;">
+         <div class="progress"  id="pbTestResult" style="height: 2px;">
+            <div id="pbTestResultPassed" title="loading..." class="progress-bar test-result-passed pbTooltip" style="width: 0%;"></div>
+            <div id="pbTestResultFailed" title="loading..." class="progress-bar test-result-failed pbTooltip" style="width: 0%;"></div>
+            <div id="pbTestResultUnknown" title="loading..." class="progress-bar test-result-unknown pbTooltip" style="width: 0%;"></div>
+            <div id="pbTestResultAborted" title="loading..." class="progress-bar test-result-aborted pbTooltip" style="width: 0%;"></div>
+         </div>
+      </div>
+      
+      <!-- /.col-lg-12 -->
+   </div>
+   <!-- /.row -->
+   
+   <div id="rowQGateIndicator" class="row row-dashboard hidden">
+
+      <div class="col-lg-12 ZeroHeightAndTopDistance" style="margin-top: -10px;">
+         <div id="pbTestResultWorstComponentTextPosition" class="ZeroHeightAndTopDistance" style="width: 80%;  text-align: right; margin-top: -20px;">
+            <span id="pbTestResultWorstComponent" style="font-size: 0.75em; color: gray;  margin-right: 10px;">(QG 80%. Loading...)</span>
+         </div>
+      </div>
+      <div class="col-lg-12 ZeroHeightAndTopDistance" style="padding: 0px;">
+         <div id="pbTestResultWorstComponentMarkerPosition" class="ZeroHeightAndTopDistance" style="margin-left:80%;  margin-top:-30px; ">
+            <i class="fa fa-caret-up" style="color: gray; margin-left: -10px; font-size: 1.5em; " title="" data-toggle="tooltip" data-original-title="Quality gate"></i>
+         </div>
+      </div>
+      <!--/.col-lg-12-->
+   
+   </div>
+   <!-- /.row status progress -->
+   
+   <div id="rowStatus" class="row row-dashboard">
+      <div class="col-xs-1">
+            
+            <!-- panel PassedRate  --> 
+
+            <!-- /. panel quality Gate  --> 
+            
+            <!-- /. panel no quality Gate  -->
+      
+      </div>
+   
+      <div class="col-xs-1">
+            
+            <!-- panel PassedRate  --> 
+
+            <!-- /. panel PassedRate  --> 
+      
+      </div>
+      <div class="col-xs-1">                
+            <!-- panel panTestsExecuted  -->                                                    
+            <!-- /. panel panTestsExecuted  -->    
+      </div>
+      <div class="col-xs-1">    
+            <!-- panel execution duration  -->    
+
+            <!-- /. panel execution time  -->    
+               
+      </div>
+      <!--  /. col-xs-2 -->
+      <div class="col-xs-5"> 
+      </div>
+      
+      <div class="col-xs-3">    
+
+            <!-- /. panel execution time  -->    
+               
+      </div>
+   
+   </div>
+   
+   <div id="rowTags" class="row row-dashboard" style="padding-top: -10px;">
+      <div id="colTags" class="col-lg-12" >
+
+         <div style="margin-left: 5px;">
+            <input id="tagsInput" placeholder="Type here..." class="hidden">
+         </div>
+      
+      </div>
+   </div>
+   
+   <div id="rowMain" class="row">
+   
+      <div id="colCharts" class="col-lg-8">
+      
+         
+         <div id="rowSecondCharts" class="row row-dashboard">
+            
+            <div class="col-xs-11">
+            
+                  <!--  panel Test result flow --> 
+                  <div id="panTestResultFlow" class="panel panel-default">
+                     <div class="panel-heading panel-slim-head"><i class="fa fa-bar-chart"></i> Test result flow (%)
+                        <!-- div id="dpTRFReportRange" class="btn-group pull-right" >
+                           <i class="glyphicon glyphicon-calendar"></i> <span></span> <b class="caret"></b>
+                     </div -->
+                     </div>
+                     <div class="panel-body">
+                        <canvas id="chartAllResultsCCRBars" height="195px"></canvas>
+                     </div> 
+                     <!-- /. chartAllResultsBars --> 
+                  </div>    
+                  <!-- /. panel Test result flow -->    
+            
+            </div>
+            <!-- /.col-xs- -->
+            
+            <div class="col-xs-6">
+            
+                  <!--  panel Test result flow -->   
+                  <!-- /. panel Test result flow -->    
+            
+            </div>
+            <!-- /.col-xs- -->
+            
+         </div>
+               
+         
+      
+      </div>
+   
+   
+      
+      <div id="colInterpretation" class="col-md-8 col-lg-4" style="padding-right: 5px;">
+         
+         <!-- panel interpretation -->   
+         <!-- /. panel interpretation -->
+            
+      </div>
+         
+               
+   </div>
+   <!-- /.row -->
+</html>

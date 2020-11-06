@@ -1,0 +1,8 @@
+15.12.2016 Pollerspöck
+- maintenance:
+  WebApp runs now also in IE
+  
+- bugfix: 
+  data table: if the first comment or ticket link was deleted, but a second 
+  still available an unwanted redraw of all comments/ticket link for this issue
+  happened.

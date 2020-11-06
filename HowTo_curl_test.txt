@@ -1,0 +1,66 @@
+pol2hi@HI-Z09T5 D:\BIOS\TML\webapp\web_server
+> "%programfiles%\curl\bin\curl" -v  -H "Cookie: testdb_session=s"%"3Ac2mw425xejMrRpJIfB6rxI4LS7pubvfh.PnS"%"2BxpfFH7SR5urZluH3UzorS8pJkrCMaZZRYO4pWkk" http://localhost:3000/loggedin -H "Accept-Encoding: gzip"
+*   Trying ::1...
+* Connected to localhost (::1) port 3000 (#0)
+> GET /loggedin HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/7.46.0
+> Accept: */*
+> Cookie: testdb_session=s%3Ac2mw425xejMrRpJIfB6rxI4LS7pubvfh.PnS%2BxpfFH7SR5urZluH3UzorS8pJkrCMaZZRYO4pWkk
+> Accept-Encoding: gzip
+>
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: http://localhost
+< Access-Control-Allow-Credentials: true
+< Cache-Control: no-cache, no-store, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< Content-Type: application/json
+< set-cookie: testdb_session=s%3Ac2mw425xejMrRpJIfB6rxI4LS7pubvfh.PnS%2BxpfFH7SR5urZluH3UzorS8pJkrCMaZZRYO4pWkk; Path=/; Expires=Wed, 17 Mar 2021 07:04:27 GMT
+< Vary: Accept-Encoding
+< Content-Encoding: gzip
+< Date: Tue, 12 Dec 2017 15:22:52 GMT
+< Connection: keep-alive
+< Transfer-Encoding: chunked
+<
+?      ?½V*-.R¦R*+¤1-+TÊQJ+,.+I¼¶K¦M?
+õþõñ?§?õº&g+ädõþ&?+h8¹ÛxÚ:¹¦h?i'ªõfµ)Yò¶òªÍ? k$y¦M   * Connection #0 to host localhost left intact
+
+pol2hi@HI-Z09T5 D:\BIOS\TML\webapp\web_server
+> "%programfiles%\curl\bin\curl"  -H "Cookie: testdb_session=s"%"3Ac2mw425xejMrRpJIfB6rxI4LS7pubvfh.PnS"%"2BxpfFH7SR5urZluH3UzorS8pJkrCMaZZRYO4pWkk" http://localhost:3000/loggedin -H "Accept-Encoding: gzip"
+?      ?½V*-.R¦R*+¤1-+TÊQJ+,.+I¼¶K¦M?
+õþõñ?§?õº&g+ädõþ&?+h8¹ÛxÚ:¹¦h?i'ªõfµ)Yò¶òªÍ? k$y¦M
+pol2hi@HI-Z09T5 D:\BIOS\TML\webapp\web_server
+> "%programfiles%\curl\bin\curl"  -H "Cookie: testdb_session=s"%"3Ac2mw425xejMrRpJIfB6rxI4LS7pubvfh.PnS"%"2BxpfFH7SR5urZluH3UzorS8pJkrCMaZZRYO4pWkk" http://localhost:3000/loggedin -H "Accept-Encoding: gzip" > test.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    95    0    95    0     0    508      0 --:--:-- --:--:-- --:--:--   508
+
+pol2hi@HI-Z09T5 D:\BIOS\TML\webapp\web_server
+> ls -l
+'ls' is not recognized as an internal or external command,
+operable program or batch file.
+
+pol2hi@HI-Z09T5 D:\BIOS\TML\webapp\web_server
+> dir
+ Volume in drive D is DATA
+ Volume Serial Number is 4ECD-CB3A
+
+ Directory of D:\BIOS\TML\webapp\web_server
+
+12.12.2017  16:23    <DIR>          .
+12.12.2017  16:23    <DIR>          ..
+26.08.2016  12:20               217 .project
+19.12.2016  16:16               107 historyS.txt
+12.12.2017  15:57    <DIR>          lib
+12.12.2017  16:03    <DIR>          node_modules
+12.12.2017  15:57               270 package.json
+21.11.2016  14:32             1.165 readme.txt
+12.12.2017  16:23                95 test.zip
+12.12.2017  16:05             1.420 testdb.js
+               6 File(s)          3.274 bytes
+               4 Dir(s)  299.498.074.112 bytes free
+
+pol2hi@HI-Z09T5 D:\BIOS\TML\webapp\web_server
+> "%programfiles%\curl\bin\curl"  -H "Cookie: testdb_session=s"%"3Ac2mw425xejMrRpJIfB6rxI4LS7pubvfh.PnS"%"2BxpfFH7SR5urZluH3UzorS8pJkrCMaZZRYO4pWkk" http://localhost:3000/loggedin -H "Accept-Encoding: gzip" > test.zip

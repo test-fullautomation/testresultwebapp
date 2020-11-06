@@ -1,0 +1,433 @@
+<!--
+#  Copyright 2010-2020 Robert Bosch Car Multimedia GmbH
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+        
+<html lang="en">
+
+<head>
+
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="CMD BVT Dashboard">
+   <meta name="author" content="Thomas Pollerspöck CM-PJ/CMD">
+   
+   <meta http-equiv="cache-control" content="max-age=0" />
+   <meta http-equiv="cache-control" content="no-cache" />
+   <meta http-equiv="expires" content="0" />
+   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+   <meta http-equiv="pragma" content="no-cache" />
+
+
+   <title>CMD BVT Dashboard</title>
+   
+   <link href="./bower_components/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+   
+   <!-- bootstrap core css -->
+   <link href="./bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+   <link href="./bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet"/>
+   <link href="./bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet"/>
+   
+   <!-- metis menu css -->
+   <link href="./bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet"/>
+
+   <!-- morris charts css -->
+   <link href="./bower_components/morrisjs/morris.css" rel="stylesheet"/>
+   
+   <!-- custom fonts -->
+   <link href="./bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+   <link href="./bower_components/font-awesome/css/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
+   
+   
+   <!-- summernote css -->
+   <link href="./bower_components/summernote/dist/summernote.css" rel="stylesheet"/>
+   
+   <link href="./bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet"/>
+   
+   <!-- custom css -->
+   <link href="./dist/css/cmd_bvt_dashboard.css" rel="stylesheet"/>
+
+   <!-- datatbl css -->
+   <link href="./bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
+   <link href="./bower_components/datatables-plugins/buttons/buttons.dataTables.min.css" rel="stylesheet"/>
+   <link href="./bower_components/highlightjs/styles/paraiso-dark.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+   <div id="loadingNotification">Loading ...</div>
+   <div id="loadGenericModal">
+      <!--  login Modal -->
+      <div class="modal fade" id="loginModal" role="dialog">
+         <div class="modal-dialog">
+         
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header modal-success" >
+               <button type="button" class="close" data-dismiss="modal">x</button>
+               <h4><b><span class="modal-title"><i class="fa fa-lock fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></span> Login</b></h4>
+            </div>
+            <div class="modal-body">
+            
+               <form role="form">
+                  <div class="row">
+                     <div class="col-xs-8">
+                        <div class="form-group">
+                           <label for="txtLoginEmail"><span class="glyphicon glyphicon-user"></span> UserID</label>
+                           <input type="text" class="form-control" id="txtLoginEmail" placeholder="pol2hi">
+                        </div>
+                     </div>
+                     
+                     <div class="col-xs-4">
+                        <div class="form-group">
+                           <label for="txtLoginDomain"><span class="fa fa-globe"></span> Domain</label>
+                           <input type="text" class="form-control" id="txtLoginDomain" placeholder="de">
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row">
+                     <div class="col-xs-12">
+                        <div class="form-group">
+                           <label for="txtLoginPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                           <input type="password" class="form-control" id="txtLoginPassword" placeholder="password">
+                           <div id="txtWrongLogin" style="color: #FF0000;" class="hide">Please enter a valid windows userID and password!</div>
+                           <br>
+                           <!--  div class="checkbox">
+                              <label><input type="checkbox" value="" checked>Remember me</label>
+                           </div-->
+                           <button type="submit" id="btnLogin" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+               <!--  p class="btn pull-left">Not a member? <a href="#">Sign Up</a></p -->
+               <button type="submit" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
+            </div>
+         </div>
+         
+         </div>
+      </div>       
+   </div>
+
+   <div id="wrapper">
+      <!-- Navigation -->
+      <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0px;" >    
+         
+         <div class="container-fluid">
+            <div class="boschSuperGfxBorder"></div>
+            
+            <div class="navbar-header">
+               <img class="navbar-brand" src="./img/logo.png" 
+                alt="CMD BVT" style="width:50px;height:50px;padding:5px;">
+            </div>
+
+            <!-- select branch, variant, version  -->
+            <div class="collapse navbar-collapse">
+               <ul class="nav navbar-nav">
+                  <div class="navbar-form  navbar-left">
+                     <i data-toggle="tooltip" title="Select here the branch you want to see..." data-animation="true" data-placement="bottom"
+                        class="fa fa-code-fork" aria-hidden="true"></i>
+                     <span id="selectBranchWrapper">   
+                        <select class="selectpicker form-control" id="selectBranch" data-live-search="true" data-width="80px">
+                           <option value="">Loading...</option>
+                        </select>  
+                     </span>
+                  </div>
+                  <!--  /. div selectBranch -->
+                  
+                  <div class="navbar-form  navbar-left" style="margin-left: -15px;">
+                     <i data-toggle="tooltip" title="Select here the project/variant you want to see..." data-animation="true" data-placement="bottom"
+                        class="fa fa-tags" aria-hidden="true"></i>
+                     <span id="selectVariantWrapper">
+                        <select class="selectpicker form-control" id="selectProjectVariant" data-live-search="true" data-width="100px">
+                           <option value="">Loading...</option>
+                        </select>
+                     </span>   
+                  </div>
+                  <!--  ./ div selectProjectVariant -->
+ 	         	  
+                  <div class="navbar-form navbar-left" style="margin-left: -15px;">
+                     <i data-toggle="tooltip" title="Select here the version you want to see..." data-animation="true" data-placement="bottom"
+                        class="fa fa-tag" aria-hidden="true"></i>
+ 	         		   <span id="selectVersionWrapper">
+                        <select class="selectpicker form-control" id="selectVersion" data-live-search="true" data-width="390px">
+                           <option value="">Loading...</option>
+                        </select>
+                     </span>
+                  </div>
+                  <!--  ./ div selectVersion -->
+
+                  <div class="navbar-form navbar-left" style="margin-left: -15px;">
+ 	         		   <span id="selectDiffVersions" class="btn-group">
+                        <button id="btAddDiffVersion" type="button" class="btn btn-default" title="Add version to stack of diffview"><img src="./img/spiral_plus.png"></button>
+                        <button id="btListDiffVersions" type="button" class="btn btn-default dropdown-toggle" 
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="List stack of diffview">
+                           <span class="caret"></span>
+                           <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul id="btArDiffVersions" class="dropdown-menu">
+                           <li><a href="#">No selected version</a></li>
+                        </ul>
+                     </span>
+                  </div>
+                  <!--  ./ div addVersion for comparision -->
+
+                  <div class="navbar-form navbar-left" style="margin-left: -15px;">
+                     <i data-toggle="tooltip" title="Select here the component you want to see..." data-animation="true" data-placement="bottom"
+                        class="fa fa-cube" aria-hidden="true"></i>
+                     <span id="selectComponentWrapper" class="btn-group">
+                           <button id="btSelectedComponent" type="button" class="btn btn-default"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i><span> Loading...</span></button>
+                           <button id="btddSelectedComponent" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="caret"></span>
+                              <span class="sr-only">Toggle Dropdown</span>
+                           </button>
+                           <ul id="btArComponents" class="dropdown-menu">
+                              <li><a href="#"><i class="fa fa-refresh fa-spin fa-1x fa-fw"></i><span> Loading...</span></a></li>
+                           </ul>
+                     </span>
+                  
+                     <button type="button" class="btn btn-default" onclick="copyLinkToClipboard()" data-toggle="tooltip" data-placement="bottom"
+                             title="Copy the unique URL of this version to the ClipBoard..." >
+                        <span class="fa fa-clipboard"></span>
+                     </button> 
+                     <div id="dpTRFReportRange" class="btn" style="margin-left: -5px;">
+                        <i class="glyphicon glyphicon-calendar"></i> <span></span> <b class="caret"></b>
+                     </div>
+                  </div>
+  
+ 	         	   <div class="navbar-form navbar-left"  style="margin-left: -20px;">
+                     <div id="btTestSuiteStatus" class="btn-group" >
+                       <button id="btTestSuiteCurrentStatus" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> Loading... <span class="caret"></span></button>
+                       <ul id="btArTestSuiteStates" class="dropdown-menu"  role="menu" style="width: 200px;">
+                         <li><i class="fa fa-refresh  fa-spin fa-fw"></i> Loading...</li>
+                       </ul>
+                     </div>
+                     <div id="btReloadContent" class="btn-group hidden">
+                        <button type="button" class="btn btn-default" onclick="autoReload(this)" title="Click to avtivate auto reload for 'in progress' version">
+                           <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                     </div>
+                  </div>
+                  <!--  /. div selectversiont -->
+ 	
+               </ul>
+               <!--  /. ul navbar-left -->
+      
+               <ul class="nav navbar-nav navbar-right">
+                  
+                  <div id="badgeUser" class="navbar-left hide" style="margin-top: 10px; margin-right: 10px;">
+                  <span data-toggle="tooltip" title="--" data-animation="true" data-placement="bottom" 
+                        id="badgeUserText" class="round round-sm orange">-</span>
+                  </div>
+                  
+                  <li class="dropdown" style="margin-right: 0px;">
+                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                       <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                     </a>  
+                     
+                     <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <a href="mailto:CM-CI1/ESY-CMD_Integration">
+                                <div>
+                                    <strong>CMD integration team</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>++</em>
+                                    </span>
+                                </div>
+                                <div>... in case of general questions...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="mailto:Cech Markus (CM-CI1/ESY)">
+                                <div>
+                                    <strong>Cech Markus (CM-CI1/ESY)</strong>
+                                    <span class="pull-right text-muted">
+                                        <em></em>
+                                    </span>
+                                </div>
+                                <div>... in case of questions w.r.t. CMD integration test</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="mailto:Pollerspoeck Thomas (CM-CI1/ESY)">
+                                <div>
+                                    <strong>Pollerspoeck Thomas (CM-CI1/ESY) </strong>
+                                    <span class="pull-right text-muted">
+                                        <em></em>
+                                    </span>
+                                </div>
+                                <div>... in case of questions w.r.t. WebApp</div>
+                            </a>
+                        </li>
+                     
+                     </ul>
+                     <!-- /. dropdown-messages -->
+                  </li>
+                  <!--  /.  dropdown  -->
+                     
+                  <li class="dropdown" style="margin-right: 10px;">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                          <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                      </a>
+                      <ul class="dropdown-menu dropdown-user">
+                          <li id="ddLogin"><a href="#" onClick="showLoginModal(); return false;"><i class="fa fa-sign-in fa-fw"></i> Login</a></li>
+                          <li class="divider"></li>
+                          <li id="ddLogout" class="disabled"><a id="ddLogoutTxt" href="#" onClick="setLogout(); return false;"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+
+                  </li>
+                  <!-- /.dropdown-->
+               </ul>
+               <!-- /. navbar-right -->
+             
+            </div>
+			<!-- /. select branch, variant, version  -->	
+       
+         </div>
+         <!-- /.container-fluid -->
+         
+         <div class="navbar-default sidebar" role="navigation" >
+            <div class="sidebar-nav navbar-collapse">
+               <ul class="nav" id="side-menu">
+                  <li><a href="index.html" onClick="updateSelectPageContent(event,'dashboard')"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+                  <li><a href="index.html?view=datatbl" onClick="updateSelectPageContent(event,'datatbl')"><i class="fa fa-table fa-fw"></i> Data table</a></li>
+                  <li><a href="index.html?view=runtime" onClick="updateSelectPageContent(event,'runtime')"><i class="fa fa-clock-o fa-fw"></i> Run-time view</a></li>
+                  <li><a href="index.html?view=diffview" onClick="updateSelectPageContent(event,'diffview')"><img src="./img/spiral.png" height="14px" style="padding: 0 2px"></i> Diff view</a></li>
+             
+                  <li style="margin-left: 4px;">
+                     <a href="#"><i class="fa fa-external-link" aria-hidden="true"></i> Links<span class="fa arrow"></span></a>
+                     <ul class="nav nav-second-level">
+                        <li><a href="https://hi-dms.de.bosch.com/docushare/dsweb/View/Collection-211210" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> CMD release notes</a></li>
+                        <li><a href="https://inside-docupedia.bosch.com/confluence/display/gen3generic/BVT+core+concept" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i> CMD test concept</a></li>
+                        <li><a href="https://hi-dms.de.bosch.com/docushare/dsweb/Get/Document-858603/CMD_TestEnvironment.pptx" target="_blank"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> CMD test environment</a></li>
+                        <li><a href="https://hi-dms.de.bosch.com/docushare/dsweb/Get/Document-511533/CMD_MasterTestPlan_v02.00.doc" target="_blank"><i class="fa fa-file-word-o" aria-hidden="true"></i> Master Test Plan</a></li>
+                        <li><a href="https://hi-dms.de.bosch.com/docushare/dsweb/Get/Document-482299/CMD-IntegrationTestPlan_v04.00.doc" target="_blank"><i class="fa fa-file-word-o" aria-hidden="true"></i> Level Test Plan</a></li>
+                     </ul>
+                     <!-- /.nav-second-level -->
+                  </li>
+                  <li style="margin-left: 4px;">
+                     <a href="https://rb-alm-20-p.de.bosch.com/ccm/web/projects/CM%20Distribution%20%28CMD%29#action=com.ibm.team.dashboard.viewDashboard&tab=_7" target="_blank" ><img src="./img/bug.png" height="18px" width="18px" style="margin-left: -3px; margin-top: -3px;"> CMD Bug Tracking</a>
+                  </li>
+                  <li style="margin-left: 4px; position:fixed;bottom:0px;width:100%; width:176px;">
+                     <a href="#"><span style="color:#888 !important;">Powered by</span> <img src="./img/TML.png" height="18px" style="margin-left: -2px;margin-top: -2px;"><span class="fa arrow"></span></a>
+                     <ul class="nav nav-second-level">       
+                        <li><a href="https://connect.bosch.com/communities/service/html/communitystart?communityUuid=eeab3519-37b3-4ebb-8c7e-a6fae32eefec" target="_blank"><i class="fa fa-users" aria-hidden="true"></i> TML Community</a></li>
+                        <li><a href="https://rb-tracker.bosch.com/tracker01/secure/RapidBoard.jspa?rapidView=1565&view=planning.nodetail&epics=visible" target="_blank"><img src="./img/jira_logo.jpg" height="20px" width="20px" style="margin-left: -2px;margin-top: -2px;"> TML Track & Release</a></li>
+                        <li><a href="https://sourcecode.socialcoding.bosch.com/projects/TML/" target="_blank"><img src="./img/bitbucket.png" height="20px" width="20px" style="margin-left: -2px; margin-top: -2px;"> Contribute to TML</a></li>
+                        <li><a href="https://hi-dms.de.bosch.com/docushare/dsweb/Get/Document-674442/CMD_TML_Promotion.pptx" target="_blank"><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> TML information</a></li>
+                        <li><a href="http://www.tml-test.com" target="_blank" ><i class="fa fa-external-link" aria-hidden="true"></i> tml-test.com</a></li>
+                     </ul>
+                     <!-- /.nav-second-level -->
+                  </li>    
+                        
+               </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+           
+       </nav>
+       <!-- /.Navigation- -->	   
+   </div>
+   
+   <!-- wrapper -->
+   <div id="page-wrapper"></div>
+   <!-- /#page-wrapper -->
+
+
+   <!-- load jQuery -->
+   <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+   <script src="./bower_components/jquery-ui/jquery-ui.min.js"></script>
+   <!--  jQuery cookie support -->
+   <script src="./bower_components/jquery-cookie/jquery.cookie.js"></script>
+   
+   <script src="./bower_components/underscore/underscore-min.js"></script>
+  
+
+   <!-- load bootstrap core js -->
+   <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+   <script src="./bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+   <script src="./bower_components/momentjs/moment.js"></script>
+   <script src="./bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+   
+   <!-- load metis menu plugin js -->
+   <script src="./bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+   <!-- load morris charts js -->
+   <script src="./bower_components/raphael/raphael-min.js"></script>
+   <script src="./bower_components/morrisjs/morris.min.js"></script>
+   
+    <!-- load chartjs -->
+   <script src="./bower_components/color-scheme/color-scheme.min.js"></script> 
+   <script src="./bower_components/chartjs/chart.min.js"></script>
+   
+   <script src="./bower_components/summernote/dist/summernote.min.js"></script>
+   
+   <script src="./bower_components/jsencrypt/dist/jsencrypt.min.js"></script>
+   
+   <script src="./bower_components/bootboxjs/bootbox.min.js"></script>
+   
+   <script src="./bower_components/typeahead/bootstrap3-typeahead.js"></script>
+   <script src="./bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js"></script>
+   
+   <!-- datatbl js -->
+   <script src="./bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+   <script src="./bower_components/highlightjs/highlight.pack.js"></script>
+   <script src="./bower_components/datatables-plugins/buttons/dataTables.buttons.min.js"></script>
+   <script src="./bower_components/jszip/jszip.min.js"></script>
+   <script src="./bower_components/datatables-plugins/buttons/button.html5.min.js"></script>
+
+   <!-- load d3 -->
+   <script src="./bower_components/d3/d3.min.js"></script>
+   <!-- load plotly -->
+   <!-- script src="./bower_components/plotly/plotly-latest.min.js"></script-->
+   
+   <!-- load custom js -->
+   
+   <script src="./dist/js/common/ctxmenu.js"></script>
+   <script src="./dist/js/common/global.js"></script>
+   <script src="./dist/js/common/common.js"></script>
+   <script src="./dist/js/common/historyC.js"></script>
+   <script src="./dist/js/common/template.js"></script>
+   <script src="./dist/js/common/modal.js"></script>
+   <script src="./dist/js/common/communication.js"></script>
+   <script src="./dist/js/select/selectBaseC.js"></script>
+   <script src="./dist/js/charts/chartsBaseC.js"></script>
+   <script src="./dist/js/button/buttonC.js"></script>
+   <script src="./dist/js/panel/panelC.js"></script>
+   <script src="./dist/js/datepicker/datepickerC.js"></script>
+   <script src="./dist/js/tagsinput/tagsProviderC.js"></script>
+   <script src="./dist/js/tagsinput/tagsinputC.js"></script>
+   <script src="./dist/js/charts/runtime.js"></script>
+   <script src="./dist/js/charts/chartsCCRC.js"></script>
+   <script src="./dist/js/charts/diffview.js"></script>
+   
+   <script src="./dist/js/common/menu.js"></script>
+   <script src="./dist/js/common/document.ready.js"></script>
+   <script src="./dist/js/common/loginout.js"></script>
+   <script src="./dist/js/cmd_bvt_dashboard.js"></script>
+   
+   <!-- load minified custom js created with https://jscompress.com/ -->
+   <!-- script src="./dist/js/dash-board.min.js"></script -->
+   
+
+</body>
+
+</html>

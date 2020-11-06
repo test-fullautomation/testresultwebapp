@@ -1,0 +1,665 @@
+@import "variables.less";
+@import "mixins.less";
+@import "ctxmenu.less";
+
+//
+//      base page and navigation configuration
+//
+//////////////////////////////////////////////////////
+
+body {
+    //background color of side bar
+    background-color: @color-navigation-background;
+}
+
+#wrapper {
+    width: 100%;
+}
+
+#page-wrapper {
+    height: 105%;
+    //background color of dashboard 
+    //background-color: @color-dashboard-background;
+    position: inherit;
+    //width of sidebar
+    margin: 20px 0 0 180px;
+    padding: 0 30px;    
+}
+
+#page-wrapper:after {
+  content: "";
+  background: url(../../img/bg.jpg);
+  //background-color: @color-dashboard-background;
+  opacity: 0.10;
+  top: 0;
+  left: 180px;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+  
+  height: 105%;
+ 
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat-y;
+
+}
+
+.page-header {
+	margin-top: 50px;
+}
+
+.sidebar {
+    z-index: 1;
+    position: absolute;
+    //width of sidebar
+    width: 180px;
+    margin-top: 0px;
+    margin-left: 0px;
+    
+    //border of sidebar
+    border-right: 1px solid @color-navigation-border;
+    height: 1500px;
+
+}
+
+.bootstrap-tagsinput {
+	font-size: 1em;
+	border: 0px ;
+	margin-left: -10px;
+	margin-top: -10px;
+	background-color: inherit;
+	box-shadow: inherit;
+}
+
+.bootstrap-tagsinput > input {
+	font-size: 1em;
+	padding-left: 3px;
+}
+
+.navbar-default {
+	//background color of sidebar
+	background-color: @color-navigation-background;
+	//border color of sidebar
+    border-color: @color-navigation-border;
+}
+
+.nav-second-level {
+	margin-left: 5px;	
+}
+
+//
+//            Panel configuration
+//
+///////////////////////////////////////////////////////
+.panel-slim-head{
+   height: 25px;
+   padding:2px;
+}
+
+//make distance between rows smaller
+.panel-slim-box > div[class='panel-heading']{
+   padding: 2px 5px 0px 5px;	
+}
+.panel-slim-box > div[class='panel-footer']{
+   padding: 0px 5px 0px 5px;	
+}
+
+//make distance between colums smaller
+.row-dashboard > div[class*='col-'] {
+  padding: 5px;
+}
+
+/* .row {
+    margin-top: 0px;
+    padding:0;
+}
+
+.row:first-child, .row.row-dense {
+    margin-top: 0;
+    padding:0;
+}*/
+
+.panel {
+	margin-bottom: 5px;
+}
+
+.panel-info-functions{
+	background-color: @color-panel-function-info; 
+	border: 2px solid @color-panel-function-info; 
+    .panel-functions-base();
+}
+
+.panel-default-functions{
+	background-color: @color-panel-function-default; 
+	border: 2px solid @color-panel-function-default; 
+	.panel-functions-base();
+}
+
+//
+//         history dialogue configuration
+//
+////////////////////////////////////////////////////// 
+.history-listitem {
+	background-color: @color-history-listitem;
+}
+
+.history-body {
+	margin : 10px;
+}
+
+//
+//          summernote configuration
+//
+////////////////////////////////////////////////////// 
+.note-editor {
+  margin-bottom: 0px !important;
+}
+
+//
+//          additional modal configuration
+//
+////////////////////////////////////////////////////// 
+
+//make modals appear in the center of the screen
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+//modal styles
+//ok
+.modal-default, .modal-default h3, .modal-default h4{
+    color 			 : @gray-darker;
+	background-color : @color-navigation-background;
+	border-color	 : @gray-light;
+	.modal-font();
+    .modal-radius();
+}
+
+.modal-primary, .modal-primary h3, .modal-primary h4{
+	color 			 : @color-modal-primary;
+	background-color : @color-modal-background-primary;
+	border-color	 : @color-modal-border-primary;
+	.modal-font();
+    .modal-radius();
+}
+
+//ok
+.modal-success, .modal-success h3, .modal-success h4{
+	color 			 : @color-modal-success;
+	background-color : @color-modal-background-success;
+	border-color	 : @color-modal-border-success;
+	.modal-font();
+    .modal-radius();
+}
+
+.modal-info, .modal-info h3, .modal-info h4{
+	color 			 : @color-modal-info;
+	background-color : @color-modal-background-info;
+	border-color	 : @color-modal-border-info;
+	.modal-font();
+    .modal-radius();
+}
+
+.modal-warning, .modal-warning h3, .modal-warning h4{
+	color 			 : @color-modal-warning;
+	background-color : @color-modal-background-warning;
+	border-color	 : @color-modal-border-warning;
+	.modal-font();
+    .modal-radius();
+}
+
+//ok
+.modal-danger, .modal-danger h3, .modal-danger h4{
+	color 			 : @color-modal-danger;
+	background-color : @color-modal-background-danger;
+	border-color	 : @color-modal-border-danger;
+	.modal-font();
+    .modal-radius();
+}
+
+
+//
+//           DATATABLES configuration
+//
+//////////////////////////////////////////////////////
+.group {
+    background-color: @color-datatable-group !important;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 5px 5px;
+    font-size: 12px; 
+    vertical-align: top;
+}
+
+#tblTestResult {
+	margin: 0 auto;
+    clear: both;
+    width: 100%;
+    table-layout: fixed;
+}
+
+//table.dataTable tbody td {
+//  vertical-align: top;
+//}
+
+div.dt-buttons {
+    position: relative;
+    float: left;
+    margin-top: 5px;
+    margin-right: 0px;   
+}
+
+.TMLHeader td {
+	background-color: #E6E6E6;
+}
+
+.TMLHeader pre{
+	background-color: @color-codeblock;
+	color: #CCCCCC;
+	margin: 0px;
+	//font-size : 1.0em;
+}
+
+.TMLHeaderTitle {
+	color: #E0E0E0; 
+	font-weight: bold
+}
+
+.qualityIndicator {
+    opacity: 0.6; /* css standard */
+    filter: alpha(opacity=60); /* internet explorer */
+    
+    .qualityIndicator-base();   
+}
+
+.qualityIndicator:hover {
+    opacity:0.6; /* css standard */
+    filter: alpha(opacity=60); /* internet explorer */
+    
+    .qualityIndicator-base();    
+}
+
+//
+//           A class for round badges
+//
+//////////////////////////////////////////////////////    
+.round {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #222;    
+    color: #FFF;
+    text-align: center;  
+}
+.round.hollow {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background-color: #FFF;    
+    color: #222;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+}
+
+.round.round-xs {
+    height: 15px;
+    width: 15px;
+    line-height: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    font-size: 0.85em;
+}
+.round.round-sm {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    font-size: 1.0em;
+    
+}
+.round.round-lg {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    font-size: 1.5em;
+}
+.round.round-comment {
+    height: 25px;
+    width: 25px;
+    line-height: 25px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    font-size: 1.2em;
+}
+
+.round.blue {
+    background-color: #0000FF;
+}
+
+.round.orange {
+    background-color: #FF6701;
+}
+
+.round.green {
+    background-color: #0d9b19;
+}
+
+.round.red {
+    background-color: #FF0000;
+}
+
+.round.gray {
+    background-color: #E0E0E0;
+}
+
+
+
+.round.char_l_PASSED {
+    background-color: #0000FF;
+    color: white;
+}
+.round.char_l_NOTPASSED {
+    background-color: #0000FF;
+    color: white;
+}
+
+.round.char_a_PASSED {
+    background-color: #FF6701;
+    color: white;
+}
+.round.char_a_NOTPASSED {
+    background-color: #FF6701;
+    color: white;
+}
+
+.round.char_n_PASSED {
+    background-color: #0d9b19;
+    color: white;
+}
+.round.char_n_NOTPASSED {
+    background-color: #0d9b19;
+    color: white;
+}
+
+
+.round.char_questionmark_PASSED {
+    background-color: #F0F0F0;
+    color: #707070;
+}
+.round.char_questionmark_NOTPASSED {
+    background-color: #FF0000;
+    color: white;
+}
+
+
+
+
+.round.hollow.blue {
+    color: #3EA6CE;   
+    background-color: #FFF;    
+    -webkit-box-shadow: 0px 0px 0px 3px #3EA6CE;
+    -moz-box-shadow: 0px 0px 0px 3px #3EA6CE;
+    box-shadow: 0px 0px 0px 3px #3EA6CE;
+}
+
+.round.hollow.orange {
+    color: #FF6701;
+    background-color: #FFF;    
+    -webkit-box-shadow: 0px 0px 0px 3px #FF6701;
+    -moz-box-shadow: 0px 0px 0px 3px #FF6701;
+    box-shadow: 0px 0px 0px 3px #FF6701;
+}
+
+.round.hollow.green {
+    color: #42A129;
+    background-color: #FFF;    
+    -webkit-box-shadow: 0px 0px 0px 3px #42A129;
+    -moz-box-shadow: 0px 0px 0px 3px #42A129;
+    box-shadow: 0px 0px 0px 3px #42A129;
+}
+
+//
+//      test result configuration
+//
+////////////////////////////////////////////////////// 
+.test-result-passed{
+	color : @color-test-result-passed;
+	background-color : @color-test-result-passed;
+}
+.test-result-failed{
+	color : @color-test-result-failed;
+	background-color : @color-test-result-failed;
+}
+.test-result-unknown{
+	color : @color-test-result-unknown;
+	background-color : @color-test-result-unknown;
+}
+.test-result-aborted{
+	color : @color-test-result-aborted;
+	background-color : @color-test-result-aborted;
+}
+.test-result-text{
+	color : white;
+	margin-left: -0.01em;
+}
+
+//
+//      chartRuntime treemap related devinitions
+//
+//////////////////////////////////////////////////////
+text {
+  pointer-events: none;
+}
+
+.grandparent text {
+  font-weight: bold;
+}
+
+rect {
+  fill: none;
+  stroke: #fff;
+}
+
+rect.parent,
+.grandparent rect {
+  stroke-width: 2px;
+}
+
+.grandparent rect {
+  fill: orange;
+}
+
+.grandparent:hover rect {
+  fill: #ee9700;
+}
+
+.children rect.parent,
+.grandparent rect {
+  cursor: pointer;
+}
+
+.children rect.parent {
+  fill: #bbb;
+  fill-opacity: .5;
+}
+
+.children:hover rect.child {
+  fill: #bbb;
+}
+
+//
+//  Bosch Corporate Identity
+//
+///////////////////////////////////////////////////
+.boschSuperGfxBorder {
+    background: transparent url("../../img/supergfx.png") repeat scroll 0px 0px;
+    background-size: 100%; 
+    height: 16px;
+    width: 103%;
+    margin-left: -15px;
+
+}
+
+//
+// additional icons
+//
+////////////////////////////////////////////////////
+i.icon_dead:before{
+    background: url("../../img/dead.png") no-repeat 0 0;
+    display: inline-block;
+    width: 11px;
+    height: 15px;
+    content: "";
+    background-size: 100%;
+    opacity: 0.9;
+}
+
+//
+// additional helper classes
+//
+/////////////////////////////////////////////////////
+.ZeroHeightAndTopDistance{
+	margin-top: 0px;
+	padding-top: 0px;
+	height : 0px;
+	min-height: 0px;
+}
+
+//
+// chartFailDots related definitions
+//
+////////////////////////////////////////////////////
+.axis text {
+    font: 10px sans-serif;
+}
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+//
+// Testsuite realtionship style
+//
+////////////////////////////////////////////////////
+#testsuiteRelationship > .testsuiteVariant[aria-expanded=true]:before{
+    float: right !important;
+    font-family: FontAwesome;
+    content: "\f0d7";
+}
+#testsuiteRelationship > .testsuiteVariant[aria-expanded=false]:before{
+    float: right !important;
+    font-family: FontAwesome;
+    content: "\f0da";
+}
+  
+.testsuiteVariant{
+    margin: 0px;
+    display: block;
+    background: @gray-lightest;
+    text-align: left;
+    border: groove white 1px;
+    border-radius: 0px;
+}
+.testsuiteVariant:hover{
+    background: @color-panel-function-info;
+}
+.testsuiteVariant > div{
+    text-align: left;
+}
+  
+.variantExecutions{
+    padding: 0 1.1em !important;
+}
+.variantExecutions  .selected, .variantExecutions  .selected:hover {
+    background-color: #337ab7;
+    color: white;
+}
+.testExecution {
+    display: block;
+    text-align: left;
+    border-radius: 0px;
+    padding: 1px 13px;
+}
+.testExecution:hover{
+    background: @color-panel-function-default; 
+}
+
+//
+// Loading notification style
+//
+////////////////////////////////////////////////////
+#loadingNotification {
+    visibility: hidden;
+    top: 67px;
+    left: 50%;
+    text-align: center;
+    z-index: 1;
+    position: fixed;
+    padding: 5px;
+    font-size: 1.0em;
+}
+  
+#loadingNotification.show {
+    visibility: visible;
+}
+
+// Diffview: add version button
+#btAddDiffVersion{
+    padding: 4px 8px;
+}
+#btAddDiffVersion.btn-info{
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+#btAddDiffVersion.btn-info:hover {
+    color: #fff;
+    border-color: #269abc;
+}
+
+// Highlight JSON 
+.json-string{
+    color: magenta;
+}
+.json-none-string{
+    color: cyan;
+}
+
+.TMLHeaderTable td{
+    padding: 0px !important;
+    background: @color-codeblock !important; 
+    border: 0px !important; 
+}
+
+.TMLHeaderTable table{
+    margin-left: 2.5px;
+}
