@@ -149,8 +149,11 @@ function updateDiffview(response){
       })
 
       .on('mousemove', function(d) {
-      tooltip.style('top', (d3.event.layerY + 10) + 'px')
-      .style('left', (d3.event.layerX - 25) + 'px');
+         var clickedPos = d3.mouse(this)
+         var topOffset = parseInt(height/2 + margin.top + clickedPos[1] + tooltip.node().clientHeight/2 + 15)
+         var leftOffset = parseInt(width/2 + margin.left + clickedPos[0] + 15)
+         tooltip.style('top', topOffset + 'px')
+                .style('left',leftOffset + 'px');
       })
       .on('mouseout', function(d) {
       d3.selectAll("circle")

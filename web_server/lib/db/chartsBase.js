@@ -156,28 +156,14 @@ chartsBase.prototype.chartBarsAllResults = function chartBarsAllResults (query, 
                "t1.time_start BETWEEN STR_TO_DATE('" + startDate + "','%d.%m.%Y') AND DATE_ADD(STR_TO_DATE('" + endDate + "','%d.%m.%Y'), INTERVAL 1 DAY) "  +
                "order by t1.time_start";
          if ((query['component']!=undefined) && (query['component'].trim()!="All Components")){
-            // num_resets still indicates for all component
-            sql="select t1.version_sw_target, t3.num_passed, t3.num_failed, t3.num_unknown, t3.num_aborted, num_resets from " + global.mySQLOptions.database +  ".evtbl_result_main as t1 " +
-                  "join " + global.mySQLOptions.database +  ".tbl_result as t2 on (t1.test_result_id=t2.test_result_id) " +
-                  "join " + global.mySQLOptions.database +  ".evtbl_failed_unknown_per_component as t3 on (t1.test_result_id=t3.test_result_id) " +
-                  "where t1.tbl_prj_project='"+ query['project'].trim() +"' and t1.tbl_prj_branch='"+ query['branch'].trim() +"' and " +
-                  "t2.result_state not in ('test died','test build','new report','in progress') and " +
+            sql="select t1.version_sw_target, t2.num_passed, t2.num_failed, t2.num_unknown, t2.num_aborted, t2.num_resets from " + global.mySQLOptions.database +  ".tbl_result as t1 " +
+                  "join " + global.mySQLOptions.database +  ".evtbl_failed_unknown_per_component as t2 on (t1.test_result_id=t2.test_result_id) " +
+                  "where t1.project='"+ query['project'].trim() +"' and t1.branch='"+ query['branch'].trim() +"' and " +
+                  "t1.result_state not in ('test died','test build','new report','in progress') and " +
                   "t1.version_sw_target not like '%_S' and t1.version_sw_target not like '%_R' and " + 
-                  "t1.time_start BETWEEN STR_TO_DATE('" + startDate + "','%d.%m.%Y') AND DATE_ADD(STR_TO_DATE('" + endDate + "','%d.%m.%Y'), INTERVAL 1 DAY)"  +
-                  "AND t3.component='"+common.mapToLongComponentNames(query['component'].trim())+"' "+
-                  "order by t1.time_start";  
-
-            // solution: add new column 'num_resets' for table 'evtbl_failed_unknown_per_component'
-            // => _update_evtbl_failed_unknown_per_component stored procudure need to add a step for component reset counters
-            // use this query when the update of database table and procedure completely done.
-            // sql="select t1.version_sw_target, t2.num_passed, t2.num_failed, t2.num_unknown, t2.num_aborted, t2.num_resets from " + global.mySQLOptions.database +  ".tbl_result as t1 " +
-            //       "join " + global.mySQLOptions.database +  ".evtbl_failed_unknown_per_component as t2 on (t1.test_result_id=t2.test_result_id) " +
-            //       "where t1.project='"+ query['project'].trim() +"' and t1.branch='"+ query['branch'].trim() +"' and " +
-            //       "t1.result_state not in ('test died','test build','new report','in progress') and " +
-            //       "t1.version_sw_target not like '%_S' and t1.version_sw_target not like '%_R' and " + 
-            //       "t1.time_start BETWEEN STR_TO_DATE('" + startDate + "','%d.%m.%Y') AND DATE_ADD(STR_TO_DATE('" + endDate + "','%d.%m.%Y'), INTERVAL 1 DAY) "  +
-            //       "AND t2.component='"+common.mapToLongComponentNames(query['component'].trim())+"' "+
-            //       "order by t1.time_start";    
+                  "t1.time_start BETWEEN STR_TO_DATE('" + startDate + "','%d.%m.%Y') AND DATE_ADD(STR_TO_DATE('" + endDate + "','%d.%m.%Y'), INTERVAL 1 DAY) "  +
+                  "AND t2.component='"+common.mapToLongComponentNames(query['component'].trim())+"' "+
+                  "order by t1.time_start";    
          }
          // console.log(sql);
       
