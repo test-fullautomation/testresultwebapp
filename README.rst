@@ -1,13 +1,28 @@
+.. Copyright 2020-2022 Robert Bosch GmbH
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+
 .. |IMG_BOSCH| image:: https://upload.wikimedia.org/wikipedia/de/thumb/3/31/Bosch-logotype.svg/200px-Boschlogotype.svg.png
     :height: 30
 
-.. |IMG_WEBAPP_DASHBOARD| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/img/Dashboard.png?sanitize=true
+.. |IMG_WEBAPP_DASHBOARD| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/images/Dashboard.png?sanitize=true
 
-.. |IMG_WEBAPP_DATATABLE| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/img/DataTable.png?sanitize=true
+.. |IMG_WEBAPP_DATATABLE| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/images/DataTable.png?sanitize=true
 
-.. |IMG_WEBAPP_RUNTIME| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/img/Runtime.png?sanitize=true
+.. |IMG_WEBAPP_RUNTIME| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/images/Runtime.png?sanitize=true
 
-.. |IMG_WEBAPP_DIFFVIEW| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/img/DiffView.PNG?sanitize=true
+.. |IMG_WEBAPP_DIFFVIEW| image:: https://raw.githubusercontent.com/test-fullautomation/TestResultWebApp/develop/doc/images/DiffView.PNG?sanitize=true
 
 
 TestResultWebApp (TRWebApp)
@@ -15,6 +30,13 @@ TestResultWebApp (TRWebApp)
 
 .. contents::
    :local:
+
+
+Package Documentation
+---------------------
+
+A detailed documentation of the TestResultWebApp package can be found here: `TestResultWebApp.pdf <https://github.com/test-fullautomation/testresultwebapp/blob/develop/doc/_build/latex/TestResultWebApp.pdf>`_
+
 
 Introduction
 ------------
@@ -83,6 +105,7 @@ Documentation
 Support and contact
 -------------------
 
+`Thomas Pollerspöck <mailto:Thomas.Pollerspoeck@de.bosch.com>`_
 
 
 Contributing
@@ -93,9 +116,21 @@ Contributing
 License
 -------
 
-TestResultWebApp is open source software provided under the `Apache License
-2.0`__. 
+Copyright 2020-2022 Robert Bosch GmbH
 
-__ http://apache.org/licenses/LICENSE-2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-   
+    |License: Apache v2|
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+.. |License: Apache v2| image:: https://img.shields.io/pypi/l/robotframework.svg
+   :target: http://www.apache.org/licenses/LICENSE-2.0.html
+
