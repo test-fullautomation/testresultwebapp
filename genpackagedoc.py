@@ -16,20 +16,23 @@
 #
 # **************************************************************************************************************
 #
-# CExtendedSetup.py
+# genpackagedoc.py
 #
-# CM-CI1/ECA3-Queckenstedt
-#
-# Contains all functions to support the extended setup process.
+# XC-CT/ECA3-Queckenstedt
 #
 # --------------------------------------------------------------------------------------------------------------
 #
-# Initial version 03/2022
+# 29.06.2022
 #
 # --------------------------------------------------------------------------------------------------------------
 
-import os, sys, platform, shlex, subprocess, shutil
+import os, sys
+
 import colorama as col
+
+from config.CRepositoryConfig import CRepositoryConfig # providing repository and environment specific information
+from GenPackageDoc.CPackageDocConfig import CPackageDocConfig
+from GenPackageDoc.CDocBuilder import CDocBuilder
 
 col.init(autoreset=True)
 
@@ -50,49 +53,52 @@ def printexception(sMsg):
 
 # --------------------------------------------------------------------------------------------------------------
 
-class CExtendedSetup():
+# -- setting up the repository configuration (relative to the path of this script)
+oRepositoryConfig = None
+try:
+    oRepositoryConfig = CRepositoryConfig(os.path.abspath(sys.argv[0]))
+except Exception as ex:
+    print()
+    printexception(str(ex))
+    print()
+    sys.exit(ERROR)
 
-    def __init__(self, oRepositoryConfig=None):
-        if oRepositoryConfig is None:
-            raise Exception("oRepositoryConfig is None")
-        self.__oRepositoryConfig = oRepositoryConfig
+# -- setting up the GenPackageDoc configuration
+oGenPackageDocConfig = None
+try:
+    oPackageDocConfig = CPackageDocConfig(oRepositoryConfig)
+except Exception as ex:
+    print()
+    printexception(str(ex))
+    print()
+    sys.exit(ERROR)
 
-    # --------------------------------------------------------------------------------------------------------------
+# -- setting up and calling the doc builder
+try:
+    oDocBuilder = CDocBuilder(oPackageDocConfig)
+except Exception as ex:
+    print()
+    printexception(str(ex))
+    print()
+    sys.exit(ERROR)
 
-    def __del__(self):
-        pass
-
-    # --------------------------------------------------------------------------------------------------------------
-
-    def gen_doc(self):
-        """Executes sphinx-makeall.py
-        """
-        sPython = self.__oRepositoryConfig.Get('sPython')
-        sDocumentationBuilder = self.__oRepositoryConfig.Get('sDocumentationBuilder')
-        listCmdLineParts = []
-        listCmdLineParts.append(f"\"{sPython}\"")
-        listCmdLineParts.append(f"\"{sDocumentationBuilder}\"")
-        sCmdLine = " ".join(listCmdLineParts)
-        del listCmdLineParts
-        listCmdLineParts = shlex.split(sCmdLine)
-        # -- debug
-        sCmdLine = " ".join(listCmdLineParts)
-        print()
-        print("Now executing command line:\n" + sCmdLine)
-        print()
-        nReturn = ERROR
-        try:
-            nReturn = subprocess.call(listCmdLineParts)
-        except Exception as ex:
-            print()
-            printexception(str(ex))
-            print()
-            return ERROR
-        print()
-        return nReturn
-    # eof def gen_doc():
-
-# eof class CExtendedSetup():
+bSuccess, sResult = oDocBuilder.Build()
+if bSuccess is None:
+    print()
+    printexception(sResult)
+    print()
+    sys.exit(ERROR)
+elif bSuccess is False:
+    print()
+    printerror(sResult)
+    print()
+    sys.exit(ERROR)
+else:
+   print(COLBY + sResult)
+   print()
+   print(COLBG + "genpackagedoc done")
+   print()
+   sys.exit(SUCCESS)
 
 # --------------------------------------------------------------------------------------------------------------
 

@@ -1,0 +1,21 @@
+{
+   "REPOSITORYNAME" : "testresultwebapp",
+   "PACKAGENAME" : "TestResultWebApp",
+   "VERSION" : "0.1.0",
+   "VERSION_DATE" : "04.07.2022",
+   "AUTHOR" : "Thomas Pollerspöck",
+   "AUTHOREMAIL" : "Thomas.Pollerspoeck@de.bosch.com",
+   "DESCRIPTION" : "Web based display of test results",
+   "LONGDESCRIPTIONCONTENTTYPE" : "text/markdown",
+   "URL" : "https://github.com/test-fullautomation/testresultwebapp",
+   "PROGRAMMINGLANGUAGE" : "Programming Language :: Python :: 3",
+   "LICENCE" : "License :: OSI Approved :: Apache Software License",
+   "OPERATINGSYSTEM" : "Operating System :: OS Independent",
+   "PYTHONREQUIRES" : ">=3.0",
+   "DEVELOPMENTSTATUS" : "Development Status :: 4 - Beta",
+   "INTENDEDAUDIENCE" : "Intended Audience :: Developers",
+   "TOPIC" : "Topic :: Software Development",
+   "INSTALLREQUIRES" : ["pypandoc","colorama","GenPackageDoc","PythonExtensionsCollection"],
+   "PACKAGEDATA" : ["*.pdf"],
+   "PACKAGEDOC" : "./packagedoc"
+}
