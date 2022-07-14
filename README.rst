@@ -35,7 +35,7 @@ TestResultWebApp (TRWebApp)
 Package Documentation
 ---------------------
 
-A detailed documentation of the TestResultWebApp package can be found here: `TestResultWebApp.pdf <https://github.com/test-fullautomation/testresultwebapp/blob/develop/doc/_build/latex/TestResultWebApp.pdf>`_
+A detailed documentation of the TestResultWebApp package can be found here: `TestResultWebApp.pdf <https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/TestResultWebApp.pdf>`_
 
 
 Introduction

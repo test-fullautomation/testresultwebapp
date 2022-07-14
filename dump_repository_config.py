@@ -16,32 +16,25 @@
 #
 # **************************************************************************************************************
 #
-# setup.py
+# dump_repository_config.py
 #
 # XC-CT/ECA3-Queckenstedt
 #
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# dump_repository_config.py is a little helper to get deeper knowledge about the environment under which
+# the software in this repository is being executed.
 #
-# This setup script is only used as common entry point to render the documentation.
-# No installation of any Python sources to site-packages will be done here.
-#
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# 
-# 04.07.2022
+# The script prints all repository configuration values to console:
+# Reference:
+# - config\repository_config.json
+# - config\CRepositoryConfig.py
 #
 # --------------------------------------------------------------------------------------------------------------
-
-import os, sys, platform, shlex, subprocess
-import setuptools
-from setuptools.command.install import install
-
-# prefer the repository local version of all additional libraries (instead of the installed version under site-packages)
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "./additions")))
-
-from config.CRepositoryConfig import CRepositoryConfig # providing repository and environment specific information
-from additions.CExtendedSetup import CExtendedSetup # providing functions to support the extended setup process
+#
+import os, sys
 
 import colorama as col
+
+from config.CRepositoryConfig import CRepositoryConfig
 
 col.init(autoreset=True)
 
@@ -62,7 +55,7 @@ def printexception(sMsg):
 
 # --------------------------------------------------------------------------------------------------------------
 
-# -- setting up the repository configuration
+# -- setting up the repository configuration (relative to the path of this script)
 oRepositoryConfig = None
 try:
     oRepositoryConfig = CRepositoryConfig(os.path.abspath(sys.argv[0]))
@@ -72,35 +65,11 @@ except Exception as ex:
     print()
     sys.exit(ERROR)
 
-# -- setting up the extended setup
-oExtendedSetup = None
-try:
-    oExtendedSetup = CExtendedSetup(oRepositoryConfig)
-except Exception as ex:
-    print()
-    printexception(str(ex))
-    print()
-    sys.exit(ERROR)
-
-print(COLBY + "Calling the documentation builder")
-print()
-
-nReturn = oExtendedSetup.genpackagedoc()
-if nReturn != SUCCESS:
-    sys.exit(nReturn)
-
-print(COLBY + "Converting the repository README")
-print()
-
-nReturn = oExtendedSetup.convert_repo_readme()
-if nReturn != SUCCESS:
-    sys.exit(nReturn)
-
 # --------------------------------------------------------------------------------------------------------------
 
+print(COLBG + "Repository configuration dump done")
 print()
-print(COLBG + "Documentation build done")
-print()
+sys.exit(SUCCESS)
 
 # --------------------------------------------------------------------------------------------------------------
 
