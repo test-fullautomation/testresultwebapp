@@ -79,7 +79,8 @@ There are also some charts which help you to get the the overview analysis about
 the test result, components's status or even the comparison to the previous test
 execution results.
 
-|IMG_WEBAPP_DASHBOARD|
+.. image:: packagedoc/additional_docs/pictures/Dashboard.png
+   :alt: Dashboard view
 
 Data table
 ~~~~~~~~~~
@@ -93,7 +94,8 @@ component's name. Besides, it also allows to:
 - filter test cases.
 - search test cases.
    
-|IMG_WEBAPP_DATATABLE|
+.. image:: packagedoc/additional_docs/pictures/DataTable.png
+   :alt: DataTable view
 
 Run-time view
 ~~~~~~~~~~~~~
@@ -102,7 +104,8 @@ The run-time view shows you test cases grouped by compnent.
 The size of a block is relative for the run-time of a test case. 
 This allows you to optimize the run-time of a your test suite.
 
-|IMG_WEBAPP_RUNTIME|
+.. image:: packagedoc/additional_docs/pictures/Runtime.png
+   :alt: Runtime view
 
 Diff view
 ~~~~~~~~~
@@ -119,7 +122,8 @@ The diff view allows you to:
 - open the traceback for failed test cases.
 - diff up to 5 versions.
    
-|IMG_WEBAPP_DIFFVIEW|      
+.. image:: packagedoc/additional_docs/pictures/DiffView.png
+   :alt: Diff view    
 
 Contribution
 ------------
@@ -198,15 +202,4 @@ limitations under the License.
 .. _Holger Queckenstedt: mailto:Holger.Queckenstedt@de.bosch.com
 .. |License: Apache v2| image:: https://img.shields.io/pypi/l/robotframework.svg
    :target: http://www.apache.org/licenses/LICENSE-2.0.html
-.. |IMG_BOSCH| image:: 
-      https://upload.wikimedia.org/wikipedia/de/thumb/3/31/Bosch-logotype.svg/
-      200px-Boschlogotype.svg.png
-      :height: 25
-.. |IMG_WEBAPP_DASHBOARD| 
-      image:: packagedoc/additional_docs/pictures/Dashboard.png
-.. |IMG_WEBAPP_DATATABLE| 
-      image:: packagedoc/additional_docs/pictures/DataTable.png
-.. |IMG_WEBAPP_RUNTIME| 
-      image:: packagedoc/additional_docs/pictures/Runtime.png
-.. |IMG_WEBAPP_DIFFVIEW| 
-      image:: packagedoc/additional_docs/pictures/DiffView.png
+.. |IMG_BOSCH| image:: packagedoc/additional_docs/pictures/Boschlogo.png

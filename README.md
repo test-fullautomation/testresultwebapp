@@ -37,8 +37,8 @@ side.
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) was
 initially implemented at
-![IMG_BOSCH](https://upload.wikimedia.org/wikipedia/de/thumb/3/31/Bosch-logotype.svg/%0A200px-Boschlogotype.svg.png){height="25px"}
-[Robert Bosch Car
+![IMG_BOSCH](packagedoc/additional_docs/pictures/Boschlogo.png) [Robert
+Bosch Car
 Multimedia](https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim/)
 and was open sourced in 2020.
 
@@ -78,6 +78,8 @@ There are also some charts which help you to get the the overview
 analysis about the test result, components\'s status or even the
 comparison to the previous test execution results.
 
+![Dashboard view](packagedoc/additional_docs/pictures/Dashboard.png)
+
 ### Data table
 
 The data table show all executed test case and their results order by
@@ -89,11 +91,15 @@ component\'s name. Besides, it also allows to:
 -   filter test cases.
 -   search test cases.
 
+![DataTable view](packagedoc/additional_docs/pictures/DataTable.png)
+
 ### Run-time view
 
 The run-time view shows you test cases grouped by compnent. The size of
 a block is relative for the run-time of a test case. This allows you to
 optimize the run-time of a your test suite.
+
+![Runtime view](packagedoc/additional_docs/pictures/Runtime.png)
 
 ### Diff view
 
@@ -108,6 +114,8 @@ The diff view allows you to:
 -   show only test cases which are new or missing.
 -   open the traceback for failed test cases.
 -   diff up to 5 versions.
+
+![Diff view](packagedoc/additional_docs/pictures/DiffView.png)
 
 ## Contribution
 
