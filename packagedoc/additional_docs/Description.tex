@@ -13,9 +13,9 @@
 % limitations under the License.
 
 \hypertarget{webapp-architecture}{%
-\section{WebApp Architecture:}\label{webapp-architecture}}
+\section{TestResultWebApp Architecture:}\label{webapp-architecture}}
 
-The WebApp application includes:
+The TestResultWebApp application includes:
 \begin{itemize}
    \item The database: mysql is used - which contains on the test execution 
          results. For detail of all tables in databse, please refer the 
@@ -25,6 +25,10 @@ The WebApp application includes:
    \item Active Directory: for the authentication.
    \item Web server: which is hosted for static data and run the nodejs 
          application for the dynamic data (API call).
+   \item Web client: is written in javascript which also use some libraries such 
+         as \href{https://jquery.com/}{Jquery} for Ajax requests and 
+         \href{https://www.chartjs.org/}{chartjs}, 
+         \href{https://d3js.org/}{d3js} for data visualization. 
 \end{itemize}
 
 Please refer below architecture for more detail:
@@ -103,7 +107,8 @@ Below them is the test execution result timeline:
 
 It provides:
 \begin{itemize}
-   \item The timeline of the executed test cases by components (different color).
+   \item The timeline of the executed test cases by components 
+         (different color).
    \item How much time is consumed by the individual test case by the distance 
          to the next test on time line or the detail pop-up when hovering on the 
          dot of the timeline.
@@ -171,7 +176,8 @@ test results.
 So that, you can understand the quality of testing software is being improved 
 or vice versa.
 
-\includegraphics[width=1\linewidth]{./pictures/dashboard/chart_test_result_flow.png}
+\includegraphics[width=1\linewidth]
+{./pictures/dashboard/chart_test_result_flow.png}
 
 - \textbf{Tests per component flow} chart: provides the change of number test
 cases per component between versions.
@@ -229,11 +235,13 @@ Besides, you can aslo:
 \begin{itemize}
    \item determine how many test cases (entries) are displayed in the table page.
 
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/change_number_entries.png}
+         \includegraphics[width=0.6\linewidth]
+         {./pictures/datatable/change_number_entries.png}
          
    \item apply filters to display such as not passed test cases.
    
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/apply_filter.png}
+         \includegraphics[width=0.6\linewidth]
+         {./pictures/datatable/apply_filter.png}
 
    \item search for the specific test case for reference.
    
@@ -241,21 +249,25 @@ Besides, you can aslo:
 
    \item get more information about test environment, configurations.
    
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/testcase_detail.png}
+         \includegraphics[width=0.6\linewidth]
+         {./pictures/datatable/testcase_detail.png}
 
    \item get traceback information for not passed test case(s). An pop-up will 
          be displayed which show all record traceback (error) information.
 
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/testcase_traceback.png}
+         \includegraphics[width=0.6\linewidth]
+         {./pictures/datatable/testcase_traceback.png}
 
    \item give comment to test case, link issue ticket to test case or observe
          the history of the user interaction on the test case.
 
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/testcase_menu.png}
+         \includegraphics[width=0.6\linewidth]
+         {./pictures/datatable/testcase_menu.png}
 
    \item copy data table or export them to the excel file.
 
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/copy_export.png}
+         \includegraphics[width=0.6\linewidth]
+         {./pictures/datatable/copy_export.png}
 \end{itemize}
 
 
@@ -306,7 +318,8 @@ The dots which present for the test cases along the spiral line (small dot is
 passed and bigger one for other status) are interactable. It means that you can:
 \begin{itemize}
    \item mouse over the dots to see the test case information.
-   \item click on the failed test case (bigger dot) for the traceback informtion.
+   \item click on the failed test case (bigger dot) for the traceback 
+         information.
 \end{itemize}
 
 \begin{boxhint}{Notice:}
@@ -317,3 +330,114 @@ passed and bigger one for other status) are interactable. It means that you can:
 \end{boxhint}
 
 \includegraphics[width=1\linewidth]{./pictures/diffview/warning.png}
+
+\hypertarget{developer-guidance}{%
+\section{Developer guidance:}\label{developer-guidance}}
+
+\subsection{How to run new TestResultWebApp instant:}
+\begin{enumerate}
+
+\item Precondition:
+   \begin{itemize}
+   \item \href{https://nodejs.org/en/}{Nodejs} shoulde be installed.
+   \item \href{https://dev.mysql.com/downloads/mysql/}{mysql server} should be 
+         installed.
+   \item clone package's resource from 
+         \href{https://github.com/test-fullautomation/testresultwebapp}
+         {Github repo}
+   \item enable firewall for the port which will run nodejs application.
+   \begin{robotlog}
+   git clone https://github.com/test-fullautomation/testresultwebapp.git
+   \end{robotlog}
+      
+   \end{itemize}
+
+\item Setup mysql database:
+   \begin{itemize}
+   \item create user, password and schema then update them as 
+         \rcode{global.mySQLOptions} in \rlog{webapp/web_server/lib/global.js} 
+         file.
+   \item create required tables database use MySQL Workbench.
+   \begin{itemize}
+      \item open the datamodel which is located at
+            \rlog{mysql\_server/datamodel/test\_result.mwb}
+      \item create all tables in datamodel to your schema, use 
+            \textbf{Foreward Enginneer to Database} feature of MySQL Workbench.
+   \begin{robotlog}
+   EER Diagram > Database > Forward Engineer... > your schema
+   \end{robotlog}
+   \includegraphics[width=1\linewidth]{./pictures/forward_engineer.png}
+   \begin{boxhint}{Notice}
+   If you have created your schema with other name than the default 
+   name \emph{pjcmd\_bvt}, you should replace the schema name at the \textbf{Review
+   SQL Script} step (copy SQL script to text editor such as VsCode, replace 
+   \emph{pjcmd\_bvt} which your new schema name then paste SQL script back to the 
+   \textbf{Foreward Enginneer to Database} tool) before moving to next step to 
+   execute SQL scripts.
+   \end{boxhint}
+
+      \item create all store procedures by loading all SQL scripts under 
+            \rlog{mysql_server/TMLdb_sproc/} folder then execute them.
+
+   \begin{boxhint}{Notice}
+   If you have created your schema with other name than the default 
+   name \emph{pjcmd\_bvt}, you should replace the schema name before executing SQL 
+   scripts.
+   \end{boxhint}
+   \end{itemize}
+   \end{itemize}
+
+\item Import the initial data to the database with \
+href{https://github.com/test-fullautomation/robotframework-testresultwebapptool}
+{RobotResults2DB tool}.
+
+\item Adapt Web server:
+\begin{itemize}
+   \item \rlog{web_server/lib/global.js}: for domain, database's configuration,
+         keys for authentication, ldap server for authentication, ...
+   \item \rlog{web_server/test.js}: for listening port of nodejs application.
+\end{itemize}
+
+\item Adapt Web client:
+\begin{itemize}
+   \item \rlog{web_client/dashboard/dist/js/common/global.js}: for domain.
+   \item \rlog{web_client/dashboard/dist/js/common/communication.js}: for 
+         listening port of nodejs application's API.
+\end{itemize}
+
+\item Start nodejs application by command:
+\begin{robotlog}
+node testdb.js
+\end{robotlog}
+
+\item Start web server for static files:
+
+You can use any web server \href{https://httpd.apache.org/}{Apache}, 
+\href{https://www.iis.net/}{IIS} or \href{https://www.nginx.com/}{Nginx} for 
+hosting the static files under \rlog{web_client/dashboad/} folder when running 
+as production.
+
+For development, you can use directly \rlog{express.static} which is available 
+on nodejs for hosting static files.
+The \rlog{web_server/test.js} file should be modified to add this setting.
+
+\begin{robotcode}[linebackgroundcolor=\hlcode{4,10}]
+'use strict';
+
+var global = require('./lib/global');
+var path = require('path');
+
+...
+
+//for local GUI tests deliver static HTML 
+//content from port 3000
+app.use(express.static(path.join(__dirname, "../web_client/dashboad/"))); 
+
+var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
+...
+\end{robotcode}
+
+\item Now open your favourite browser, go to the domain of webapp and enjoy.
+
+\end{enumerate}
