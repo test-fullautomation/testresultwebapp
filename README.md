@@ -1,21 +1,8 @@
-> Licensed under the Apache License, Version 2.0 (the \"License\"); you
-> may not use this file except in compliance with the License. You may
-> obtain a copy of the License at
->
-> <http://www.apache.org/licenses/LICENSE-2.0>
->
-> Unless required by applicable law or agreed to in writing, software
-> distributed under the License is distributed on an \"AS IS\" BASIS,
-> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-> implied. See the License for the specific language governing
-> permissions and limitations under the License.
-
 # TestResultWebApp (TRWebApp)
 
 ## Table of Contents
 
 -   [Getting Started](#getting-started)
-    -   [How to install](#how-to-install)
 -   [Usage](#usage)
 -   [Contribution](#contribution)
 -   [Sourcecode Documentation](#documentation)
@@ -28,7 +15,7 @@
 ## Getting Started
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) is a
-generic web based open source application which allows processing
+generic web based open source application which allows processing and
 displaying of test result data in a sophisticated way.
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) uses
@@ -37,12 +24,11 @@ side.
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) was
 initially implemented at
-![IMG_BOSCH](packagedoc/additional_docs/pictures/Boschlogo.png) [Robert
-Bosch Car
+<img src="packagedoc/additional_docs/pictures/Bosch-Logo.png" height="15">
+[Robert Bosch Car
 Multimedia](https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim/)
 and was open sourced in 2020.
 
-### How to install
 
 ## Usage
 

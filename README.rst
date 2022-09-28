@@ -20,8 +20,6 @@ Table of Contents
 -----------------
 
 -  `Getting Started <#getting-started>`__
-
-   -  `How to install <#how-to-install>`__
 -  `Usage <#usage>`__
 -  `Contribution <#contribution>`__
 -  `Sourcecode Documentation <#documentation>`__
@@ -36,16 +34,13 @@ Getting Started
 ---------------
 
 TRWebApp_ is a generic web based open source application which allows processing 
-displaying of test result data in a sophisticated way.
+and displaying of test result data in a sophisticated way.
 
 TRWebApp_ uses a mysql data base, nodejs on server side and JavaScript on
 Web-Browser side.
 
 TRWebApp_ was initially implemented at |IMG_BOSCH| 
 `Robert Bosch Car Multimedia`_ and was open sourced in 2020. 
-
-How to install
-~~~~~~~~~~~~~~
 
 Usage
 -----
@@ -202,4 +197,5 @@ limitations under the License.
 .. _Holger Queckenstedt: mailto:Holger.Queckenstedt@de.bosch.com
 .. |License: Apache v2| image:: https://img.shields.io/pypi/l/robotframework.svg
    :target: http://www.apache.org/licenses/LICENSE-2.0.html
-.. |IMG_BOSCH| image:: packagedoc/additional_docs/pictures/Boschlogo.png
+.. |IMG_BOSCH| image:: packagedoc/additional_docs/pictures/Bosch-Logo.png
+               :height: 15px
