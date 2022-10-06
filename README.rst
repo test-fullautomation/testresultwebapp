@@ -45,7 +45,7 @@ TRWebApp_ was initially implemented at |IMG_BOSCH|
 Usage
 -----
 
-TRWebApp_ has the main menu (on the top) which allow you to:
+TRWebApp_ has the main menu (on the top) which allows you to:
 
 - select the branch, variant, version or component for views/comparison.
 - select the range of time for displaying test results in charts.
@@ -54,11 +54,11 @@ TRWebApp_ has the main menu (on the top) which allow you to:
 TRWebApp_ provides 4 main views which will give from the overview of the test
 execution result to the detail of the single test results.
 
-Besides, you can have the comparison to the previous test results or 
+Besides, you can have the comparisons with the previous test results or 
 related test results (different variants).
 
-Dashboard
-~~~~~~~~~
+Dashboard view
+~~~~~~~~~~~~~~
 
 The Dashboard shows an overview of the test execution result, such as:
 
@@ -77,8 +77,8 @@ execution results.
 .. image:: packagedoc/additional_docs/pictures/Dashboard.png
    :alt: Dashboard view
 
-Data table
-~~~~~~~~~~
+Datatable view
+~~~~~~~~~~~~~~
 
 The data table show all executed test case and their results order by 
 component's name. Besides, it also allows to:
@@ -95,7 +95,7 @@ component's name. Besides, it also allows to:
 Run-time view
 ~~~~~~~~~~~~~
 
-The run-time view shows you test cases grouped by compnent. 
+The run-time view shows you test cases grouped by component. 
 The size of a block is relative for the run-time of a test case. 
 This allows you to optimize the run-time of a your test suite.
 
@@ -105,17 +105,22 @@ This allows you to optimize the run-time of a your test suite.
 Diff view
 ~~~~~~~~~
 
-The diff view allows you to diff test runs from different test suites.
+The diff view shows you the differences of test runs from different test suites.
 For this a spiral view is used where the center is the start of the test suite 
 execution.
 
 The diff view allows you to:
 
-- show only test cases which are other than passed.
-- show only test cases which are failed.
-- show only test cases which are new or missing.
+- show the differences of current test results to the previous and the next ones.
+- select any test results for the comparison (up to 5 test results)
+- filter test cases to be displayed in the sprial line:
+
+   - show only test cases which are other than passed.
+   - show only test cases which are failed.
+   - show only test cases which are new or missing.
+
 - open the traceback for failed test cases.
-- diff up to 5 versions.
+
    
 .. image:: packagedoc/additional_docs/pictures/DiffView.png
    :alt: Diff view    

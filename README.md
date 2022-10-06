@@ -29,11 +29,10 @@ initially implemented at
 Multimedia](https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim/)
 and was open sourced in 2020.
 
-
 ## Usage
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) has
-the main menu (on the top) which allow you to:
+the main menu (on the top) which allows you to:
 
 -   select the branch, variant, version or component for
     views/comparison.
@@ -45,10 +44,10 @@ the main menu (on the top) which allow you to:
 provides 4 main views which will give from the overview of the test
 execution result to the detail of the single test results.
 
-Besides, you can have the comparison to the previous test results or
+Besides, you can have the comparisons with the previous test results or
 related test results (different variants).
 
-### Dashboard
+### Dashboard view
 
 The Dashboard shows an overview of the test execution result, such as:
 
@@ -66,7 +65,7 @@ comparison to the previous test execution results.
 
 ![Dashboard view](packagedoc/additional_docs/pictures/Dashboard.png)
 
-### Data table
+### Datatable view
 
 The data table show all executed test case and their results order by
 component\'s name. Besides, it also allows to:
@@ -81,7 +80,7 @@ component\'s name. Besides, it also allows to:
 
 ### Run-time view
 
-The run-time view shows you test cases grouped by compnent. The size of
+The run-time view shows you test cases grouped by component. The size of
 a block is relative for the run-time of a test case. This allows you to
 optimize the run-time of a your test suite.
 
@@ -89,17 +88,24 @@ optimize the run-time of a your test suite.
 
 ### Diff view
 
-The diff view allows you to diff test runs from different test suites.
-For this a spiral view is used where the center is the start of the test
-suite execution.
+The diff view shows you the differences of test runs from different test
+suites. For this a spiral view is used where the center is the start of
+the test suite execution.
 
 The diff view allows you to:
 
--   show only test cases which are other than passed.
--   show only test cases which are failed.
--   show only test cases which are new or missing.
+-   show the differences of current test results to the previous and the
+    next ones.
+
+-   select any test results for the comparison (up to 5 test results)
+
+-   filter test cases to be displayed in the sprial line:
+
+    > -   show only test cases which are other than passed.
+    > -   show only test cases which are failed.
+    > -   show only test cases which are new or missing.
+
 -   open the traceback for failed test cases.
--   diff up to 5 versions.
 
 ![Diff view](packagedoc/additional_docs/pictures/DiffView.png)
 

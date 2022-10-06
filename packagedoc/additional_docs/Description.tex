@@ -42,7 +42,7 @@ The data which will be visualized on webapp are get directly from the database.
 So that the test execution result information should be transformed first 
 follows \href{https://github.com/test-fullautomation/testresultwebapp/blob/
 develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}
-{the defined database model} then import to database.
+{the defined database model} then imported to database.
 
 We have already provided the \href{https://github.com/test-fullautomation/
 robotframework-testresultwebapptool}{RobotResults2DB} which helps to import the
@@ -64,8 +64,8 @@ testresultwebapptool/blob/develop/RobotResults2DB/RobotResults2DB.pdf}
 
 \hypertarget{main-menu}{%
 \subsection{Main menu:}\label{main-menu}}
-WebApp provides the main menu for user to select the specific branch, 
-project/variant and software version to be displayed.
+WebApp provides the main menu for user to select the specific \textbf{branch}, 
+\textbf{project/variant} and \textbf{software version} to be displayed.
 
 \includegraphics[width=1\linewidth]{./pictures/main-menu.png}
 
@@ -107,12 +107,13 @@ Below them is the test execution result timeline:
 
 It provides:
 \begin{itemize}
-   \item The timeline of the executed test cases by components 
+   \item The timeline of the executed test cases which are grouped by components 
          (different color).
    \item How much time is consumed by the individual test case by the distance 
          to the next test on time line or the detail pop-up when hovering on the 
          dot of the timeline.
-   \item Test status result: small dot for passed status and big dot for others.
+   \item Test status result: small dot for \ifpassed{Passed} status and big dot 
+         for others.
 \end{itemize}
 
 
@@ -157,9 +158,9 @@ results (grouped by project/variant) of the the current selected version.
 So that you can quickly go to the related test results to have the comparison
 about the quality of the selected version across the projects/variants.
 
-For example: the selected version have been executed for 4 projects/variants:
-\emph{g3g\_lsim}, \emph{psarcc}, \emph{rnaivi} and \emph{unittest}. Each 
-variant (except the \emph{unittest}) has 2 test results 
+\underline{For example:} the selected version have been executed for 4 
+projects/variants: \emph{g3g\_lsim}, \emph{psarcc}, \emph{rnaivi} and 
+\emph{unittest}. Each variant (except the \emph{unittest}) has 2 test results 
 (one for the smoke test and one for the whole test execution result).
 
 Then, all the related test execution results will be displayed as below:
@@ -167,8 +168,8 @@ Then, all the related test execution results will be displayed as below:
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/testsuite_relationship.png}
 
-There is the context menu (\textbf{...}) that allow you to filter the related 
-test results.
+There is also the context menu (\textbf{...}) that allows you to filter the 
+related test results.
 
 - \textbf{Test result flow} chart: provides the picture of quality change 
 (percentages of each status) between versions. 
@@ -196,8 +197,9 @@ the selected range of time in
 \end{boxhint}
 
 \subsubsection{Result interpretation:}
-You can give more information, analyze, take note, ... about the execution
-result by leaving comments in the \textbf{Result interpretation} section.
+You can give more information, provide an analysis, take notes, ... on the 
+execution result by leaving comments in the \textbf{Result interpretation} 
+section.
 
 As soon as the comment(s) is saved, that information will be updated to 
 the database. So that, other users who browse to this test result can see
@@ -226,8 +228,8 @@ You can have awareness that:
 \hypertarget{datatable-view}{%
 \subsection{DataTable View}\label{datatable-view}}
 
-Datatable view provides the table which contains the detail information of each
-test case (grouped by component) within the test execution.
+Datatable view provides the summary table which contains the detail information 
+of each test case (grouped by component) within the test execution.
 
 \includegraphics[width=1\linewidth]{./pictures/view_datatable.png}
 
@@ -238,7 +240,7 @@ Besides, you can aslo:
          \includegraphics[width=0.6\linewidth]
          {./pictures/datatable/change_number_entries.png}
          
-   \item apply filters to display such as not passed test cases.
+   \item apply filters to display such as not \ifpassed{Passed} test cases.
    
          \includegraphics[width=0.6\linewidth]
          {./pictures/datatable/apply_filter.png}
@@ -273,15 +275,14 @@ Besides, you can aslo:
 
 \hypertarget{runtime-view}{%
 \subsection{Runtime View}\label{runtime-view}}
-The runtime provides the treemap chart which helps you to know the time 
-consumption of components within test execution result or test cases within
-each component.
+The runtime provides the treemap chart which helps you to know the runtime of 
+components within test execution result or test cases within each component.
 
-You can click on the component to go to detail run-time of all test cases within 
+You can click on the component to go to detail runtime of all test cases within 
 it and go back by clicking the component header.
 
-With this view, you can understand run-time of a your test suite then optimize
-the specific component or testcase if required.
+With this view, you can understand the runtime of a your test suite then 
+optimize the specific component or testcase if required.
 
 \includegraphics[width=1\linewidth]{./pictures/view_runtime.png}
 
@@ -290,7 +291,8 @@ the specific component or testcase if required.
 The diffview contains only the spiral chart which displays the differences 
 between the software versions you want to compare. So that you can:
 \begin{itemize}
-   \item observe the test case result change (e.g from passed to failed).
+   \item observe the test case result change (e.g from \ifpassed{Passed} to 
+         \iffailed{Failed}).
    \item aware the new or removed test case(s).
    \item recognize the unstable test case(s)/component(s).
 \end{itemize}
@@ -303,10 +305,10 @@ will be chosen for diffview as below:
 
 In case, you want to add the specific versions for diffview, select the version
 from the version select box then click the add button 
-\includegraphics{./pictures/diffview/add_button.png} to add it to the list of 
-diffview. 
+\includegraphics{./pictures/diffview/add_button.png}
+to add it to the list of diffview. 
 
-The next dropdown button is used for viewing your selected version.
+The next dropdown button is used for viewing your selected versions.
 You can also clear your selection with \textbf{clear list} option.
 
 \includegraphics[width=1\linewidth]{./pictures/diffview/selected_version.png}
@@ -315,7 +317,8 @@ As soon as the new version is added for diffview, the spiral chart is updated
 immediately.
 
 The dots which present for the test cases along the spiral line (small dot is 
-passed and bigger one for other status) are interactable. It means that you can:
+\ifpassed{Passed} and bigger one for other status) are interactable. 
+It means that you can:
 \begin{itemize}
    \item mouse over the dots to see the test case information.
    \item click on the failed test case (bigger dot) for the traceback 
@@ -334,62 +337,80 @@ passed and bigger one for other status) are interactable. It means that you can:
 \hypertarget{developer-guidance}{%
 \section{Developer guidance:}\label{developer-guidance}}
 
+\begin{boxhint}{Notice:}
+In order to run up the TestResultWebApp, it requires some knowledge about:
+\begin{itemize}
+   \item Web server: setup and run web server for web hosting.
+   \item Nodejs platform and Express framework: adapt the sourcecode with your
+         environemnt: domain, configurations, ...
+   \item Mysql database: schema, tables, SQL scripting. We propose to use 
+         \href{https://dev.mysql.com/doc/workbench/en/}{MySQL Workbench} tool
+         for working with Mysql database.
+\end{itemize}
+\end{boxhint}
+
 \subsection{How to run new TestResultWebApp instant:}
 \begin{enumerate}
 
 \item Precondition:
-   \begin{itemize}
-   \item \href{https://nodejs.org/en/}{Nodejs} shoulde be installed.
-   \item \href{https://dev.mysql.com/downloads/mysql/}{mysql server} should be 
-         installed.
-   \item clone package's resource from 
-         \href{https://github.com/test-fullautomation/testresultwebapp}
-         {Github repo}
-   \item enable firewall for the port which will run nodejs application.
-   \begin{robotlog}
-   git clone https://github.com/test-fullautomation/testresultwebapp.git
-   \end{robotlog}
-      
-   \end{itemize}
+\begin{itemize}
+\item \href{https://nodejs.org/en/}{Nodejs} shoulde be installed.
+\item \href{https://dev.mysql.com/downloads/mysql/}{mysql server} should be 
+      installed.
+\item A cloned package's resource from 
+      \href{https://github.com/test-fullautomation/testresultwebapp}
+      {Github repo}
+\begin{robotlog}
+git clone https://github.com/test-fullautomation/testresultwebapp.git
+\end{robotlog}
+\item The port which will run nodejs application (default is \textbf{3000}) is
+      opened (enable) in firewall.
+
+\end{itemize}
 
 \item Setup mysql database:
-   \begin{itemize}
-   \item create user, password and schema then update them as 
-         \rcode{global.mySQLOptions} in \rlog{webapp/web_server/lib/global.js} 
-         file.
-   \item create required tables database use MySQL Workbench.
-   \begin{itemize}
-      \item open the datamodel which is located at
-            \rlog{mysql\_server/datamodel/test\_result.mwb}
-      \item create all tables in datamodel to your schema, use 
-            \textbf{Foreward Enginneer to Database} feature of MySQL Workbench.
-   \begin{robotlog}
-   EER Diagram > Database > Forward Engineer... > your schema
-   \end{robotlog}
-   \includegraphics[width=1\linewidth]{./pictures/forward_engineer.png}
-   \begin{boxhint}{Notice}
-   If you have created your schema with other name than the default 
-   name \emph{pjcmd\_bvt}, you should replace the schema name at the \textbf{Review
-   SQL Script} step (copy SQL script to text editor such as VsCode, replace 
-   \emph{pjcmd\_bvt} which your new schema name then paste SQL script back to the 
-   \textbf{Foreward Enginneer to Database} tool) before moving to next step to 
-   execute SQL scripts.
-   \end{boxhint}
+\begin{itemize}
+\item create \emph{user}, \emph{password} and \emph{schema} then update them  
+      as \rcode{global.mySQLOptions} in  \\
+      \rlog{webapp/web_server/lib/global.js} file.
+\item create required tables in your database schema with MySQL Workbench.
+\begin{itemize}
+\item open the datamodel which is located at
+      \rlog{mysql\_server/datamodel/test\_result.mwb}
+\item export all defined tables in datamodel to your schema, use 
+      \textbf{Foreward Enginneer to Database} feature of MySQL Workbench.
+\begin{robotlog}
+EER Diagram > Database > Forward Engineer... > your schema
+\end{robotlog}
+\includegraphics[width=1\linewidth]{./pictures/forward_engineer.png}
+\begin{boxhint}{Notice}
+If you have created your schema with other name than the default 
+name \emph{pjcmd\_bvt}, you should replace the schema name at the \textbf{Review
+SQL Script} step:
+\begin{itemize}
+\item copy SQL script to text editor such as VsCode
+\item replace \emph{pjcmd\_bvt} which your new schema name
+\item paste SQL script back to the \textbf{Foreward Enginneer to Database} 
+      tool
+\end{itemize}
+before moving to next step to execute SQL script.
+\end{boxhint}
 
-      \item create all store procedures by loading all SQL scripts under 
-            \rlog{mysql_server/TMLdb_sproc/} folder then execute them.
+\item create all store procedures by loading all SQL scripts under 
+      \rlog{mysql_server/TMLdb_sproc/} folder then execute them.
 
-   \begin{boxhint}{Notice}
-   If you have created your schema with other name than the default 
-   name \emph{pjcmd\_bvt}, you should replace the schema name before executing SQL 
-   scripts.
-   \end{boxhint}
-   \end{itemize}
-   \end{itemize}
+\begin{boxhint}{Notice}
+If you have created your schema with other name than the default 
+name \emph{pjcmd\_bvt}, you should replace the schema name before executing SQL 
+scripts.
+\end{boxhint}
 
-\item Import the initial data to the database with \
-href{https://github.com/test-fullautomation/robotframework-testresultwebapptool}
-{RobotResults2DB tool}.
+\end{itemize}
+
+\end{itemize}
+
+\item Import the initial data to the database with \href{https://github.com/test
+-fullautomation/robotframework-testresultwebapptool}{RobotResults2DB tool}.
 
 \item Adapt Web server:
 \begin{itemize}
@@ -410,15 +431,15 @@ href{https://github.com/test-fullautomation/robotframework-testresultwebapptool}
 node testdb.js
 \end{robotlog}
 
-\item Start web server for static files:
+\item Start web server for hosting the static files:
 
 You can use any web server \href{https://httpd.apache.org/}{Apache}, 
 \href{https://www.iis.net/}{IIS} or \href{https://www.nginx.com/}{Nginx} for 
 hosting the static files under \rlog{web_client/dashboad/} folder when running 
 as production.
 
-For development, you can use directly \rlog{express.static} which is available 
-on nodejs for hosting static files.
+For development, you can use directly \rlog{express.static} which is supported 
+by Express framework for hosting static files.
 The \rlog{web_server/test.js} file should be modified to add this setting.
 
 \begin{robotcode}[linebackgroundcolor=\hlcode{4,10}]
