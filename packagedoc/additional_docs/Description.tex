@@ -13,22 +13,21 @@
 % limitations under the License.
 
 \hypertarget{webapp-architecture}{%
-\section{TestResultWebApp Architecture:}\label{webapp-architecture}}
+\section{TestResultWebApp Architecture}\label{webapp-architecture}}
 
 The TestResultWebApp application includes:
 \begin{itemize}
-   \item The database: mysql is used - which contains on the test execution 
-         results. For detail of all tables in databse, please refer the 
-         \href{https://github.com/test-fullautomation/testresultwebapp/blob/
-         develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}{database
+   \item Database: \href{https://mysql.com/}{MySQL} - which contains all test execution 
+         results. For details of all tables in the database, please refer the 
+         \href{https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}{database
          model}.
    \item Active Directory: for the authentication.
-   \item Web server: which is hosted for static data and run the nodejs 
-         application for the dynamic data (API call).
+   \item Web server: which hosts the static data and runs the \href{https://nodejs.org/}{Node.js}
+         application for providing the dynamic data.
    \item Web client: is written in javascript which also use some libraries such 
-         as \href{https://jquery.com/}{Jquery} for Ajax requests and 
-         \href{https://www.chartjs.org/}{chartjs}, 
-         \href{https://d3js.org/}{d3js} for data visualization. 
+         as \href{https://jquery.com/}{jQuery}, \href{https://getbootstrap.com/docs/5.0/getting-started/introduction/}{bootstrap},
+         \href{https://www.chartjs.org/}{Chart.js}, 
+         \href{https://d3js.org/}{D3} for data visualization. 
 \end{itemize}
 
 Please refer below architecture for more detail:
@@ -36,66 +35,65 @@ Please refer below architecture for more detail:
 \includegraphics[width=1\linewidth]{./pictures/Architechture.png}
 
 \hypertarget{import-data}{%
-\section{Import Data:}\label{import-data}}
+\section{Import Data}\label{import-data}}
 
-The data which will be visualized on webapp are get directly from the database.
-So that the test execution result information should be transformed first 
-follows \href{https://github.com/test-fullautomation/testresultwebapp/blob/
-develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}
-{the defined database model} then imported to database.
+The data which will be visualized on WebApp comes directly from the database.
+For this the test execution result data must be transformed first 
+into the defined \href{https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}{database model} 
+then imported into the database.
 
-We have already provided the \href{https://github.com/test-fullautomation/
-robotframework-testresultwebapptool}{RobotResults2DB} which helps to import the
-\rfwcore\ result file(s) \emph{output.xml} to the database of testresult webapp.
+The data base model is generic, so test result data can be any. Only a test 
+result importer must transfrom and import the data.
+
+We provide already the \href{https://github.com/test-fullautomation/robotframework-testresultwebapptool}{RobotResults2DB}
+which helps to import the \rfwcore\ result file(s) \emph{output.xml} to the 
+database of the TestResultWebApp.
 
 You will need to provide only the \rfwcore\ result file(s) and database's 
-information, that import tool will parse the test execution result information 
-and interact with provided database to import the according data.
+credential information, that RobotResults2DB will parse the test execution result data 
+and interact with the provided database to import the data.
 
-Please refer \href{https://github.com/test-fullautomation/
-robotframework-testresultwebapptool#usage}{RobotResults2DB's usage} and 
-\href{https://github.com/test-fullautomation/robotframework-
-testresultwebapptool/blob/develop/RobotResults2DB/RobotResults2DB.pdf}
+Please refer \href{https://github.com/test-fullautomation/robotframework-testresultwebapptool#usage}{RobotResults2DB's usage} and 
+\href{https://github.com/test-fullautomation/robotframework-testresultwebapptool/blob/develop/RobotResults2DB/RobotResults2DB.pdf}
 {its document} for more detail.
 
 
 \hypertarget{data-visualization}{%
-\section{Data Visualization:}\label{data-visualization}}
+\section{Data Visualization}\label{data-visualization}}
 
 \hypertarget{main-menu}{%
-\subsection{Main menu:}\label{main-menu}}
-WebApp provides the main menu for user to select the specific \textbf{branch}, 
+\subsection{Main menu}\label{main-menu}}
+The WebApp provides a main menu for selecting a specific \textbf{branch}, 
 \textbf{project/variant} and \textbf{software version} to be displayed.
 
 \includegraphics[width=1\linewidth]{./pictures/main-menu.png}
 
 \hypertarget{dashboard-view}{%
-\subsection{Dashboard View:}\label{dashboard-view}}
-Dashboard view does not only provide an overview of test execution results but 
-also shows the correlation betweeen components within the result 
-and relationship with other test execution results.
+\subsection{Dashboard View}\label{dashboard-view}}
+The Dashboard view does not only provide an overview of test execution results but 
+also shows the correlation betweeen components within the result and relationship with other test execution results.
 
 \includegraphics[width=1\linewidth]{./pictures/view_dashboard.png}
 
-\subsubsection{Result overview:}
-On the top left conner of the Dashboard view, there is test execution result 
+\subsubsection{Result overview}
+At the top left corner of the Dashboard view you find the test execution result 
 statistics:
 
 \includegraphics[width=1\linewidth]{./pictures/dashboard/result_statistics.png}
 
 Which contains:
 \begin{itemize}
-   \item Overrall status.
+   \item Overrall status (you can define a qualitiy gate).
    \item Passed rate.
-   \item Total executed test cases.
+   \item Total number of executed test cases.
    \item Test execution duration.
 \end{itemize}
 
-On other right-hand side, there is information about execution environemnt:
+On other right-hand side, there is information about the execution environment:
 
 \includegraphics[width=1\linewidth]{./pictures/dashboard/result_environment.png}
 \begin{itemize}
-   \item Execution time
+   \item Execution time (start of test execution)
    \item Test machine
    \item Test user
    \item Jenkins link (embedded URL in the Jenkins's icon)
@@ -108,55 +106,60 @@ Below them is the test execution result timeline:
 It provides:
 \begin{itemize}
    \item The timeline of the executed test cases which are grouped by components 
-         (different color).
+         (different color). Left side is start of testing. Right side the end.
    \item How much time is consumed by the individual test case by the distance 
-         to the next test on time line or the detail pop-up when hovering on the 
-         dot of the timeline.
-   \item Test status result: small dot for \ifpassed{Passed} status and big dot 
+         to the next test at the time line or the detail pop-up when hovering on the 
+         dot at the timeline.
+   \item Test status result: A small dot for \ifpassed{Passed} status and a big dot 
          for others.
 \end{itemize}
 
 
-The next \textbf{Average test result} chart will give you the detail of test 
-result with the percentage (number of test cases will be showed when mousing 
+The next \textbf{Average test result} chart will give you the detail of the test 
+result with the percentage (number of test cases will be shown when moving the mouse 
 over the pie chart) of each result status (\ifpassed{Passed}, \iffailed{Failed}, 
-\ifunknown{Unknown} or \ifaborted{Aborted}) in the execution. 
+\ifunknown{Unknown} or \ifaborted{Aborted}) of the execution. 
 
 So that, you can qualify this test execution result is good or not.
 
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_average_test_result.png}
 
-\subsubsection{Component's correlation:}
+\subsubsection{Component's correlation}
 The next charts will help you to get the correlation between components within
-the test result, so that you can know which component(s) is impacted to the test
+the test result, so that you can know which component(s) impact(s) the test
 result.
 
-- \textbf{Test result per component} chart: provides the passed percentages of 
-all components within test results and the quality of them compare the 
-expectated quality gate (default: 80\%).\\
-So that, you can justify the impact of component to the whole test execution
-result.
+\textbf{Test result per component} chart: provides a fast overview of 
+test result percentages over all components. Here you can quickly see
+the quality of the system under test. Idially the spider chart should
+be fully green. This means that all component tests result in 100\% \ifpassed{Passed}.
+
+You can also define a quality gate (default 80\%) which results in a "minus"
+in front of the component name if the quality gate is not reached.
+
 
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_test_result_per_component.png}
 
 
-- \textbf{Not analyzed issues} chart: you can known how many test cases of 
-components are issued without any analysis. 
+\textbf{Not analyzed issues} chart: you can known how many test cases of 
+components are issued without analysis. 
 
-So that, you can have the appropriate actions to the component team.
+The Datatable view provides a process to set \iffailed{Failed} test cases to
+"analyzed". Ideally this spider chart should have a red dot in the center.
+This means all \iffailed{Failed} test cases are analyzed.
 
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_not_analyzed_issues.png}
 
-\subsubsection{Relationships with other test execution results:}
+\subsubsection{Relationships with other test execution results}
 
 - \textbf{Testsuite relationship}: will let you know all the related test 
-results (grouped by project/variant) of the the current selected version.
+results (grouped by project/variant) of the current selected version.
 
-So that you can quickly go to the related test results to have the comparison
-about the quality of the selected version across the projects/variants.
+This allows to quickly go to related test results to have a fast comparison
+about the quality of the selected version across all projects/variants.
 
 \underline{For example:} the selected version have been executed for 4 
 projects/variants: \emph{g3g\_lsim}, \emph{psarcc}, \emph{rnaivi} and 
@@ -196,7 +199,7 @@ the selected range of time in
 \hyperref[main-menu]{the main menu} (default is \textbf{Last 90 Days}).
 \end{boxhint}
 
-\subsubsection{Result interpretation:}
+\subsubsection{Result interpretation}
 You can give more information, provide an analysis, take notes, ... on the 
 execution result by leaving comments in the \textbf{Result interpretation} 
 section.
@@ -208,7 +211,7 @@ the analysis/comment for reference.
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/result_interpretation.png}
 
-\subsubsection{Resets vs. component:}
+\subsubsection{Resets vs. component}
 
 The \textbf{Resets vs. component} chart will helps you to know the interaction
 of component with the DUT (device under test) by providing the the reset counter
