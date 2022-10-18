@@ -115,7 +115,8 @@ It provides:
 \end{itemize}
 
 
-The next \textbf{Average test result} chart will give you the detail of the test 
+\subsubsection{Average test result} 
+This chart will give you the detail of the test 
 result with the percentage (number of test cases will be shown when moving the mouse 
 over the pie chart) of each result status (\ifpassed{Passed}, \iffailed{Failed}, 
 \ifunknown{Unknown} or \ifaborted{Aborted}) of the execution. 
@@ -130,7 +131,8 @@ The next charts will help you to get the correlation between components within
 the test result, so that you can know which component(s) impact(s) the test
 result.
 
-\textbf{Test result per component} chart: provides a fast overview of 
+\begin{itemize}
+\item \textbf{Test result per component} chart: provides a fast overview of 
 test result percentages over all components. Here you can quickly see
 the quality of the system under test. Idially the spider chart should
 be fully green. This means that all component tests result in 100\% \ifpassed{Passed}.
@@ -143,7 +145,7 @@ in front of the component name if the quality gate is not reached.
 {./pictures/dashboard/chart_test_result_per_component.png}
 
 
-\textbf{Not analyzed issues} chart: you can known how many test cases of 
+\item \textbf{Not analyzed issues} chart: you can known how many test cases of 
 components are issued without analysis. 
 
 The Datatable view provides a process to set \iffailed{Failed} test cases to
@@ -152,16 +154,18 @@ This means all \iffailed{Failed} test cases are analyzed.
 
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_not_analyzed_issues.png}
+\end{itemize}
 
 \subsubsection{Relationships with other test execution results}
 
-- \textbf{Testsuite relationship}: will let you know all the related test 
+\begin{itemize}
+\item \textbf{Testsuite relationship}: will let you know all the related test 
 results (grouped by project/variant) of the current selected version.
 
 This allows to quickly go to related test results to have a fast comparison
 about the quality of the selected version across all projects/variants.
 
-\underline{For example:} the selected version have been executed for 4 
+For example: the selected version have been executed for 4 
 projects/variants: \emph{g3g\_lsim}, \emph{psarcc}, \emph{rnaivi} and 
 \emph{unittest}. Each variant (except the \emph{unittest}) has 2 test results 
 (one for the smoke test and one for the whole test execution result).
@@ -174,7 +178,7 @@ Then, all the related test execution results will be displayed as below:
 There is also the context menu (\textbf{...}) that allows you to filter the 
 related test results.
 
-- \textbf{Test result flow} chart: provides the picture of quality change 
+\item \textbf{Test result flow} chart: provides the picture of quality change 
 (percentages of each status) between versions. 
 
 So that, you can understand the quality of testing software is being improved 
@@ -183,28 +187,33 @@ or vice versa.
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_test_result_flow.png}
 
-- \textbf{Tests per component flow} chart: provides the change of number test
+\item \textbf{Tests per component flow} chart: provides the change of number test
 cases per component between versions.
 
 You can aware the number of test cases per component and how many test cases are
 added or removed (per component or the whole test result) from those versions.
 
+This allows to quickly verify if all expected tests are executed, or if expected
+tests were not executed.
+
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_tests_per_component_flow.png}
+\end{itemize}
 
 \begin{boxhint}{Notice}
 The versions which are displayed in \textbf{Test result flow} and 
 \textbf{Tests per component flow} charts are the executed test results within 
 the selected range of time in 
-\hyperref[main-menu]{the main menu} (default is \textbf{Last 90 Days}).
+\hyperref[main-menu]{the main menu} (default is \textbf{last 90 days}).
 \end{boxhint}
+
 
 \subsubsection{Result interpretation}
 You can give more information, provide an analysis, take notes, ... on the 
 execution result by leaving comments in the \textbf{Result interpretation} 
 section.
 
-As soon as the comment(s) is saved, that information will be updated to 
+As soon as the Result interpretion is saved, that information will be updated to 
 the database. So that, other users who browse to this test result can see
 the analysis/comment for reference.
 
@@ -213,14 +222,14 @@ the analysis/comment for reference.
 
 \subsubsection{Resets vs. component}
 
-The \textbf{Resets vs. component} chart will helps you to know the interaction
-of component with the DUT (device under test) by providing the the reset counter
-per component during the execution.
+The \textbf{Resets vs. component} chart will help you to know the interaction
+of component tests with the DUT (device under test) by providing the reset counter
+per component during the execution. 
 
 You can have awareness that:
 \begin{itemize}
-   \item When DUT has been reset.
-   \item Which component has reset the DUT.
+   \item When the DUT has been reset.
+   \item Which component tests were executed when a reset happened.
    \item How many reset has been done during each component and the whole
          test execution.
 \end{itemize}
@@ -231,7 +240,7 @@ You can have awareness that:
 \hypertarget{datatable-view}{%
 \subsection{DataTable View}\label{datatable-view}}
 
-Datatable view provides the summary table which contains the detail information 
+The Datatable view provides the summary table which contains all detail information 
 of each test case (grouped by component) within the test execution.
 
 \includegraphics[width=1\linewidth]{./pictures/view_datatable.png}
@@ -240,46 +249,48 @@ Besides, you can aslo:
 \begin{itemize}
    \item determine how many test cases (entries) are displayed in the table page.
 
-         \includegraphics[width=0.6\linewidth]
+         \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/change_number_entries.png}
          
    \item apply filters to display such as not \ifpassed{Passed} test cases.
    
-         \includegraphics[width=0.6\linewidth]
+         \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/apply_filter.png}
 
    \item search for the specific test case for reference.
    
-         \includegraphics[width=0.6\linewidth]{./pictures/datatable/search.png}
+         \includegraphics[width=0.9\linewidth]{./pictures/datatable/search.png}
 
    \item get more information about test environment, configurations.
    
-         \includegraphics[width=0.6\linewidth]
+         \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/testcase_detail.png}
 
    \item get traceback information for not passed test case(s). An pop-up will 
-         be displayed which show all record traceback (error) information.
+         be displayed which show all recorded traceback (error) information.
 
-         \includegraphics[width=0.6\linewidth]
+         \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/testcase_traceback.png}
 
-   \item give comment to test case, link issue ticket to test case or observe
+   \item give comment to the test case, link an issue ticket with the test case or watch
          the history of the user interaction on the test case.
 
-         \includegraphics[width=0.6\linewidth]
+         \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/testcase_menu.png}
 
-   \item copy data table or export them to the excel file.
+   \item copy data table or export them to an excel file.
 
-         \includegraphics[width=0.6\linewidth]
+         \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/copy_export.png}
 \end{itemize}
 
 
 \hypertarget{runtime-view}{%
 \subsection{Runtime View}\label{runtime-view}}
-The runtime provides the treemap chart which helps you to know the runtime of 
+The runtime provides a treemap chart which helps you to know the runtime of 
 components within test execution result or test cases within each component.
+The displayed number is always the runtime in minutes. The header shows the
+total runtime.
 
 You can click on the component to go to detail runtime of all test cases within 
 it and go back by clicking the component header.
@@ -291,39 +302,46 @@ optimize the specific component or testcase if required.
 
 \hypertarget{diff-view}{%
 \subsection{Diff View}\label{diff-view}}
-The diffview contains only the spiral chart which displays the differences 
-between the software versions you want to compare. So that you can:
+The diffview contains a spiral chart which displays the differences 
+between the software versions you want to compare. 
+The center of the spiral is the start time of the test execution,
+the end of the sprial the end time. You find also the name of the
+component in the spiral.
+By default only changed or \iffailed{Failed} test results are displayed.
+
+So that you can:
 \begin{itemize}
-   \item observe the test case result change (e.g from \ifpassed{Passed} to 
+   \item see a test case result change (e.g from \ifpassed{Passed} to 
          \iffailed{Failed}).
-   \item aware the new or removed test case(s).
-   \item recognize the unstable test case(s)/component(s).
+   \item quickly find new or removed test case(s).
+   \item recognize unstable test case(s)/component(s). 
 \end{itemize}
 
 Be default, without adding the version for diffview, the current selected 
 version and its around versions (the previous and the next version if existing) 
-will be chosen for diffview as below:
+will be chosen for the diffview as below:
 
 \includegraphics[width=1\linewidth]{./pictures/diffview/default_detail.png}
 
-In case, you want to add the specific versions for diffview, select the version
+In case you want to add specific versions for the diffview, select the version
 from the version select box then click the add button 
-\includegraphics{./pictures/diffview/add_button.png}
-to add it to the list of diffview. 
+\includegraphics[width=0.04\linewidth]{./pictures/diffview/add_button.png}
+to add it to the list of versions to diff. 
 
-The next dropdown button is used for viewing your selected versions.
+The dropdown button is used for viewing your selected versions.
 You can also clear your selection with \textbf{clear list} option.
 
 \includegraphics[width=1\linewidth]{./pictures/diffview/selected_version.png}
 
-As soon as the new version is added for diffview, the spiral chart is updated 
-immediately.
+As soon as a new version is added for diffview, the spiral chart is updated 
+immediately. Dependent on the number of executed test cases and browser
+rendering can need some time.
 
-The dots which present for the test cases along the spiral line (small dot is 
+The dots which present the test cases along the spiral line (small dot is 
 \ifpassed{Passed} and bigger one for other status) are interactable. 
 It means that you can:
 \begin{itemize}
-   \item mouse over the dots to see the test case information.
+   \item movethe mouse over the dots to see the test case information.
    \item click on the failed test case (bigger dot) for the traceback 
          information.
 \end{itemize}
@@ -332,15 +350,15 @@ It means that you can:
    You can only select maximum of \textbf{5} versions for diffview.
 
    If the maximum of selected versions is reached and you click on the button to 
-   add more, the warning message will be displayed to prevent that action.
+   add more, a warning message will be displayed to prevent that action.
 \end{boxhint}
 
-\includegraphics[width=1\linewidth]{./pictures/diffview/warning.png}
+\includegraphics[width=\linewidth]{./pictures/diffview/warning.png}
 
 \hypertarget{developer-guidance}{%
-\section{Developer guidance:}\label{developer-guidance}}
+\section{Developer guidance}\label{developer-guidance}}
 
-\begin{boxhint}{Notice:}
+\begin{boxhint}{Notice}
 In order to run up the TestResultWebApp, it requires some knowledge about:
 \begin{itemize}
    \item Web server: setup and run web server for web hosting.
@@ -352,13 +370,13 @@ In order to run up the TestResultWebApp, it requires some knowledge about:
 \end{itemize}
 \end{boxhint}
 
-\subsection{How to run new TestResultWebApp instant:}
+\subsection{How to run new TestResultWebApp instance}
 \begin{enumerate}
 
 \item Precondition:
 \begin{itemize}
-\item \href{https://nodejs.org/en/}{Nodejs} shoulde be installed.
-\item \href{https://dev.mysql.com/downloads/mysql/}{mysql server} should be 
+\item \href{https://nodejs.org/en/}{Node.js} shoulde be installed.
+\item \href{https://dev.mysql.com/downloads/mysql/}{MySQL server} should be 
       installed.
 \item A cloned package's resource from 
       \href{https://github.com/test-fullautomation/testresultwebapp}
@@ -366,7 +384,7 @@ In order to run up the TestResultWebApp, it requires some knowledge about:
 \begin{robotlog}
 git clone https://github.com/test-fullautomation/testresultwebapp.git
 \end{robotlog}
-\item The port which will run nodejs application (default is \textbf{3000}) is
+\item The port which will run Node.js application (default is \textbf{3000}) is
       opened (enable) in firewall.
 
 \end{itemize}
@@ -412,8 +430,7 @@ scripts.
 
 \end{itemize}
 
-\item Import the initial data to the database with \href{https://github.com/test
--fullautomation/robotframework-testresultwebapptool}{RobotResults2DB tool}.
+\item Import the initial data to the database with \href{https://github.com/test-fullautomation/robotframework-testresultwebapptool}{RobotResults2DB tool}.
 
 \item Adapt Web server:
 \begin{itemize}
@@ -426,7 +443,7 @@ scripts.
 \begin{itemize}
    \item \rlog{web_client/dashboard/dist/js/common/global.js}: for domain.
    \item \rlog{web_client/dashboard/dist/js/common/communication.js}: for 
-         listening port of nodejs application's API.
+         listening port of Node.js application's API.
 \end{itemize}
 
 \item Start nodejs application by command:

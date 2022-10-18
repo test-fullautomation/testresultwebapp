@@ -1,8 +1,8 @@
 {
    "REPOSITORYNAME" : "testresultwebapp",
    "PACKAGENAME" : "TestResultWebApp",
-   "VERSION" : "0.1.2",
-   "VERSION_DATE" : "05.10.2022",
+   "VERSION" : "0.1.3",
+   "VERSION_DATE" : "18.10.2022",
    "AUTHOR" : "Thomas Pollerspöck",
    "AUTHOREMAIL" : "Thomas.Pollerspoeck@de.bosch.com",
    "DESCRIPTION" : "Web based display of test results",
