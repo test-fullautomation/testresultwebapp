@@ -1,9 +1,22 @@
-# TestResultWebApp (TRWebApp)
+> Licensed under the Apache License, Version 2.0 (the \"License\"); you
+> may not use this file except in compliance with the License. You may
+> obtain a copy of the License at
+>
+> <http://www.apache.org/licenses/LICENSE-2.0>
+>
+> Unless required by applicable law or agreed to in writing, software
+> distributed under the License is distributed on an \"AS IS\" BASIS,
+> WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+> implied. See the License for the specific language governing
+> permissions and limitations under the License.
+
+# TestResultWebApp ([TRWebApp](https://github.com/test-fullautomation/testresultwebapp))
 
 ## Table of Contents
 
 -   [Getting Started](#getting-started)
 -   [Usage](#usage)
+-   [Import data](#import-data)
 -   [Contribution](#contribution)
 -   [Sourcecode Documentation](#documentation)
 -   [Feedback](#feedback)
@@ -19,20 +32,25 @@ generic web based open source application which allows processing and
 displaying of test result data in a sophisticated way.
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) uses
-a mysql data base, nodejs on server side and JavaScript on Web-Browser
+a mysql data base, Node,js on server side and JavaScript on Web-Browser
 side.
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) was
 initially implemented at
-<img src="packagedoc/additional_docs/pictures/Bosch-Logo.png" height="15">
+![IMG_BOSCH](packagedoc/additional_docs/pictures/Bosch-Logo.png){height="15px"}
 [Robert Bosch Car
-Multimedia](https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim/)
+Multimedia](https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim)
 and was open sourced in 2020.
+
+To understand more detail about the WebApp\'s features, the chart\'s
+meanings, the displayed information on each view, please refer to
+[TRWebApp's
+Documentation](https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/TestResultWebApp.pdf).
 
 ## Usage
 
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp) has
-the main menu (on the top) which allows you to:
+a main menu (on the top) which allows you to:
 
 -   select the branch, variant, version or component for
     views/comparison.
@@ -44,7 +62,7 @@ the main menu (on the top) which allows you to:
 provides 4 main views which will give from the overview of the test
 execution result to the detail of the single test results.
 
-Besides, you can have the comparisons with the previous test results or
+Besides, you can have a comparisons with the previous test results or
 related test results (different variants).
 
 ### Dashboard view
@@ -55,8 +73,8 @@ The Dashboard shows an overview of the test execution result, such as:
 -   Passed rate.
 -   Duration of test execution.
 -   The execution time.
--   The test user
--   The test machine
+-   The test user.
+-   The test machine.
 -   \...
 
 There are also some charts which help you to get the the overview
@@ -67,8 +85,8 @@ comparison to the previous test execution results.
 
 ### Datatable view
 
-The data table show all executed test case and their results order by
-component\'s name. Besides, it also allows to:
+The data table shows all executed test case and their results ordered by
+components names. Besides, it also allows to:
 
 -   browse into the detail of single test results.
 -   open the traceback for failed test cases.
@@ -88,33 +106,45 @@ optimize the run-time of a your test suite.
 
 ### Diff view
 
-The diff view shows you the differences of test runs from different test
-suites. For this a spiral view is used where the center is the start of
-the test suite execution.
+The diff view is very powerful. It shows you very fast the differences
+of test runs from different test suites. For this a spiral view is used
+where the center is the start of the test suite execution.
 
 The diff view allows you to:
 
 -   show the differences of current test results to the previous and the
     next ones.
 
--   select any test results for the comparison (up to 5 test results)
+-   select any test results for comparison (up to 5 test results)
 
 -   filter test cases to be displayed in the sprial line:
 
-    > -   show only test cases which are other than passed.
+    > -   show only test cases which are other than passed, inclusive
+    >     new and missing test cases (default).
     > -   show only test cases which are failed.
     > -   show only test cases which are new or missing.
 
--   open the traceback for failed test cases.
+-   open the traceback for failed test cases by clicken the bid dot.
 
 ![Diff view](packagedoc/additional_docs/pictures/DiffView.png)
+
+## Import data
+
+The data base model is generic and allows to process any test result
+data. Currently we provide an import tool for:
+
+> -   [Robot Framework](http://robotframework.org) test result files.
+>     Please refer to
+>     [RobotResults2db](https://github.com/test-fullautomation/robotframework-testresultwebapptool).
 
 ## Contribution
 
 We are always searching support and you are cordially invited to help to
 improve
 [TRWebApp](https://github.com/test-fullautomation/testresultwebapp)
-tool.
+tool. Please contact [Thomas
+Pollerspöck](mailto:Thomas.Pollerspoeck@de.bosch.com) if you want to
+contribute.
 
 ## Documentation
 
@@ -128,7 +158,7 @@ Documentation](https://github.com/test-fullautomation/testresultwebapp/blob/deve
 Please feel free to give any feedback to us via
 
 Email to: [Robot Framework Support
-Group](mailto:RobotFrameworkSupportGroup@bcn.bosch.com)
+Group](mailto:hi_cm-ci1_robotframeworksupportgroup@bcn.bosch.com)
 
 Issue tracking: [TRWebApp
 Issues](https://github.com/test-fullautomation/testresultwebapp/issues)

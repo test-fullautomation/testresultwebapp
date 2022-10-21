@@ -13,14 +13,15 @@
    limitations under the License.
 
 
-TestResultWebApp (TRWebApp)
-===========================
+TestResultWebApp (TRWebApp_)
+============================
 
 Table of Contents
 -----------------
 
 -  `Getting Started <#getting-started>`__
 -  `Usage <#usage>`__
+-  `Import data <#import-data>`__
 -  `Contribution <#contribution>`__
 -  `Sourcecode Documentation <#documentation>`__
 -  `Feedback <#feedback>`__
@@ -36,16 +37,20 @@ Getting Started
 TRWebApp_ is a generic web based open source application which allows processing 
 and displaying of test result data in a sophisticated way.
 
-TRWebApp_ uses a mysql data base, nodejs on server side and JavaScript on
+TRWebApp_ uses a mysql data base, Node,js on server side and JavaScript on
 Web-Browser side.
 
 TRWebApp_ was initially implemented at |IMG_BOSCH| 
 `Robert Bosch Car Multimedia`_ and was open sourced in 2020. 
 
+To understand more detail about the WebApp's features, the chart's meanings, 
+the displayed information on each view, please refer to 
+`TRWebApp’s Documentation`_.
+
 Usage
 -----
 
-TRWebApp_ has the main menu (on the top) which allows you to:
+TRWebApp_ has a main menu (on the top) which allows you to:
 
 - select the branch, variant, version or component for views/comparison.
 - select the range of time for displaying test results in charts.
@@ -54,7 +59,7 @@ TRWebApp_ has the main menu (on the top) which allows you to:
 TRWebApp_ provides 4 main views which will give from the overview of the test
 execution result to the detail of the single test results.
 
-Besides, you can have the comparisons with the previous test results or 
+Besides, you can have a comparisons with the previous test results or 
 related test results (different variants).
 
 Dashboard view
@@ -66,8 +71,8 @@ The Dashboard shows an overview of the test execution result, such as:
 - Passed rate.
 - Duration of test execution.
 - The execution time.
-- The test user
-- The test machine
+- The test user.
+- The test machine.
 - ...
 
 There are also some charts which help you to get the the overview analysis about
@@ -80,8 +85,8 @@ execution results.
 Datatable view
 ~~~~~~~~~~~~~~
 
-The data table show all executed test case and their results order by 
-component's name. Besides, it also allows to:
+The data table shows all executed test case and their results ordered by 
+components names. Besides, it also allows to:
 
 - browse into the detail of single test results. 
 - open the traceback for failed test cases.
@@ -105,30 +110,39 @@ This allows you to optimize the run-time of a your test suite.
 Diff view
 ~~~~~~~~~
 
-The diff view shows you the differences of test runs from different test suites.
+The diff view is very powerful. It shows you very fast the differences of test 
+runs from different test suites.
 For this a spiral view is used where the center is the start of the test suite 
 execution.
 
 The diff view allows you to:
 
 - show the differences of current test results to the previous and the next ones.
-- select any test results for the comparison (up to 5 test results)
+- select any test results for comparison (up to 5 test results)
 - filter test cases to be displayed in the sprial line:
 
-   - show only test cases which are other than passed.
+   - show only test cases which are other than passed, 
+     inclusive new and missing test cases (default).
    - show only test cases which are failed.
    - show only test cases which are new or missing.
 
-- open the traceback for failed test cases.
+- open the traceback for failed test cases by clicken the bid dot.
 
    
 .. image:: packagedoc/additional_docs/pictures/DiffView.png
    :alt: Diff view    
 
+Import data
+-----------
+The data base model is generic and allows to process any test result data.
+Currently we provide an import tool for:
+
+   -  `Robot Framework`_ test result files. Please refer to RobotResults2db_.
+
 Contribution
 ------------
 We are always searching support and you are cordially invited to help to improve 
-TRWebApp_ tool.
+TRWebApp_ tool. Please contact `Thomas Pollerspöck`_ if you want to contribute.
 
 Documentation
 -------------
@@ -185,12 +199,16 @@ limitations under the License.
 
 .. _TRWebApp: 
       https://github.com/test-fullautomation/testresultwebapp
+.. _Robot Framework:
+      http://robotframework.org
+.. _RobotResults2db:
+      https://github.com/test-fullautomation/robotframework-testresultwebapptool
 .. _Robot Framework Support Group: 
-      mailto:RobotFrameworkSupportGroup@bcn.bosch.com
+      mailto:hi_cm-ci1_robotframeworksupportgroup@bcn.bosch.com
 .. _TRWebApp Issues: 
       https://github.com/test-fullautomation/testresultwebapp/issues
 .. _Robert Bosch Car Multimedia: 
-      https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim/
+      https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim
 .. _TRWebApp’s Documentation: 
       https://github.com/test-fullautomation/testresultwebapp/blob/develop/
       TestResultWebApp/TestResultWebApp.pdf
