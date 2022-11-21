@@ -110,7 +110,7 @@ It provides:
    \item How much time is consumed by the individual test case by the distance 
          to the next test at the time line or the detail pop-up when hovering on the 
          dot at the timeline.
-   \item Test status result: A small dot for \ifpassed{Passed} status and a big dot 
+   \item Test status result: A small dot for \passed\ status and a big dot 
          for others.
 \end{itemize}
 
@@ -118,8 +118,8 @@ It provides:
 \subsubsection{Average test result} 
 This chart will give you the detail of the test 
 result with the percentage (number of test cases will be shown when moving the mouse 
-over the pie chart) of each result status (\ifpassed{Passed}, \iffailed{Failed}, 
-\ifunknown{Unknown} or \ifaborted{Aborted}) of the execution. 
+over the pie chart) of each result status (\passed, \failed, 
+\unknown\ or \aborted) of the execution. 
 
 So that, you can qualify this test execution result is good or not.
 
@@ -135,7 +135,7 @@ result.
 \item \textbf{Test result per component} chart: provides a fast overview of 
 test result percentages over all components. Here you can quickly see
 the quality of the system under test. Idially the spider chart should
-be fully green. This means that all component tests result in 100\% \ifpassed{Passed}.
+be fully green. This means that all component tests result in 100\% \passed.
 
 You can also define a quality gate (default 80\%) which results in a "minus"
 in front of the component name if the quality gate is not reached.
@@ -148,9 +148,9 @@ in front of the component name if the quality gate is not reached.
 \item \textbf{Not analyzed issues} chart: you can known how many test cases of 
 components are issued without analysis. 
 
-The Datatable view provides a process to set \iffailed{Failed} test cases to
+The Datatable view provides a process to set \failed\ test cases to
 "analyzed". Ideally this spider chart should have a red dot in the center.
-This means all \iffailed{Failed} test cases are analyzed.
+This means all \failed\ test cases are analyzed.
 
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/chart_not_analyzed_issues.png}
@@ -252,7 +252,7 @@ Besides, you can aslo:
          \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/change_number_entries.png}
          
-   \item apply filters to display such as not \ifpassed{Passed} test cases.
+   \item apply filters to display such as not \passed\ test cases.
    
          \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/apply_filter.png}
@@ -307,12 +307,11 @@ between the software versions you want to compare.
 The center of the spiral is the start time of the test execution,
 the end of the sprial the end time. You find also the name of the
 component in the spiral.
-By default only changed or \iffailed{Failed} test results are displayed.
+By default only changed or \failed\ test results are displayed.
 
 So that you can:
 \begin{itemize}
-   \item see a test case result change (e.g from \ifpassed{Passed} to 
-         \iffailed{Failed}).
+   \item see a test case result change (e.g from \passed\ to \failed).
    \item quickly find new or removed test case(s).
    \item recognize unstable test case(s)/component(s). 
 \end{itemize}
@@ -338,7 +337,7 @@ immediately. Dependent on the number of executed test cases and browser
 rendering can need some time.
 
 The dots which present the test cases along the spiral line (small dot is 
-\ifpassed{Passed} and bigger one for other status) are interactable. 
+\passed\ and bigger one for other status) are interactable. 
 It means that you can:
 \begin{itemize}
    \item movethe mouse over the dots to see the test case information.
