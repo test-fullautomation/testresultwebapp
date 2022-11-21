@@ -122,7 +122,7 @@ Import data
 The data base model is generic and allows to process any test result data.
 Currently we provide an import tool for:
 
--  `Robot Framework`_ test result files. Please refer to RobotResults2db_.
+-  `Robot Framework`_ test result files. Please refer to RobotLog2DB_.
 
 Contribution
 ------------
@@ -186,8 +186,8 @@ limitations under the License.
       https://github.com/test-fullautomation/testresultwebapp
 .. _Robot Framework:
       http://robotframework.org
-.. _RobotResults2db:
-      https://github.com/test-fullautomation/robotframework-testresultwebapptool
+.. _RobotLog2DB:
+      https://github.com/test-fullautomation/robotframework-robotlog2db
 .. _Robot Framework Support Group: 
       mailto:hi_cm-ci1_robotframeworksupportgroup@bcn.bosch.com
 .. _TRWebApp Issues: 
