@@ -123,7 +123,7 @@ data. Currently we provide an import tool for:
 
 -   [Robot Framework](http://robotframework.org) test result files.
     Please refer to
-    [RobotResults2db](https://github.com/test-fullautomation/robotframework-testresultwebapptool).
+    [RobotLog2DB](https://github.com/test-fullautomation/robotframework-robotlog2db).
 
 ## Contribution
 
