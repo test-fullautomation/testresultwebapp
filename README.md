@@ -1,4 +1,4 @@
-# TestResultWebApp ([TRWebApp](https://github.com/test-fullautomation/testresultwebapp))
+# TestResultWebApp (TRWebApp)
 
 ## Table of Contents
 
@@ -6,7 +6,7 @@
 -   [Usage](#usage)
 -   [Import data](#import-data)
 -   [Contribution](#contribution)
--   [Sourcecode Documentation](#documentation)
+-   [Documentation](#documentation)
 -   [Feedback](#feedback)
 -   [About](#about)
     -   [Maintainers](#maintainers)
