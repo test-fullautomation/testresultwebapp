@@ -1,5 +1,5 @@
-TestResultWebApp (TRWebApp_)
-============================
+TestResultWebApp (TRWebApp)
+===========================
 
 Table of Contents
 -----------------
@@ -8,7 +8,7 @@ Table of Contents
 -  `Usage <#usage>`__
 -  `Import data <#import-data>`__
 -  `Contribution <#contribution>`__
--  `Sourcecode Documentation <#documentation>`__
+-  `Documentation <#documentation>`__
 -  `Feedback <#feedback>`__
 -  `About <#about>`__
 
