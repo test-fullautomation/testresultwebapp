@@ -20,6 +20,7 @@ var constants = require("constants");
 global.domain = 'http://localhost';
 
 global.mySQLOptions = {
+   charset  : 'utf8mb4', // charset option is required to handle 4 byte characters
    host     : 'your_mysql_host', 
    port     : 3306,
    
