@@ -89,7 +89,7 @@ DELIMITER ;
 ##########################################################################
 DELIMITER $$
 DROP FUNCTION IF EXISTS `pjcmd_bvt`.`_get_ConfValue`$$
-CREATE DEFINER=`pjcmd_bvt`@`%` FUNCTION `pjcmd_bvt`.`_get_ConfValue`(strParam varchar(50)) RETURNS varchar(50) CHARSET utf8
+CREATE DEFINER=`pjcmd_bvt`@`%` FUNCTION `pjcmd_bvt`.`_get_ConfValue`(strParam varchar(50)) RETURNS varchar(50) CHARSET utf8mb4
 BEGIN
   #declare buffer for value
   declare strValue varchar(50) default "";
