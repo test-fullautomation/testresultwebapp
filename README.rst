@@ -19,17 +19,17 @@ Table of Contents
 Getting Started
 ---------------
 
-TRWebApp_ is a generic web based open source application which allows processing 
+TRWebApp_ is a generic web based open source application which allows processing
 and displaying of test result data in a sophisticated way.
 
 TRWebApp_ uses a mysql data base, Node,js on server side and JavaScript on
 Web-Browser side.
 
-TRWebApp_ was initially implemented at |IMG_BOSCH| 
-`Robert Bosch Car Multimedia`_ and was open sourced in 2020. 
+TRWebApp_ was initially implemented at |IMG_BOSCH|
+`Robert Bosch Car Multimedia`_ and was open sourced in 2020.
 
-To understand more detail about the WebApp's features, the chart's meanings, 
-the displayed information on each view, please refer to 
+To understand more detail about the WebApp's features, the chart's meanings,
+the displayed information on each view, please refer to
 `TRWebApp’s Documentation`_.
 
 Usage
@@ -44,7 +44,7 @@ TRWebApp_ has a main menu (on the top) which allows you to:
 TRWebApp_ provides 4 main views which will give from the overview of the test
 execution result to the detail of the single test results.
 
-Besides, you can have a comparisons with the previous test results or 
+Besides, you can have a comparisons with the previous test results or
 related test results (different variants).
 
 Dashboard view
@@ -70,23 +70,23 @@ execution results.
 Datatable view
 ~~~~~~~~~~~~~~
 
-The data table shows all executed test case and their results ordered by 
+The data table shows all executed test case and their results ordered by
 components names. Besides, it also allows to:
 
-- browse into the detail of single test results. 
+- browse into the detail of single test results.
 - open the traceback for failed test cases.
 - collaborate with your team by leaving your comment.
 - filter test cases.
 - search test cases.
-   
+
 .. image:: packagedoc/additional_docs/pictures/DataTable.png
    :alt: DataTable view
 
 Run-time view
 ~~~~~~~~~~~~~
 
-The run-time view shows you test cases grouped by component. 
-The size of a block is relative for the run-time of a test case. 
+The run-time view shows you test cases grouped by component.
+The size of a block is relative for the run-time of a test case.
 This allows you to optimize the run-time of a your test suite.
 
 .. image:: packagedoc/additional_docs/pictures/Runtime.png
@@ -95,9 +95,9 @@ This allows you to optimize the run-time of a your test suite.
 Diff view
 ~~~~~~~~~
 
-The diff view is very powerful. It shows you very fast the differences of test 
+The diff view is very powerful. It shows you very fast the differences of test
 runs from different test suites.
-For this a spiral view is used where the center is the start of the test suite 
+For this a spiral view is used where the center is the start of the test suite
 execution.
 
 The diff view allows you to:
@@ -106,16 +106,16 @@ The diff view allows you to:
 - select any test results for comparison (up to 5 test results)
 - filter test cases to be displayed in the sprial line:
 
-   - show only test cases which are other than passed, 
+   - show only test cases which are other than passed,
      inclusive new and missing test cases (default).
    - show only test cases which are failed.
    - show only test cases which are new or missing.
 
 - open the traceback for failed test cases by clicken the bid dot.
 
-   
+
 .. image:: packagedoc/additional_docs/pictures/DiffView.png
-   :alt: Diff view    
+   :alt: Diff view
 
 Import data
 -----------
@@ -126,13 +126,13 @@ Currently we provide an import tool for:
 
 Contribution
 ------------
-We are always searching support and you are cordially invited to help to improve 
+We are always searching support and you are cordially invited to help to improve
 TRWebApp_ tool. Please contact `Thomas Pollerspöck`_ if you want to contribute.
 
 Documentation
 -------------
-To understand more detail about the WebApp's features, the chart's meanings, 
-the displayed information on each view, please refer to 
+To understand more detail about the WebApp's features, the chart's meanings,
+the displayed information on each view, please refer to
 `TRWebApp’s Documentation`_.
 
 
@@ -167,7 +167,7 @@ Contributors
 License
 ~~~~~~~
 
-Copyright 2020-2022 Robert Bosch GmbH
+Copyright 2020-2023 Robert Bosch GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -182,19 +182,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 
-.. _TRWebApp: 
+.. _TRWebApp:
       https://github.com/test-fullautomation/testresultwebapp
 .. _Robot Framework:
       http://robotframework.org
 .. _RobotLog2DB:
       https://github.com/test-fullautomation/robotframework-robotlog2db
-.. _Robot Framework Support Group: 
+.. _Robot Framework Support Group:
       mailto:hi_cm-ci1_robotframeworksupportgroup@bcn.bosch.com
-.. _TRWebApp Issues: 
+.. _TRWebApp Issues:
       https://github.com/test-fullautomation/testresultwebapp/issues
-.. _Robert Bosch Car Multimedia: 
+.. _Robert Bosch Car Multimedia:
       https://www.bosch.de/unser-unternehmen/bosch-in-deutschland/hildesheim
-.. _TRWebApp’s Documentation: 
+.. _TRWebApp’s Documentation:
       https://github.com/test-fullautomation/testresultwebapp/blob/develop/
       TestResultWebApp/TestResultWebApp.pdf
 .. _Thomas Pollerspöck: mailto:Thomas.Pollerspoeck@de.bosch.com
