@@ -1,4 +1,4 @@
-% Copyright 2020-2022 Robert Bosch GmbH
+% Copyright 2020-2023 Robert Bosch GmbH
 
 % Licensed under the Apache License, Version 2.0 (the "License");
 % you may not use this file except in compliance with the License.
@@ -17,17 +17,17 @@
 
 The TestResultWebApp application includes:
 \begin{itemize}
-   \item Database: \href{https://mysql.com/}{MySQL} - which contains all test execution 
-         results. For details of all tables in the database, please refer the 
+   \item Database: \href{https://mysql.com/}{MySQL} - which contains all test execution
+         results. For details of all tables in the database, please refer the
          \href{https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}{database
          model}.
    \item Active Directory: for the authentication.
    \item Web server: which hosts the static data and runs the \href{https://nodejs.org/}{Node.js}
          application for providing the dynamic data.
-   \item Web client: is written in javascript which also use some libraries such 
+   \item Web client: is written in javascript which also use some libraries such
          as \href{https://jquery.com/}{jQuery}, \href{https://getbootstrap.com/docs/5.0/getting-started/introduction/}{bootstrap},
-         \href{https://www.chartjs.org/}{Chart.js}, 
-         \href{https://d3js.org/}{D3} for data visualization. 
+         \href{https://www.chartjs.org/}{Chart.js},
+         \href{https://d3js.org/}{D3} for data visualization.
 \end{itemize}
 
 Please refer below architecture for more detail:
@@ -38,22 +38,22 @@ Please refer below architecture for more detail:
 \section{Import Data}\label{import-data}}
 
 The data which will be visualized on WebApp comes directly from the database.
-For this the test execution result data must be transformed first 
-into the defined \href{https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}{database model} 
+For this the test execution result data must be transformed first
+into the defined \href{https://github.com/test-fullautomation/testresultwebapp/blob/develop/TestResultWebApp/mysql_server/datamodel/datamodel.svg}{database model}
 then imported into the database.
 
-The data base model is generic, so test result data can be any. Only a test 
+The data base model is generic, so test result data can be any. Only a test
 result importer must transfrom and import the data.
 
 We provide already the \href{https://github.com/test-fullautomation/robotframework-robotlog2db}{RobotLog2DB}
-which helps to import the \rfwcore\ result file(s) \emph{output.xml} to the 
+which helps to import the \rfwcore\ result file(s) \emph{output.xml} to the
 database of the TestResultWebApp.
 
-You will need to provide only the \rfwcore\ result file(s) and database's 
-credential information, that RobotLog2DB will parse the test execution result data 
+You will need to provide only the \rfwcore\ result file(s) and database's
+credential information, that RobotLog2DB will parse the test execution result data
 and interact with the provided database to import the data.
 
-Please refer \href{https://github.com/test-fullautomation/robotframework-robotlog2db#usage}{RobotLog2DB's usage} and 
+Please refer \href{https://github.com/test-fullautomation/robotframework-robotlog2db#usage}{RobotLog2DB's usage} and
 \href{https://github.com/test-fullautomation/robotframework-robotlog2db/blob/develop/RobotLog2DB/RobotLog2DB.pdf}
 {its document} for more detail.
 
@@ -63,20 +63,20 @@ Please refer \href{https://github.com/test-fullautomation/robotframework-robotlo
 
 \hypertarget{main-menu}{%
 \subsection{Main menu}\label{main-menu}}
-The WebApp provides a main menu for selecting a specific \textbf{branch}, 
+The WebApp provides a main menu for selecting a specific \textbf{branch},
 \textbf{project/variant} and \textbf{software version} to be displayed.
 
 \includegraphics[width=1\linewidth]{./pictures/main-menu.png}
 
 \hypertarget{dashboard-view}{%
 \subsection{Dashboard View}\label{dashboard-view}}
-The Dashboard view does not only provide an overview of test execution results but 
+The Dashboard view does not only provide an overview of test execution results but
 also shows the correlation betweeen components within the result and relationship with other test execution results.
 
 \includegraphics[width=1\linewidth]{./pictures/view_dashboard.png}
 
 \subsubsection{Result overview}
-At the top left corner of the Dashboard view you find the test execution result 
+At the top left corner of the Dashboard view you find the test execution result
 statistics:
 
 \includegraphics[width=1\linewidth]{./pictures/dashboard/result_statistics.png}
@@ -105,21 +105,21 @@ Below them is the test execution result timeline:
 
 It provides:
 \begin{itemize}
-   \item The timeline of the executed test cases which are grouped by components 
+   \item The timeline of the executed test cases which are grouped by components
          (different color). Left side is start of testing. Right side the end.
-   \item How much time is consumed by the individual test case by the distance 
-         to the next test at the time line or the detail pop-up when hovering on the 
+   \item How much time is consumed by the individual test case by the distance
+         to the next test at the time line or the detail pop-up when hovering on the
          dot at the timeline.
-   \item Test status result: A small dot for \passed\ status and a big dot 
+   \item Test status result: A small dot for \passed\ status and a big dot
          for others.
 \end{itemize}
 
 
-\subsubsection{Average test result} 
-This chart will give you the detail of the test 
-result with the percentage (number of test cases will be shown when moving the mouse 
-over the pie chart) of each result status (\passed, \failed, 
-\unknown\ or \aborted) of the execution. 
+\subsubsection{Average test result}
+This chart will give you the detail of the test
+result with the percentage (number of test cases will be shown when moving the mouse
+over the pie chart) of each result status (\passed, \failed,
+\unknown\ or \aborted) of the execution.
 
 So that, you can qualify this test execution result is good or not.
 
@@ -132,7 +132,7 @@ the test result, so that you can know which component(s) impact(s) the test
 result.
 
 \begin{itemize}
-\item \textbf{Test result per component} chart: provides a fast overview of 
+\item \textbf{Test result per component} chart: provides a fast overview of
 test result percentages over all components. Here you can quickly see
 the quality of the system under test. Idially the spider chart should
 be fully green. This means that all component tests result in 100\% \passed.
@@ -145,8 +145,8 @@ in front of the component name if the quality gate is not reached.
 {./pictures/dashboard/chart_test_result_per_component.png}
 
 
-\item \textbf{Not analyzed issues} chart: you can known how many test cases of 
-components are issued without analysis. 
+\item \textbf{Not analyzed issues} chart: you can known how many test cases of
+components are issued without analysis.
 
 The Datatable view provides a process to set \failed\ test cases to
 "analyzed". Ideally this spider chart should have a red dot in the center.
@@ -159,15 +159,15 @@ This means all \failed\ test cases are analyzed.
 \subsubsection{Relationships with other test execution results}
 
 \begin{itemize}
-\item \textbf{Testsuite relationship}: will let you know all the related test 
+\item \textbf{Testsuite relationship}: will let you know all the related test
 results (grouped by project/variant) of the current selected version.
 
 This allows to quickly go to related test results to have a fast comparison
 about the quality of the selected version across all projects/variants.
 
-For example: the selected version have been executed for 4 
-projects/variants: \emph{g3g\_lsim}, \emph{psarcc}, \emph{rnaivi} and 
-\emph{unittest}. Each variant (except the \emph{unittest}) has 2 test results 
+For example: the selected version have been executed for 4
+projects/variants: \emph{g3g\_lsim}, \emph{psarcc}, \emph{rnaivi} and
+\emph{unittest}. Each variant (except the \emph{unittest}) has 2 test results
 (one for the smoke test and one for the whole test execution result).
 
 Then, all the related test execution results will be displayed as below:
@@ -175,13 +175,13 @@ Then, all the related test execution results will be displayed as below:
 \includegraphics[width=1\linewidth]
 {./pictures/dashboard/testsuite_relationship.png}
 
-There is also the context menu (\textbf{...}) that allows you to filter the 
+There is also the context menu (\textbf{...}) that allows you to filter the
 related test results.
 
-\item \textbf{Test result flow} chart: provides the picture of quality change 
-(percentages of each status) between versions. 
+\item \textbf{Test result flow} chart: provides the picture of quality change
+(percentages of each status) between versions.
 
-So that, you can understand the quality of testing software is being improved 
+So that, you can understand the quality of testing software is being improved
 or vice versa.
 
 \includegraphics[width=1\linewidth]
@@ -201,19 +201,19 @@ tests were not executed.
 \end{itemize}
 
 \begin{boxhint}{Notice}
-The versions which are displayed in \textbf{Test result flow} and 
-\textbf{Tests per component flow} charts are the executed test results within 
-the selected range of time in 
+The versions which are displayed in \textbf{Test result flow} and
+\textbf{Tests per component flow} charts are the executed test results within
+the selected range of time in
 \hyperref[main-menu]{the main menu} (default is \textbf{last 90 days}).
 \end{boxhint}
 
 
 \subsubsection{Result interpretation}
-You can give more information, provide an analysis, take notes, ... on the 
-execution result by leaving comments in the \textbf{Result interpretation} 
+You can give more information, provide an analysis, take notes, ... on the
+execution result by leaving comments in the \textbf{Result interpretation}
 section.
 
-As soon as the Result interpretion is saved, that information will be updated to 
+As soon as the Result interpretion is saved, that information will be updated to
 the database. So that, other users who browse to this test result can see
 the analysis/comment for reference.
 
@@ -224,7 +224,7 @@ the analysis/comment for reference.
 
 The \textbf{Resets vs. component} chart will help you to know the interaction
 of component tests with the DUT (device under test) by providing the reset counter
-per component during the execution. 
+per component during the execution.
 
 You can have awareness that:
 \begin{itemize}
@@ -240,7 +240,7 @@ You can have awareness that:
 \hypertarget{datatable-view}{%
 \subsection{DataTable View}\label{datatable-view}}
 
-The Datatable view provides the summary table which contains all detail information 
+The Datatable view provides the summary table which contains all detail information
 of each test case (grouped by component) within the test execution.
 
 \includegraphics[width=1\linewidth]{./pictures/view_datatable.png}
@@ -251,22 +251,22 @@ Besides, you can aslo:
 
          \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/change_number_entries.png}
-         
+
    \item apply filters to display such as not \passed\ test cases.
-   
+
          \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/apply_filter.png}
 
    \item search for the specific test case for reference.
-   
+
          \includegraphics[width=0.9\linewidth]{./pictures/datatable/search.png}
 
    \item get more information about test environment, configurations.
-   
+
          \includegraphics[width=0.9\linewidth]
          {./pictures/datatable/testcase_detail.png}
 
-   \item get traceback information for not passed test case(s). An pop-up will 
+   \item get traceback information for not passed test case(s). An pop-up will
          be displayed which show all recorded traceback (error) information.
 
          \includegraphics[width=0.9\linewidth]
@@ -287,23 +287,23 @@ Besides, you can aslo:
 
 \hypertarget{runtime-view}{%
 \subsection{Runtime View}\label{runtime-view}}
-The runtime provides a treemap chart which helps you to know the runtime of 
+The runtime provides a treemap chart which helps you to know the runtime of
 components within test execution result or test cases within each component.
 The displayed number is always the runtime in minutes. The header shows the
 total runtime.
 
-You can click on the component to go to detail runtime of all test cases within 
+You can click on the component to go to detail runtime of all test cases within
 it and go back by clicking the component header.
 
-With this view, you can understand the runtime of a your test suite then 
+With this view, you can understand the runtime of a your test suite then
 optimize the specific component or testcase if required.
 
 \includegraphics[width=1\linewidth]{./pictures/view_runtime.png}
 
 \hypertarget{diff-view}{%
 \subsection{Diff View}\label{diff-view}}
-The diffview contains a spiral chart which displays the differences 
-between the software versions you want to compare. 
+The diffview contains a spiral chart which displays the differences
+between the software versions you want to compare.
 The center of the spiral is the start time of the test execution,
 the end of the sprial the end time. You find also the name of the
 component in the spiral.
@@ -313,42 +313,42 @@ So that you can:
 \begin{itemize}
    \item see a test case result change (e.g from \passed\ to \failed).
    \item quickly find new or removed test case(s).
-   \item recognize unstable test case(s)/component(s). 
+   \item recognize unstable test case(s)/component(s).
 \end{itemize}
 
-Be default, without adding the version for diffview, the current selected 
-version and its around versions (the previous and the next version if existing) 
+Be default, without adding the version for diffview, the current selected
+version and its around versions (the previous and the next version if existing)
 will be chosen for the diffview as below:
 
 \includegraphics[width=1\linewidth]{./pictures/diffview/default_detail.png}
 
 In case you want to add specific versions for the diffview, select the version
-from the version select box then click the add button 
+from the version select box then click the add button
 \includegraphics[width=0.04\linewidth]{./pictures/diffview/add_button.png}
-to add it to the list of versions to diff. 
+to add it to the list of versions to diff.
 
 The dropdown button is used for viewing your selected versions.
 You can also clear your selection with \textbf{clear list} option.
 
 \includegraphics[width=1\linewidth]{./pictures/diffview/selected_version.png}
 
-As soon as a new version is added for diffview, the spiral chart is updated 
+As soon as a new version is added for diffview, the spiral chart is updated
 immediately. Dependent on the number of executed test cases and browser
 rendering can need some time.
 
-The dots which present the test cases along the spiral line (small dot is 
-\passed\ and bigger one for other status) are interactable. 
+The dots which present the test cases along the spiral line (small dot is
+\passed\ and bigger one for other status) are interactable.
 It means that you can:
 \begin{itemize}
    \item movethe mouse over the dots to see the test case information.
-   \item click on the failed test case (bigger dot) for the traceback 
+   \item click on the failed test case (bigger dot) for the traceback
          information.
 \end{itemize}
 
 \begin{boxhint}{Notice:}
    You can only select maximum of \textbf{5} versions for diffview.
 
-   If the maximum of selected versions is reached and you click on the button to 
+   If the maximum of selected versions is reached and you click on the button to
    add more, a warning message will be displayed to prevent that action.
 \end{boxhint}
 
@@ -363,7 +363,7 @@ In order to run up the TestResultWebApp, it requires some knowledge about:
    \item Web server: setup and run web server for web hosting.
    \item Nodejs platform and Express framework: adapt the sourcecode with your
          environemnt: domain, configurations, ...
-   \item Mysql database: schema, tables, SQL scripting. We propose to use 
+   \item Mysql database: schema, tables, SQL scripting. We propose to use
          \href{https://dev.mysql.com/doc/workbench/en/}{MySQL Workbench} tool
          for working with Mysql database.
 \end{itemize}
@@ -375,9 +375,9 @@ In order to run up the TestResultWebApp, it requires some knowledge about:
 \item Precondition:
 \begin{itemize}
 \item \href{https://nodejs.org/en/}{Node.js} shoulde be installed.
-\item \href{https://dev.mysql.com/downloads/mysql/}{MySQL server} should be 
+\item \href{https://dev.mysql.com/downloads/mysql/}{MySQL server} should be
       installed.
-\item A cloned package's resource from 
+\item A cloned package's resource from
       \href{https://github.com/test-fullautomation/testresultwebapp}
       {Github repo}
 \begin{robotlog}
@@ -390,38 +390,38 @@ git clone https://github.com/test-fullautomation/testresultwebapp.git
 
 \item Setup mysql database:
 \begin{itemize}
-\item create \emph{user}, \emph{password} and \emph{schema} then update them  
+\item create \emph{user}, \emph{password} and \emph{schema} then update them
       as \rcode{global.mySQLOptions} in  \\
       \rlog{webapp/web_server/lib/global.js} file.
 \item create required tables in your database schema with MySQL Workbench.
 \begin{itemize}
 \item open the datamodel which is located at
       \rlog{mysql\_server/datamodel/test\_result.mwb}
-\item export all defined tables in datamodel to your schema, use 
+\item export all defined tables in datamodel to your schema, use
       \textbf{Foreward Enginneer to Database} feature of MySQL Workbench.
 \begin{robotlog}
 EER Diagram > Database > Forward Engineer... > your schema
 \end{robotlog}
 \includegraphics[width=1\linewidth]{./pictures/forward_engineer.png}
 \begin{boxhint}{Notice}
-If you have created your schema with other name than the default 
+If you have created your schema with other name than the default
 name \emph{pjcmd\_bvt}, you should replace the schema name at the \textbf{Review
 SQL Script} step:
 \begin{itemize}
 \item copy SQL script to text editor such as VsCode
 \item replace \emph{pjcmd\_bvt} which your new schema name
-\item paste SQL script back to the \textbf{Foreward Enginneer to Database} 
+\item paste SQL script back to the \textbf{Foreward Enginneer to Database}
       tool
 \end{itemize}
 before moving to next step to execute SQL script.
 \end{boxhint}
 
-\item create all store procedures by loading all SQL scripts under 
+\item create all store procedures by loading all SQL scripts under
       \rlog{mysql_server/TMLdb_sproc/} folder then execute them.
 
 \begin{boxhint}{Notice}
-If you have created your schema with other name than the default 
-name \emph{pjcmd\_bvt}, you should replace the schema name before executing SQL 
+If you have created your schema with other name than the default
+name \emph{pjcmd\_bvt}, you should replace the schema name before executing SQL
 scripts.
 \end{boxhint}
 
@@ -441,7 +441,7 @@ scripts.
 \item Adapt Web client:
 \begin{itemize}
    \item \rlog{web_client/dashboard/dist/js/common/global.js}: for domain.
-   \item \rlog{web_client/dashboard/dist/js/common/communication.js}: for 
+   \item \rlog{web_client/dashboard/dist/js/common/communication.js}: for
          listening port of Node.js application's API.
 \end{itemize}
 
@@ -452,12 +452,12 @@ node testdb.js
 
 \item Start web server for hosting the static files:
 
-You can use any web server \href{https://httpd.apache.org/}{Apache}, 
-\href{https://www.iis.net/}{IIS} or \href{https://www.nginx.com/}{Nginx} for 
-hosting the static files under \rlog{web_client/dashboad/} folder when running 
+You can use any web server \href{https://httpd.apache.org/}{Apache},
+\href{https://www.iis.net/}{IIS} or \href{https://www.nginx.com/}{Nginx} for
+hosting the static files under \rlog{web_client/dashboad/} folder when running
 as production.
 
-For development, you can use directly \rlog{express.static} which is supported 
+For development, you can use directly \rlog{express.static} which is supported
 by Express framework for hosting static files.
 The \rlog{web_server/test.js} file should be modified to add this setting.
 
@@ -469,9 +469,9 @@ var path = require('path');
 
 ...
 
-//for local GUI tests deliver static HTML 
+//for local GUI tests deliver static HTML
 //content from port 3000
-app.use(express.static(path.join(__dirname, "../web_client/dashboad/"))); 
+app.use(express.static(path.join(__dirname, "../web_client/dashboad/")));
 
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
