@@ -27,6 +27,7 @@
 # Parameter: --
 #
 ##########################################################################
+SET GLOBAL log_bin_trust_function_creators = 1;
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `pjcmd_bvt`.`_clr_tbl_debug`$$
 CREATE DEFINER=`pjcmd_bvt`@`%` PROCEDURE `pjcmd_bvt`.`_clr_tbl_debug`(IN txtProcedure TEXT)
@@ -301,3 +302,5 @@ ON SCHEDULE EVERY 1 HOUR DO
 UPDATE tbl_result SET result_state = 'test died' 
 WHERE result_state = 'in progress' AND DATE(time_start)=subdate(current_date, 1) AND ADDDATE( time_start, INTERVAL 1 DAY) < NOW()$$
 DELIMITER ;
+
+SET GLOBAL log_bin_trust_function_creators = 0;

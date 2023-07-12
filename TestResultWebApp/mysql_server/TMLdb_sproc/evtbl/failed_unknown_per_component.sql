@@ -91,11 +91,19 @@ BEGIN
                              );     
        call _gen_select_into("COALESCE(max(counter_resets)-min(counter_resets)+1, 0)", 
                               CONCAT( 
-                                CONCAT("(SELECT counter_resets, component FROM tbl_case WHERE ",strCondTRID),
-                                  " AND counter_resets>0 GROUP BY counter_resets) AS tmp_tbl"),
+                                CONCAT("(SELECT t.counter_resets, t.component FROM tbl_case AS t INNER JOIN (SELECT MIN(test_case_id) AS test_case_id FROM tbl_case WHERE ",strCondTRID),
+                                  " AND counter_resets>0 GROUP BY counter_resets) AS sub ON t.test_case_id=sub.test_case_id) AS tmp_tbl"),
                               REPLACE( "component=\"<COMPONENT>\"", "<COMPONENT>", cur_component),
                               numResets, bErr
                              );
+       # from mysql 8, below query can be used to replace the above one 
+       /* call _gen_select_into("COALESCE(max(counter_resets)-min(counter_resets)+1, 0)", 
+                              CONCAT( 
+                                CONCAT("(SELECT DISTINCT(counter_resets), FIRST_VALUE(component) OVER (PARTITION BY counter_resets ORDER BY test_case_id ASC) AS component FROM tbl_case WHERE ",strCondTRID),
+                                  " AND counter_resets>0) AS tmp_tbl"),
+                              REPLACE( "component=\"<COMPONENT>\"", "<COMPONENT>", cur_component),
+                              numResets, bErr
+                             ); */
 
        insert into evtbl_failed_unknown_per_component
                                  (test_result_id,
