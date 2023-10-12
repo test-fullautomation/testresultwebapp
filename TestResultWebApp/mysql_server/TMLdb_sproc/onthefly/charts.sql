@@ -42,7 +42,7 @@ BEGIN
        END IF;
  
        INSERT INTO tmp (component, not_analyzed)
-          select component, sum(case when t1.lastlog is not null and ((t2.state!='l' and t2.state!='n') or t2.state is null) then 1 else 0 end) as not_analyzed
+          select component, sum(case when t1.lastlog is not null and trim(t1.lastlog) <> '' and ((t2.state!='l' and t2.state!='n') or t2.state is null) then 1 else 0 end) as not_analyzed
              from tbl_case as t1 
              left join tbl_usr_case as t2 on t1.test_case_id=t2.test_case_id 
           where component=cur_component and test_result_id=strVersion;
