@@ -45,15 +45,7 @@
 # ------------------------------------------
 
    "RELEASES"  : {
-                   "0.9." : [
-                              "TestResultWebApp change 0.9 A",
-                              "TestResultWebApp change 0.9 B",
-                              "TestResultWebApp change 0.9 X"
-                            ],
                    "0.10." : [
-                               "TestResultWebApp change 0.10 A",
-                               "TestResultWebApp change 0.10 B",
-                               "TestResultWebApp change 0.10 X"
                              ]
                  }
 }
