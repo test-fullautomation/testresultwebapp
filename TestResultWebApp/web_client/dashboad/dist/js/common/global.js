@@ -40,3 +40,10 @@ var sPreStackVersions = "";
 var bForceUpdateDashboard = false;
 var oReloadTimer;       //timer object
 var iReloadSecond = 5;  //time(second) to reload content
+
+// Configurations for inactive branches and variants
+var oInactiveBranchVariant = {
+   "dev" : "all", // "all" value indicates this branch is inactive => all variants of this branch are inactive, too.
+   "main"  : [], // list of inactive variant(s) for this specified branch.
+   "all"   : ['extended', 'original'] // "all" key contains inactive variants which apply for all available branches.
+}
