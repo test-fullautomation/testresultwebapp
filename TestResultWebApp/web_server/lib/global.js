@@ -77,8 +77,6 @@ try {
 global.activeDirectoryOptions = { 
       url: 'ldap://your_ldap_server',
       baseDN: 'DC=your_domain,DC=your_toplevel_domain',
-      username: 'your_user_name',
-      password:  pwd,
                               
       referrals: {
                     enabled: true,

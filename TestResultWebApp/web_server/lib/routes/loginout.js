@@ -43,10 +43,11 @@ module.exports = function(app){
                                                  new Buffer(req.body.pwd, "base64"));
       pwdDecrypted=pwdDecrypted.toString("utf8");
       
-      if (!req.body.usr || !req.body.dom || pwdDecrypted.trim()=='' ) {
+      if (!req.body.usr || pwdDecrypted.trim()=='' ) {
          loginfail(res);   
       } else {
-    	  ad.authenticate(req.body.usr.trim()+"@"+req.body.dom.trim()+".bosch.com", pwdDecrypted, function(err, auth) {
+        var username = req.body.dom ? req.body.usr.trim()+"@"+req.body.dom.trim()+".bosch.com" : req.body.usr.trim()+"@bosch.com";
+    	  ad.authenticate(username, pwdDecrypted, function(err, auth) {
     	     if (err) {
     	       loginfail(res);   
     	       return;
@@ -54,8 +55,14 @@ module.exports = function(app){
       
     	     if (auth) {
     	    	 console.log("auth OK")
-    	    	 
-    	    	 ad.findUser(req.body.usr.trim(), function(err, user) {
+             var localADConfig = {
+                url: global.activeDirectoryOptions.url,
+                baseDN: global.activeDirectoryOptions.baseDN,
+                username: username,
+                password: pwdDecrypted
+             };
+             var adFindUser = new ActiveDirectory(localADConfig);
+             adFindUser.findUser(req.body.usr.trim(), function(err, user) {
     	    		  if (err || !user) {
     	    			 console.log(err)
     	    			 console.log(user['displayName'])
