@@ -35,7 +35,7 @@ function updateSelect(responseData,sSelectName,deferred,buffer){
 	   }
 		
 		// initialize buffer as initial value dNAV_INIT incase undefined
-		if (sSelected==undefined){
+		if (sSelected==undefined && dNAV[buffer].includes(dNAV_INIT[buffer])){
 			sSelected=dNAV_INIT[buffer];
 		}
 
