@@ -17,7 +17,7 @@
 var global = require('../global');
 
 var mysql = require('mysql');
-var Q = require('Q');
+var Q = require('q');
 
 var pool  = mysql.createPool(global.mySQLOptions);
 
