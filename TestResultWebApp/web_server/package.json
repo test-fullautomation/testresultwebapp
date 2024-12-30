@@ -1,14 +1,45 @@
 {
-  "name": "testdb_app",
+  "name": "testresult-webapp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Test Result Web Application",
   "main": "testdb.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "directories": {
+    "lib": "lib"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express-mysql-session": "^1.1.1"
-  }
+    "activedirectory": "^0.7.2",
+    "ajax": "^0.0.4",
+    "body-parser": "^1.15.2",
+    "compression": "^1.7.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-mysql-session": "^1.1.1",
+    "express-session": "^1.14.1",
+    "htmldiff": "^0.0.4",
+    "joi": "^17.11.0",
+    "jquery": "^3.1.0",
+    "moment": "^2.15.1",
+    "mysql": "^2.11.1",
+    "node-cache": "^4.1.0",
+    "node-uuid": "^1.4.7",
+    "q": "^1.4.1",
+    "swagger-ui-express": "^5.0.0",
+    "underscore": "^1.8.3",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "overrides": {
+    "activedirectory": {
+      "ldapjs": "2.3.3"
+    }
+  },
+  "scripts": {
+    "webapp": "node testdb.js",
+    "restapi": "node ./lib/api/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/test-fullautomation/testresultwebapp.git"
+  },
+  "author": "Tran Duy Ngoan (MS/EMC51-XC)",
+  "license": "ISC"
 }
