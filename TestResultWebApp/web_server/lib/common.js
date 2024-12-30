@@ -22,8 +22,9 @@ function common(){
 	
 };
 
-common.prototype.sendJsonResponse = function sendJsonResponse(res,response){
+common.prototype.sendJsonResponse = function sendJsonResponse(res,response,return_code=200){
    // allow cross-site access
+   // res.setHeader("Access-Control-Allow-Origin", "*");
    res.setHeader("Access-Control-Allow-Origin", global.domain);
    res.setHeader("Access-Control-Allow-Credentials", true);
    
@@ -33,7 +34,7 @@ common.prototype.sendJsonResponse = function sendJsonResponse(res,response){
    res.setHeader("Expires", "0"); // Proxies.
    
    //finally send JSON message
-   res.writeHead( 200, { "Content-Type": "application/json"});
+   res.writeHead( return_code, { "Content-Type": "application/json"});
    res.write(JSON.stringify(response));
    res.end();
 }

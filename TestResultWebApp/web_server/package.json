@@ -34,7 +34,8 @@
   },
   "scripts": {
     "webapp": "node testdb.js",
-    "restapi": "node ./lib/api/index.js"
+    "restapi": "node ./lib/api/index.js",
+    "restapi-withdoc": "OSTDOC=True node ./lib/api/index.js"
   },
   "repository": {
     "type": "git",
