@@ -18,6 +18,7 @@ var crypto = require("crypto");
 var constants = require("constants");
 
 global.domain = 'http://localhost';
+global.port   = 3000;
 
 global.mySQLOptions = {
    charset  : 'utf8mb4', // charset option is required to handle 4 byte characters

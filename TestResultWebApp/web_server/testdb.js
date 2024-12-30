@@ -59,8 +59,8 @@ require('./lib/routes/public.js')(app);
 require('./lib/routes/db_charts.js')(app);
 require('./lib/routes/db_statistics.js')(app);
 
-app.listen(3000, function () {
-  console.log('testdb_app successfully listening on port 3000!');
+app.listen(global.port, function () {
+  console.log(`testdb_app successfully listening on port ${global.port}!`);
 }); 
 
 
