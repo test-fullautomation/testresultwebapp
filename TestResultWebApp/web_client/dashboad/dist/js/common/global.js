@@ -32,6 +32,7 @@ var dNAV_INIT = { branch: undefined, variant: undefined };
 //access will be blocked due to cross site access
 var sDOMAIN = 'http://localhost';
 var sSubFolder = '/CMD_BVT';
+var sAPISubPath = ":3000"; //location or port which is running nodejs service
 var oIntervalTimer;
 var bLoading = false;
 var sPreStackVersions = "";
