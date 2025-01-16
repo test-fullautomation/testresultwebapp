@@ -26,7 +26,7 @@ var ActiveDirectory = require('activedirectory');
                
 var ad = new ActiveDirectory(global.activeDirectoryOptions);
 
-module.exports = function(app){
+module.exports = function(app, path=""){
 
    function loginfail(res){
       console.log(" Login failed!")
@@ -35,7 +35,7 @@ module.exports = function(app){
    }
    	 
    // Login endpoint
-   app.post('/login', function (req, res) {
+   app.post(`${path}/login`, function (req, res) {
       console.log("Processing: post > login");
       
       var pwdDecrypted = crypto.privateDecrypt({ key : global.auth.privateKey,
@@ -43,10 +43,11 @@ module.exports = function(app){
                                                  new Buffer(req.body.pwd, "base64"));
       pwdDecrypted=pwdDecrypted.toString("utf8");
       
-      if (!req.body.usr || !req.body.dom || pwdDecrypted.trim()=='' ) {
+      if (!req.body.usr || pwdDecrypted.trim()=='' ) {
          loginfail(res);   
       } else {
-    	  ad.authenticate(req.body.usr.trim()+"@"+req.body.dom.trim()+".bosch.com", pwdDecrypted, function(err, auth) {
+        var username = req.body.dom ? req.body.usr.trim()+"@"+req.body.dom.trim()+".bosch.com" : req.body.usr.trim()+"@bosch.com";
+    	  ad.authenticate(username, pwdDecrypted, function(err, auth) {
     	     if (err) {
     	       loginfail(res);   
     	       return;
@@ -54,8 +55,14 @@ module.exports = function(app){
       
     	     if (auth) {
     	    	 console.log("auth OK")
-    	    	 
-    	    	 ad.findUser(req.body.usr.trim(), function(err, user) {
+             var localADConfig = {
+                url: global.activeDirectoryOptions.url,
+                baseDN: global.activeDirectoryOptions.baseDN,
+                username: username,
+                password: pwdDecrypted
+             };
+             var adFindUser = new ActiveDirectory(localADConfig);
+             adFindUser.findUser(req.body.usr.trim(), function(err, user) {
     	    		  if (err || !user) {
     	    			 console.log(err)
     	    			 console.log(user['displayName'])
@@ -86,7 +93,7 @@ module.exports = function(app){
    
    
    //returns if logged in for initialization after opening URL
-   app.get('/loggedin', function (req, res) {
+   app.get(`${path}/loggedin`, function (req, res) {
       console.log("Processing: get < loggedin");	
       
       var response = { 'usr' : req.session.user, 
@@ -103,7 +110,7 @@ module.exports = function(app){
    });
       
    // Logout endpoint
-   app.get('/logout', function (req, res) {
+   app.get(`${path}/logout`, function (req, res) {
       console.log("Processing: get < logout");	
       req.session.admin = false;
       
@@ -114,7 +121,7 @@ module.exports = function(app){
    });
    
    // Logout endpoint
-   app.get('/getPubKey', function (req, res) {
+   app.get(`${path}/getPubKey`, function (req, res) {
       console.log("Processing: get < pubKey");	
       
       var response = { pubKey : global.auth.publicKey };
@@ -123,7 +130,7 @@ module.exports = function(app){
    });
    
    //Logout endpoint
-   app.get('/heartbeat', function (req, res) {
+   app.get(`${path}/heartbeat`, function (req, res) {
       console.log("Processing: get < heartbeat");	
      
       var sKeys = global.ndCache.keys();

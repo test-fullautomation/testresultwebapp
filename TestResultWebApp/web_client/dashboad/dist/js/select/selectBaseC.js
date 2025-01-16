@@ -35,17 +35,46 @@ function updateSelect(responseData,sSelectName,deferred,buffer){
 	   }
 		
 		// initialize buffer as initial value dNAV_INIT incase undefined
-		if (sSelected==undefined){
+		if (sSelected==undefined && dNAV[buffer].includes(dNAV_INIT[buffer])){
 			sSelected=dNAV_INIT[buffer];
 		}
 
 		dQUERY_STRING[buffer]=sSelected;  
 	}
 
+	var sInactiveOpts = "";
 	// generate option menu base on response data
 	responseData['data'].forEach(function(item){
-       $(sSelectName).append("<option value=" + item + "> " + item + "</option>");
-	});	
+		var sOptionElem = "<option value=" + item + "> " + item + "</option>";
+		switch(buffer){
+			case "branch":
+				if (oInactiveBranchVariant.hasOwnProperty(item) &&
+				    oInactiveBranchVariant[item] == "all"){
+					sInactiveOpts += sOptionElem;
+				} else {
+					$(sSelectName).append(sOptionElem);
+				}
+				break;
+			case "variant":
+				var sSelectedBranch = $("#selectBranch").find("option:selected").text().trim();
+				// Firstly, check if variant is in values of "all"
+				// Then check whether parent branch is inactive and:
+				//   - Value is "all"
+				//   - Selected variant in list of value
+				if ((oInactiveBranchVariant.hasOwnProperty("all") && oInactiveBranchVariant["all"].indexOf(item)>-1) ||
+				    (oInactiveBranchVariant.hasOwnProperty(sSelectedBranch) &&
+					  (oInactiveBranchVariant[sSelectedBranch].indexOf(item)>-1 ||
+					   oInactiveBranchVariant[sSelectedBranch]=="all"))){
+					sInactiveOpts += sOptionElem;
+					break;
+				}
+			default:
+				$(sSelectName).append(sOptionElem);
+		}
+	});
+	if (sInactiveOpts != ""){
+		$(sSelectName).append("<optgroup label='inactive' class='inactive-option'>" + sInactiveOpts + "</optgroup>");
+	}
 
 	// set selected option for the selection
 	if (dQUERY_STRING[buffer]!=undefined){

@@ -21,6 +21,7 @@ var history = new (require('../history'))();
 var moment = require('moment');
 
 var _ = require('underscore');
+var path = require('path');
 
 module.exports = chartsBase;
 
@@ -1885,9 +1886,9 @@ chartsBase.prototype.getDiffExecutionResults = function getDiffExecutionResults(
                               // some components have same name in same TML file - spi
                               // some components have blank name in same TML file - audio
                               // to identify them, I use the combination of TML path file and test name
-                              var arrTMLpathPart = item.filename.split('/ai_');
+                              var arrTMLpathPart = path.normalize(item.filename).split(path.sep+'ai_');
                               if (arrTMLpathPart.length == 1){
-                                 arrTMLpathPart = item.filename.split('/');
+                                 arrTMLpathPart = path.normalize(item.filename).split(path.sep);
                               }
                               var sPrefixTestname = arrTMLpathPart[arrTMLpathPart.length-1];
                               var sIdentified_name = sPrefixTestname+":"+item.name;

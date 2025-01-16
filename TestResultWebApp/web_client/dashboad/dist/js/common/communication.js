@@ -22,7 +22,7 @@ function getFromDB(path,params,callback){
 	
 	 $.ajax({
 	      type: 'GET',
-	      url: sDOMAIN +':3000' + path +"?" + params,
+	      url: sDOMAIN + sAPISubPath + path +"?" + params,
 	      crossDomain: true,
 	      //cache:false causes that a timestamp is added to
 	      //            each request
@@ -50,7 +50,7 @@ function getFromDB(path,params,callback){
 	          console.warn(response);
 	          //missing heartbeat response should not create an error popup.
 	          if (path.toLowerCase().indexOf("heartbeat") < 0){
-	             //alert("An unexpected error occurred. \nCause: GET < '" + sDOMAIN +':3000' + path +"?" + params + "'");
+	             //alert("An unexpected error occurred. \nCause: GET < '" + sDOMAIN + sAPISubPath + path +"?" + params + "'");
 	          }
 	      }); //ajax error
 	        
@@ -66,7 +66,7 @@ function postToDB(path,data,callback){
 	
 	 $.ajax({
 	      type: 'POST',
-	      url: sDOMAIN +':3000' + path,
+	      url: sDOMAIN + sAPISubPath + path,
 	      crossDomain: true,
 	      data: data,
 	      dataType: 'json',
@@ -84,7 +84,7 @@ function postToDB(path,data,callback){
 	     .fail( function (response) 
 	      {
 	          console.warn(response);
-	          //alert("An unexpected error occurred- \nCause: POST > '" + sDOMAIN +':3000' + path + "'");
+	          //alert("An unexpected error occurred- \nCause: POST > '" + sDOMAIN + sAPISubPath + path + "'");
 	      }); //ajax error
 	        
 	return deferred; 

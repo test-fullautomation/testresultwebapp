@@ -1,0 +1,15 @@
+{
+  "name": "testresult-api",
+  "version": "1.0.0",
+  "description": "REST APIs for TestResult WebApp",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "author": "Tran Duy Ngoan",
+  "license": "ISC",
+  "dependencies": {
+    "joi": "^17.11.0",
+    "nodemon": "^3.0.1"
+  }
+}

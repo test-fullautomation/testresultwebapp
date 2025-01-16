@@ -18,6 +18,7 @@ var crypto = require("crypto");
 var constants = require("constants");
 
 global.domain = 'http://localhost';
+global.port   = 3000;
 
 global.mySQLOptions = {
    charset  : 'utf8mb4', // charset option is required to handle 4 byte characters
@@ -77,8 +78,6 @@ try {
 global.activeDirectoryOptions = { 
       url: 'ldap://your_ldap_server',
       baseDN: 'DC=your_domain,DC=your_toplevel_domain',
-      username: 'your_user_name',
-      password:  pwd,
                               
       referrals: {
                     enabled: true,

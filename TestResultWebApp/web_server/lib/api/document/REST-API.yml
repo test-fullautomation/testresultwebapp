@@ -1,0 +1,2002 @@
+openapi: 3.0.2
+info:
+  title: TestResult WebApp API
+  version: '1.0'
+  description: REST API for importing test execution result to DB.
+  contact:
+    name: Tran Duy Ngoan
+    email: Ngoan.TranDuy@vn.bosch.com
+servers:
+- url: http://localhost:4000/api/v1/{db_name}
+  variables:
+    db_name:
+      default: testdb
+- url: https://testresultwebapp.wam-sso.bosch.com/api/v1/{db_name}
+  variables:
+    db_name:
+      enum:
+      - testdb
+      - tmlst
+      - robfwaiost
+      - pjcmd_bvt
+      default: testdb
+paths:
+  "/login":
+    post:
+      tags:
+      - Connection
+      summary: Log In
+      description: Establish the connection session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usr:
+                  type: string
+                  example: ntd1hc
+                  description: login user
+                dom:
+                  type: string
+                  example: apac
+                  description: user's domain
+                pwd:
+                  type: string
+                  format: password
+                  description: encryped password
+      responses:
+        '200':
+          description: Successfully login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: login_success
+                    description: login status
+                  displayName:
+                    type: string
+                    example: Tran Duy Ngoan
+                    description: full user name
+  "/logout":
+    get:
+      tags:
+      - Connection
+      summary: Log Out
+      description: Destroy the connection session
+      responses:
+        '200':
+          description: Successfully logout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: logout_success
+                    description: logout status
+  "/loggedin":
+    get:
+      tags:
+      - Connection
+      summary: Login status
+      description: Check login status
+      responses:
+        '200':
+          description: Login information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  usr:
+                    type: string
+                    example: ntd1hc
+                    description: login user id
+                  displayName:
+                    type: string
+                    example: Tran Duy Ngoan
+                    description: full user name
+                  admin:
+                    type: boolean
+                    example: false
+                    description: admin permission
+  "/getPubKey":
+    get:
+      tags:
+      - Connection
+      summary: Get Public Key
+      description: Get Public Key
+      responses:
+        '200':
+          description: Public Key from server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pubKey:
+                    type: string
+                    description: Public key for encoding password
+  "/results":
+    get:
+      tags:
+      - Result
+      summary: Get All Results
+      description: Retrieve a list of all test results.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - Result
+      summary: Create a New Result
+      description: Create a new test result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ResultPOST"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '409':
+          description: Failed to create due to existing result
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/results/{test_result_id}":
+    get:
+      tags:
+      - Result
+      summary: Get Result by ID
+      description: Retrieve a test result by its ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+        examples:
+          success:
+            value: 06d86c1f-de7d-4894-a636-1ab1138b9f5e
+          not_found:
+            value: non-existing
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get result with test_result_id=06d86c1f-de7d-4894-a636-1ab1138b9f5e
+                      sucessfully
+                    data:
+                      test_result_id: 06d86c1f-de7d-4894-a636-1ab1138b9f5e
+                      external_id:
+                      time_start: '2023-03-08T09:33:25.000Z'
+                      time_end:
+                      version_sw_target:
+                      version_sw_test:
+                      version_hardware:
+                      useForMetrix: 1
+                      timestamp: '2023-10-23T11:42:29.000Z'
+                      interpretation:
+                      project: newProject
+                      variant: myVariant
+                      branch: main
+                      jenkinsurl:
+                      result_state: in progress
+                      reporting_qualitygate:
+                      category_main:
+                      category_sub:
+                      num_of_reanimation: 0
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find result with test_result_id=06d86c1f-de7d-4894-a636-1ab1138b9fas
+                    data: {}
+    patch:
+      tags:
+      - Result
+      summary: Update Result by ID
+      description: Update a test result by its ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ResultPATCH"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - Result
+      summary: Delete Result by ID
+      description: Delete a test result by its ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/userresults":
+    get:
+      tags:
+      - User Result
+      summary: Get All User Results
+      description: Retrieve a list of all test user results.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - User Result
+      summary: Create a New User Result
+      description: Create a new test user result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserResult"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '409':
+          description: Failed to create due to existing user result
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/userresults/{test_result_id}":
+    get:
+      tags:
+      - User Result
+      summary: Get User Result by ID
+      description: Retrieve a test user result by its ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+        examples:
+          success:
+            value: 06d86c1f-de7d-4894-a636-1ab1138b9f5e
+          not_found:
+            value: non-existing
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get user result with test_result_id=06d86c1f-de7d-4894-a636-1ab1138b9f5e
+                      sucessfully
+                    data:
+                      test_result_id: 06d86c1f-de7d-4894-a636-1ab1138b9f5e
+                      interpretation:
+                      comment: this is user comment
+                      tags:
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find user result with test_result_id=06d86c1f-de7d-4894-a636-1ab1138b9fas
+                    data: {}
+    patch:
+      tags:
+      - User Result
+      summary: Update User Result by ID
+      description: Update a test user result by its ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UserResult"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - User Result
+      summary: Delete User Result by ID
+      description: Delete a test user result by its ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/projects":
+    get:
+      tags:
+      - Project
+      summary: Get All Projects
+      description: Retrieve a list of all projects.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - Project
+      summary: Create a New Project
+      description: Create a new project.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Project"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '409':
+          description: Failed to create due to existing result
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/projects?":
+    get:
+      tags:
+      - Project
+      summary: Get Project by query
+      description: Retrieve project(s) with condition.
+      parameters:
+      - name: project
+        in: query
+        schema:
+          type: string
+          description: project name
+      - name: variant
+        in: query
+        schema:
+          type: string
+          description: variant name
+      - name: branch
+        in: query
+        schema:
+          type: string
+          description: branch info
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/categories":
+    get:
+      tags:
+      - Category
+      summary: Get All Categories
+      description: Retrieve a list of all categories.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Category"
+    post:
+      tags:
+      - Category
+      summary: Create a New Category
+      description: Create a new category.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Category"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Category"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/categories/{category_id}":
+    get:
+      tags:
+      - Category
+      summary: Get Category by ID
+      description: Retrieve a category by its ID.
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the category.
+        examples:
+          success:
+            value: '1'
+          not_found:
+            value: '9999'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get category with category_id=1 sucessfully
+                    data:
+                      category_id: 1
+                      category: unittest
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find result with category_id=9999
+                    data: {}
+    patch:
+      tags:
+      - Category
+      summary: Update Category by ID
+      description: Update a category by its ID.
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the category.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                  description: category name
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - Category
+      summary: Delete Category by ID
+      description: Delete a category by its ID.
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the category.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/files":
+    get:
+      tags:
+      - File
+      summary: Get All Files
+      description: Retrieve a list of all test files.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - File
+      summary: Create a New File
+      description: Create a new file result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FilePOST"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/files/last":
+    get:
+      tags:
+      - File
+      summary: Get Last Files
+      description: Retrieve a latest test files.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              example:
+                success: true
+                message: get last file id successfully
+                data:
+                  id: 23890
+  "/files/{file_id}":
+    get:
+      tags:
+      - File
+      summary: Get File by ID
+      description: Retrieve a test file by its ID.
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test file.
+        examples:
+          success:
+            value: '9701'
+          not_found:
+            value: '0'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get file with file_id=9701 successfully
+                    data:
+                      file_id: 9701
+                      name: C:/JenkinsClient/workspace/cmd_relbin_main/4_gen3arm_cherym31t_smoke/view/ai_sw_test/testsuites/SmokeTest/TTFIS_response.tml
+                      tester_account: TrackMy Tickets (CM/PJ-CMD)
+                      tester_machine: HI-Z0EI6
+                      time_start: '2017-09-26T08:03:15.000Z'
+                      time_end: '2017-09-26T08:03:20.000Z'
+                      test_result_id: 69668a5f-9a86-4bc7-84a6-04051f38dc85
+                      origin: TML
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find file with file_id=0
+                    data: {}
+    patch:
+      tags:
+      - File
+      summary: Update File by ID
+      description: Update a test file by its ID.
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test file.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FilePATCH"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - File
+      summary: Delete File by ID
+      description: Delete a test file by its ID.
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test file.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/fileheaders":
+    get:
+      tags:
+      - File
+      summary: Get All File Headers
+      description: Retrieve a list of all test file headers information.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - File
+      summary: Create a New File Header
+      description: Create a new file header.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FileHeaderPOST"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/fileheaders/{file_id}":
+    get:
+      tags:
+      - File
+      summary: Get File Header by File ID
+      description: Retrieve a test file header by its ID.
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test file.
+        examples:
+          success:
+            value: '9701'
+          not_found:
+            value: '0'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get file header with file_id=9701 successfully
+                    data:
+                      file_id: 9701
+                      testtoolconfiguration_testtoolname: TML Framework
+                      testtoolconfiguration_testtoolversionstring: RC-3 30.08.2017
+                        / V 1.14.3.0 (1323)
+                      testtoolconfiguration_projectname: G3g
+                      testtoolconfiguration_logfileencoding: utf-8
+                      testtoolconfiguration_pythonversion: 2.7.9 (default, Dec 10
+                        2014, 12:24:55) [MSC v.1500 32 bit (Intel)] on Windows
+                      testtoolconfiguration_testfile: C:/JenkinsClient/workspace/cmd_relbin_main/4_gen3arm_cherym31t_smoke/view/ai_sw_test/testsuites/SmokeTest/TTFIS_response.tml
+                      testtoolconfiguration_logfilepath: C:/JenkinsClient/workspace/cmd_relbin_main/4_gen3arm_cherym31t_smoke/Smoketest/logfiles/SmokeTest
+                      testtoolconfiguration_logfilemode: 8/7:'a'
+                      testtoolconfiguration_ctrlfilepath: C:/AutoTest/ctrlfiles
+                      testtoolconfiguration_configfile: 2:C:/JenkinsClient/workspace/cmd_relbin_main/4_gen3arm_cherym31t_smoke/view/ai_sw_test/testsuites/BVT/config/test_config_cherym31t.xml
+                      testtoolconfiguration_confname: cherym31t
+                      testfileheader_author: Thomas Pollerspoeck
+                      testfileheader_project: G3g
+                      testfileheader_testfiledate: ''
+                      testfileheader_version_major: ''
+                      testfileheader_version_minor: ''
+                      testfileheader_version_patch: ''
+                      testfileheader_keyword: Smoke Test
+                      testfileheader_shortdescription: SmokeTest for TTFIS interface
+                      testexecution_useraccount: TrackMy Tickets (CM/PJ-CMD)
+                      testexecution_computername: HI-Z0EI6
+                      testrequirements_documentmanagement: ClearCase
+                      testrequirements_testenvironment: PC with TML 1.11.0.0
+                      testbenchconfig_name:
+                      testbenchconfig_data:
+                      preprocessor_parameters:
+                      preprocessor_filter:
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find file header with file_id=0
+                    data: {}
+    patch:
+      tags:
+      - File
+      summary: Update File Header by ID
+      description: Update a test file header by its ID.
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test file.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FileHeaderPATCH"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - File
+      summary: Delete File Header by ID
+      description: Delete a test file header by its ID.
+      parameters:
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test file.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/testcases":
+    get:
+      tags:
+      - TestCase
+      summary: Get All Test Cases
+      description: Retrieve a list of all test cases.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - TestCase
+      summary: Create a New Test Case
+      description: Create a new test case.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TestCasePOST"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/testcases/{test_case_id}":
+    get:
+      tags:
+      - TestCase
+      summary: Get Test Case by ID
+      description: Retrieve a test case by its ID.
+      parameters:
+      - name: test_case_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test case.
+        examples:
+          success:
+            value: '33674'
+          not_found:
+            value: '0'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get testcase with test_case_id=33674 successfully
+                    data:
+                      test_case_id: 33674
+                      name: SmokeTest::FirstStartup
+                      issue: ''
+                      tcid: ''
+                      fid: ''
+                      component: SmokeTest
+                      time_start: '2017-09-26T08:00:45.000Z'
+                      result_main: Passed
+                      result_state: complete
+                      result_return: 11
+                      counter_resets: 0
+                      lastlog:
+                      testnumber: 1
+                      repeatcount: 1
+                      test_result_id: 69668a5f-9a86-4bc7-84a6-04051f38dc85
+                      file_id: 9698
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find testcase with test_case_id=0
+                    data: {}
+    patch:
+      tags:
+      - TestCase
+      summary: Update Test Case by ID
+      description: Update a test case by its ID.
+      parameters:
+      - name: test_case_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test case.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TestCasePATCH"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - TestCase
+      summary: Delete Test Case by ID
+      description: Delete a test case by its ID.
+      parameters:
+      - name: test_case_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the test case.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/aborts":
+    get:
+      tags:
+      - Abort Reason
+      summary: Get All Aborted Reasons
+      description: Retrieve a list of all aborted reasons.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - Abort Reason
+      summary: Create a New Aborted Reason
+      description: Create a new aborted reason.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AbortPOST"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/aborts/{test_result_id}":
+    get:
+      tags:
+      - Abort Reason
+      summary: Get Aborted Reason by Result ID
+      description: Retrieve a aborted reason of given result ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+        examples:
+          success:
+            value: 0041bc6e-2760-4130-9e46-331022264148
+          not_found:
+            value: non-existing
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get abort with test_result_id=0041bc6e-2760-4130-9e46-331022264148
+                      successfully
+                    data:
+                      test_result_id: 0041bc6e-2760-4130-9e46-331022264148
+                      abort_reason: WorthToProcess
+                      msg_detail: '{"expectation": "35%"}'
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find abort with test_result_id=non-existing
+                    data: {}
+    patch:
+      tags:
+      - Abort Reason
+      summary: Update Aborted Reason by Result ID
+      description: Update a aborted reason by the result ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AbortPATCH"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - Abort Reason
+      summary: Delete Aborted Reason by Result ID
+      description: Delete a aborted reason by the result ID.
+      parameters:
+      - name: test_result_id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the test result.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/ccrs":
+    get:
+      tags:
+      - CCR
+      summary: Get All CCR Information
+      description: Retrieve a list of ccr information.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    post:
+      tags:
+      - CCR
+      summary: Create a CCR Record
+      description: Create a new ccr record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CCRPOST"
+      responses:
+        '201':
+          description: Successfully created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/ccrs/{ccr_components_id}":
+    get:
+      tags:
+      - CCR
+      summary: Get CCR info by ID
+      description: Retrieve a ccr record by ID.
+      parameters:
+      - name: ccr_components_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the ccr component.
+        examples:
+          success:
+            value: '1'
+          not_found:
+            value: '0'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: get ccr component with ccr_components_id=1 successfully
+                    data:
+                      ccr_components_id: 1
+                      test_case_id: 33674
+                      timestamp:
+                      component_name: media
+                      binary_name: media
+                      MEM_RSS: 10
+                      MEM_PSS: 5
+                      MEM_Anonymus:
+                      Storage: 1
+                      CPU: 2
+        '404':
+          description: Unsuccessful reponse due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+              examples:
+                not_found:
+                  value:
+                    success: false
+                    message: cannot find ccr component with ccr_components_id=0
+                    data: {}
+    patch:
+      tags:
+      - CCR
+      summary: Update CCR Record by ID
+      description: Update a ccr information by ID.
+      parameters:
+      - name: ccr_components_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the ccr component.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CCRPATCH"
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: Failed to update due to non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+    delete:
+      tags:
+      - CCR
+      summary: Delete CCR Record by ID
+      description: Delete a ccr record by ID.
+      parameters:
+      - name: ccr_components_id
+        in: path
+        required: true
+        schema:
+          type: number
+        description: ID of the ccr component.
+      responses:
+        '200':
+          description: Successfully delete or non-existence
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/evtblresults":
+    post:
+      tags:
+      - Store Procedures
+      summary: Call Store Procedure update_evtbls
+      description: Call store procedure update_evtbls to update all evtbl_ tables.
+      responses:
+        '201':
+          description: Successfully called
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Failed to call store procedure
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  "/evtblresults/{test_result_id}":
+    patch:
+      tags:
+      - Store Procedures
+      summary: Call Store Procedure update_evtbl with Result ID
+      description: Call store procedure update_evtbls to update all evtbl_ tables
+        for given result ID.
+      responses:
+        '200':
+          description: Successfully called
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '400':
+          description: Failed to call store procedure
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+components:
+  schemas:
+    Response:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: reponse status
+        message:
+          type: string
+          description: log/error message
+        data:
+          type: object
+          description: reponse data
+    ResultPOST:
+      type: object
+      properties:
+        test_result_id:
+          type: string
+          example: 06d86c1f-de7d-4894-a636-1ab1138b9f5e
+          description: The unique ID of the test result.
+        branch:
+          type: string
+          description: The branch name.
+        project:
+          type: string
+          description: The project name.
+        variant:
+          type: string
+          description: The variant name
+        time_start:
+          type: string
+          format: date-time
+          description: Start time
+        time_end:
+          type: string
+          format: date-time
+          description: End time
+        version_sw_target:
+          type: string
+          description: The software version
+        version_sw_test:
+          type: string
+          description: The test version
+        version_hardware:
+          type: string
+          description: The hardware version
+        jenkinsurl:
+          type: string
+          description: The url to test job (on Jenkins)
+        reporting_qualitygate:
+          type: string
+          description: The quality gate
+        result_state:
+          type: string
+          default: in progress
+          description: The status of test execution
+        interpretation:
+          type: string
+          description: The test execution interpretation
+      required:
+      - test_result_id
+      - branch
+      - project
+      - variant
+    ResultPATCH:
+      type: object
+      properties:
+        branch:
+          type: string
+          description: The branch name.
+        project:
+          type: string
+          description: The project name.
+        variant:
+          type: string
+          description: The variant name
+        time_start:
+          type: string
+          format: date-time
+          description: Start time
+        time_end:
+          type: string
+          format: date-time
+          description: End time
+        version_sw_target:
+          type: string
+          description: The software version
+        version_sw_test:
+          type: string
+          description: The test version
+        version_hardware:
+          type: string
+          description: The hardware version
+        jenkinsurl:
+          type: string
+          description: The url to test job (on Jenkins)
+        reporting_qualitygate:
+          type: string
+          description: The quality gate
+        result_state:
+          type: string
+          default: in progress
+          description: The status of test execution
+        interpretation:
+          type: string
+          description: The test execution interpretation
+    UserResult:
+      type: object
+      properties:
+        test_result_id:
+          type: string
+          example: 06d86c1f-de7d-4894-a636-1ab1138b9f5e
+          description: The unique ID of the test result.
+        interpretation:
+          type: string
+          description: The test execution interpretation
+        comment:
+          type: string
+          description: The user's comments.
+        tags:
+          type: string
+          description: Tag information.
+      required:
+      - test_result_id
+    Project:
+      type: object
+      properties:
+        project:
+          type: string
+          description: project name
+        variant:
+          type: string
+          description: variant name
+        branch:
+          type: string
+          description: branch information
+    Category:
+      type: object
+      properties:
+        category_id:
+          type: number
+          description: category id
+        category:
+          type: string
+          description: category name
+    FilePOST:
+      type: object
+      properties:
+        test_result_id:
+          type: string
+          description: test result id
+        name:
+          type: string
+          description: test file name
+        tester_account:
+          type: string
+          description: Test executor
+        tester_machine:
+          type: string
+          description: Test machine
+        time_start:
+          type: string
+          format: date-time
+          description: File start time
+        time_end:
+          type: string
+          format: date-time
+          description: File end time
+        origin:
+          type: string
+          description: Test origin
+      required:
+      - test_result_id
+    FilePATCH:
+      type: object
+      properties:
+        name:
+          type: string
+          description: test file name
+        tester_account:
+          type: string
+          description: Test executor
+        tester_machine:
+          type: string
+          description: Test machine
+        time_start:
+          type: string
+          format: date-time
+          description: File start time
+        time_end:
+          type: string
+          format: date-time
+          description: File end time
+        origin:
+          type: string
+          description: Test origin
+    FileHeaderPOST:
+      type: object
+      properties:
+        file_id:
+          type: number
+          description: test file id
+        testtoolconfiguration_testtoolname:
+          type: string
+          description: test tool name
+        testtoolconfiguration_testtoolversionstring:
+          type: string
+          description: test tool version
+        testtoolconfiguration_projectname:
+          type: string
+          description: project name
+        testtoolconfiguration_logfileencoding:
+          type: string
+          description: encoding of log file
+        testtoolconfiguration_pythonversion:
+          type: string
+          description: python version
+        testtoolconfiguration_testfile:
+          type: string
+          description: name/path of test file
+        testtoolconfiguration_logfilepath:
+          type: string
+          description: path to log file
+        testtoolconfiguration_logfilemode:
+          type: string
+          description: log file's mode
+        testtoolconfiguration_ctrlfilepath:
+          type: string
+          description: path to control file
+        testtoolconfiguration_configfile:
+          type: string
+          description: path to test configuration file
+        testtoolconfiguration_confname:
+          type: string
+          description: configuration name
+        testfileheader_author:
+          type: string
+          description: test file's author
+        testfileheader_project:
+          type: string
+          description: project name
+        testfileheader_testfiledate:
+          type: string
+          description: creation/update date
+        testfileheader_version_major:
+          type: string
+          description: test file version - major
+        testfileheader_version_minor:
+          type: string
+          description: test file version - minor
+        testfileheader_version_patch:
+          type: string
+          description: test file version - patch
+        testfileheader_keyword:
+          type: string
+          description: test file keyword
+        testfileheader_shortdescription:
+          type: string
+          description: test file short description
+        testexecution_useraccount:
+          type: string
+          description: execution user account
+        testexecution_computername:
+          type: string
+          description: execution machine
+        testrequirements_documentmanagement:
+          type: string
+          description: test requirement document management
+        testrequirements_testenvironment:
+          type: string
+          description: test requirement test environment
+        testbenchconfig_name:
+          type: string
+          description: testbench configuration name
+        testbenchconfig_data:
+          type: string
+          description: testbench configuration data
+        preprocessor_parameters:
+          type: string
+          description: preprocessor definitions
+        preprocessor_filter:
+          type: string
+          description: preprocessor filter
+      required:
+      - file_id
+    FileHeaderPATCH:
+      type: object
+      properties:
+        testtoolconfiguration_testtoolname:
+          type: string
+          description: test tool name
+        testtoolconfiguration_testtoolversionstring:
+          type: string
+          description: test tool version
+        testtoolconfiguration_projectname:
+          type: string
+          description: project name
+        testtoolconfiguration_logfileencoding:
+          type: string
+          description: encoding of log file
+        testtoolconfiguration_pythonversion:
+          type: string
+          description: python version
+        testtoolconfiguration_testfile:
+          type: string
+          description: name/path of test file
+        testtoolconfiguration_logfilepath:
+          type: string
+          description: path to log file
+        testtoolconfiguration_logfilemode:
+          type: string
+          description: log file's mode
+        testtoolconfiguration_ctrlfilepath:
+          type: string
+          description: path to control file
+        testtoolconfiguration_configfile:
+          type: string
+          description: path to test configuration file
+        testtoolconfiguration_confname:
+          type: string
+          description: configuration name
+        testfileheader_author:
+          type: string
+          description: test file's author
+        testfileheader_project:
+          type: string
+          description: project name
+        testfileheader_testfiledate:
+          type: string
+          description: creation/update date
+        testfileheader_version_major:
+          type: string
+          description: test file version - major
+        testfileheader_version_minor:
+          type: string
+          description: test file version - minor
+        testfileheader_version_patch:
+          type: string
+          description: test file version - patch
+        testfileheader_keyword:
+          type: string
+          description: test file keyword
+        testfileheader_shortdescription:
+          type: string
+          description: test file short description
+        testexecution_useraccount:
+          type: string
+          description: execution user account
+        testexecution_computername:
+          type: string
+          description: execution machine
+        testrequirements_documentmanagement:
+          type: string
+          description: test requirement document management
+        testrequirements_testenvironment:
+          type: string
+          description: test requirement test environment
+        testbenchconfig_name:
+          type: string
+          description: testbench configuration name
+        testbenchconfig_data:
+          type: string
+          description: testbench configuration data
+        preprocessor_parameters:
+          type: string
+          description: preprocessor definitions
+        preprocessor_filter:
+          type: string
+          description: preprocessor filter
+    TestCasePOST:
+      type: object
+      properties:
+        name:
+          type: string
+          description: test case name
+        issue:
+          type: string
+          description: test case issue
+        tcid:
+          type: string
+          description: test case id
+        fid:
+          type: string
+          description: function id
+        component:
+          type: string
+          description: component name
+        time_start:
+          type: string
+          format: date-time
+          description: test case start time
+        result_main:
+          type: string
+          description: test case main result
+        result_state:
+          type: string
+          description: test case result state
+        result_return:
+          type: number
+          description: test case return code
+        counter_resets:
+          type: number
+          description: number of reset counter
+        lastlog:
+          type: string
+          description: lastlog/traceback information
+        testnumber:
+          type: string
+          description: test case number
+        repeatcount:
+          type: string
+          description: test case counter
+        test_result_id:
+          type: string
+          description: test result id
+        file_id:
+          type: number
+          description: test file id
+      required:
+      - test_result_id
+      - file_id
+    TestCasePATCH:
+      type: object
+      properties:
+        name:
+          type: string
+          description: test case name
+        issue:
+          type: string
+          description: test case issue
+        tcid:
+          type: string
+          description: test case id
+        fid:
+          type: string
+          description: function id
+        component:
+          type: string
+          description: component name
+        time_start:
+          type: string
+          format: date-time
+          description: test case start time
+        result_main:
+          type: string
+          description: test case main result
+        result_state:
+          type: string
+          description: test case result state
+        result_return:
+          type: number
+          description: test case return code
+        counter_resets:
+          type: number
+          description: number of reset counter
+        lastlog:
+          type: string
+          description: lastlog/traceback information
+        testnumber:
+          type: string
+          description: test case number
+        repeatcount:
+          type: string
+          description: test case counter
+    AbortPOST:
+      type: object
+      properties:
+        test_result_id:
+          type: string
+          description: test result id
+        abort_reason:
+          type: string
+          description: aborted reason
+        msg_detail:
+          type: string
+          description: message in detail of aborted reason
+      required:
+      - test_result_id
+    AbortPATCH:
+      type: object
+      properties:
+        abort_reason:
+          type: string
+          description: aborted reason
+        msg_detail:
+          type: string
+          description: message in detail of aborted reason
+    CCRPOST:
+      type: object
+      properties:
+        test_case_id:
+          type: number
+          description: test case id
+        time_start:
+          type: string
+          format: date-time
+          description: start time
+        component_name:
+          type: string
+          description: component name
+        binary_name:
+          type: string
+          description: binary name
+        MEM_RSS:
+          type: number
+          description: resident set size memory
+        MEM_PSS:
+          type: number
+          description: proportional set size memory
+        MEM_Anonymus:
+          type: number
+          description: anonymous memory
+        Storage:
+          type: number
+          description: storage information
+        CPU:
+          type: number
+          description: CPU information
+      required:
+      - test_case_id
+    CCRPATCH:
+      type: object
+      properties:
+        time_start:
+          type: string
+          format: date-time
+          description: start time
+        component_name:
+          type: string
+          description: component name
+        binary_name:
+          type: string
+          description: binary name
+        MEM_RSS:
+          type: number
+          description: resident set size memory
+        MEM_PSS:
+          type: number
+          description: proportional set size memory
+        MEM_Anonymus:
+          type: number
+          description: anonymous memory
+        Storage:
+          type: number
+          description: storage information
+        CPU:
+          type: number
+          description: CPU information

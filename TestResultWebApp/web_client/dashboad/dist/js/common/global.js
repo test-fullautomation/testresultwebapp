@@ -32,6 +32,7 @@ var dNAV_INIT = { branch: undefined, variant: undefined };
 //access will be blocked due to cross site access
 var sDOMAIN = 'http://localhost';
 var sSubFolder = '/CMD_BVT';
+var sAPISubPath = ":3000"; //location or port which is running nodejs service
 var oIntervalTimer;
 var bLoading = false;
 var sPreStackVersions = "";
@@ -40,3 +41,10 @@ var sPreStackVersions = "";
 var bForceUpdateDashboard = false;
 var oReloadTimer;       //timer object
 var iReloadSecond = 5;  //time(second) to reload content
+
+// Configurations for inactive branches and variants
+var oInactiveBranchVariant = {
+   "dev" : "all", // "all" value indicates this branch is inactive => all variants of this branch are inactive, too.
+   "main"  : [], // list of inactive variant(s) for this specified branch.
+   "all"   : ['extended', 'original'] // "all" key contains inactive variants which apply for all available branches.
+}
