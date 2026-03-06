@@ -117,9 +117,6 @@ class CRepositoryConfig():
         # ---- paths relative to repository root folder (where the scripts are located that use this module)
 
         # documentation
-
-        # The following key doesn't matter in case of the documentation builder itself is using this CRepositoryConfig.
-        # But if the documentation builder is called by other apps like setup.py, they need to know where to find.
         self.__dictRepositoryConfig['DOCUMENTATIONBUILDER'] = CString.NormalizePath(f"{self.__sReferencePath}/genpackagedoc.py")
 
         # - folder containing the package source files (will also contain the PDF documentation)
