@@ -1,6 +1,6 @@
 # **************************************************************************************************************
 #
-#  Copyright 2020-2023 Robert Bosch GmbH
+#  Copyright 2020-2026 Robert Bosch GmbH
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 #
 # CRepositoryConfig.py
 #
-# XC-CT/ECA3-Queckenstedt
+# XC-HWP/ESW3-Queckenstedt
 #
 # Purpose:
 # - Compute and store all repository specific information, like the repository name,
@@ -35,7 +35,6 @@
 
 import os, sys, platform, shlex, subprocess, json
 import colorama as col
-import pypandoc
 
 from PythonExtensionsCollection.String.CString import CString
 
@@ -105,21 +104,7 @@ class CRepositoryConfig():
         sPython         = CString.NormalizePath(sys.executable)
         sPythonVersion  = sys.version
 
-        sInstalledPackageFolder = None
-
-        try:
-            # try to access pandoc; if not installed we detect this already here as early as possible
-            pypandoc.get_pandoc_path()
-        except Exception as ex:
-            bSuccess = False
-            sResult  = str(ex)
-            return bSuccess, sResult
-
-        if sPlatformSystem == "Windows":
-            sInstalledPackageFolder = f"{sPythonPath}/Lib/site-packages/" + self.__dictRepositoryConfig['PACKAGENAME']
-        elif sPlatformSystem == "Linux":
-            sInstalledPackageFolder = f"{sPythonPath}/../lib/python3.9/site-packages/" + self.__dictRepositoryConfig['PACKAGENAME']
-        else:
+        if sPlatformSystem not in ("Windows", "Linux"):
             bSuccess = False
             sResult  = f"Operating system {sPlatformSystem} ({sOSName}) not supported"
             return bSuccess, sResult
@@ -128,25 +113,14 @@ class CRepositoryConfig():
         self.__dictRepositoryConfig['PLATFORMSYSTEM']         = sPlatformSystem
         self.__dictRepositoryConfig['PYTHON']                 = sPython
         self.__dictRepositoryConfig['PYTHONVERSION']          = sPythonVersion
-        self.__dictRepositoryConfig['INSTALLEDPACKAGEFOLDER'] = sInstalledPackageFolder
 
         # ---- paths relative to repository root folder (where the scripts are located that use this module)
 
-        # ====== 1. documentation
-
-        # - README
-        self.__dictRepositoryConfig['README_RST'] = CString.NormalizePath(f"{self.__sReferencePath}/README.rst")
-        self.__dictRepositoryConfig['README_MD']  = CString.NormalizePath(f"{self.__sReferencePath}/README.md")
-
-        # The following key doesn't matter in case of the documentation builder itself is using this CRepositoryConfig.
-        # But if the documentation builder is called by other apps like setup.py, they need to know where to find.
+        # documentation
         self.__dictRepositoryConfig['DOCUMENTATIONBUILDER'] = CString.NormalizePath(f"{self.__sReferencePath}/genpackagedoc.py")
 
         # - folder containing the package source files (will also contain the PDF documentation)
         self.__dictRepositoryConfig['PACKAGESOURCEFOLDER'] = CString.NormalizePath(f"{self.__sReferencePath}/{self.__dictRepositoryConfig['PACKAGENAME']}")
-
-        # # ====== 2. setuptools (no setup)
-        # ...
 
         print()
         print(f"Running under {sPlatformSystem} ({sOSName})")
